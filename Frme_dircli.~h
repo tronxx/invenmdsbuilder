@@ -1,0 +1,65 @@
+//---------------------------------------------------------------------------
+
+
+#ifndef Frme_dircliH
+#define Frme_dircliH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <DBCtrls.hpp>
+#include "dxCntner.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include "dxExEdtr.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxTL.hpp"
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+//---------------------------------------------------------------------------
+class TFrame_dircli : public TFrame
+{
+__published:	// IDE-managed Components
+        TLabel *lbl_dato;
+        TEdit *edt_dircli;
+        TEdit *edt_dircli2;
+        TQuery *qry_poblac;
+        TDataSource *dts_poblac;
+        TDBLookupComboBox *lkcmb_poblac;
+        TdxCurrencyEdit *edt_letras;
+        TLabel *lbl_letras;
+        TDataSource *dts_tipotarjeta;
+        TQuery *qry_tipotarjeta;
+        TLabel *lbl_tipotarjeta;
+        TDBLookupComboBox *lkcmb_tipotarjeta;
+        TdxDBGrid *dbgrd_poblacs;
+        TQuery *qry_movto;
+        TDataSource *dts_movto;
+        TQuery *qry_lineas;
+        TDataSource *dts_linea;
+        TQuery *qry_rutas;
+        TDataSource *dts_rutas;
+        TLabel *lbl_dato2;
+        TEdit *edt_codpost;
+        TEdit *edt_colonia;
+private:	// User declarations
+public:		// User declarations
+        __fastcall TFrame_dircli(TComponent* Owner);
+        void __fastcall selecciona_tipodato(String mitipodato_z, String datoini_z);
+        void __fastcall asignar_cvetar();
+        void __fastcall agrega_campos(TStringList *campos_z, TStringList *titulos_z);
+
+
+        String __fastcall obten_resultado(String mitipodato_z);
+        int tipo_z, cia_z;
+        String antticte_z, antdato_z;
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFrame_dircli *Frame_dircli;
+//---------------------------------------------------------------------------
+#endif

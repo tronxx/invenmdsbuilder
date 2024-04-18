@@ -1,0 +1,51 @@
+//---------------------------------------------------------------------------
+
+#ifndef dlgCnsPenPagMayH
+#define dlgCnsPenPagMayH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+//#include "dxmdaset.hpp"
+#include "dxTL.hpp"
+#include <Db.hpp>
+#include <DBTables.hpp>
+//---------------------------------------------------------------------------
+int __fastcall ConsultaPendMayoristas(TForm *Padre, String sClave, int icia, int &iConsep, int &iPagarep);
+//---------------------------------------------------------------------------
+class TfrmDlgPendPagMay : public TForm
+{
+__published:	// IDE-managed Components
+    TdxDBGrid *dbgrdPendPag;
+    TQuery *qsPendPag;
+    TDataSource *dtsPendpag;
+    TdxDBGridMaskColumn *dbgrdPendPagDOCTO;
+    TdxDBGridMaskColumn *dbgrdPendPagPAGARE;
+    TdxDBGridDateColumn *dbgrdPendPagFECHA;
+    TdxDBGridDateColumn *dbgrdPendPagVENCE;
+    TdxDBGridMaskColumn *dbgrdPendPagCONCEP;
+    TdxDBGridMaskColumn *dbgrdPendPagCONSE;
+    TdxDBGridCurrencyColumn *dbgrdPendPagIMPORTE;
+    TdxDBGridCurrencyColumn *dbgrdPendPagSALDO;
+    TBitBtn *RzBitBtn1;
+    TBitBtn *btnCancelar;
+    TQuery *qsMayoris;
+    void __fastcall RzBitBtn1Click(TObject *Sender);
+    void __fastcall btnCancelarClick(TObject *Sender);
+    void __fastcall dbgrdPendPagKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+private:	// User declarations
+public:		// User declarations
+    bool bOk;
+    __fastcall TfrmDlgPendPagMay(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TfrmDlgPendPagMay *frmDlgPendPagMay;
+//---------------------------------------------------------------------------
+#endif

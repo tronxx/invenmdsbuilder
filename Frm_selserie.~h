@@ -1,0 +1,89 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_selserieH
+#define Frm_selserieH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+#include "dxTL.hpp"
+#include <ActnList.hpp>
+#include <Buttons.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <ExtCtrls.hpp>
+#include <ImgList.hpp>
+//---------------------------------------------------------------------------
+class TForm_selserie : public TForm
+{
+__published:	// IDE-managed Components
+        TGroupBox *grp_foldisp;
+        TQuery *qry_foldisp;
+        TDataSource *dts_foldisp;
+        TUpdateSQL *uqry_foldisp;
+        TdxDBGrid *dxDBGrid1;
+        TdxDBGridMaskColumn *dxDBGrid1FOLIO;
+        TdxDBGridMaskColumn *dxDBGrid1SERIE;
+        TdxDBGridMaskColumn *dxDBGrid1MODENT;
+        TdxDBGridDateColumn *dxDBGrid1FECHA;
+        TdxDBGridMaskColumn *dxDBGrid1ENTCAN;
+        TdxDBGridDateColumn *dxDBGrid1FECENTORI;
+        TdxDBGridMaskColumn *dxDBGrid1FACPRO;
+        TDataSource *dts_folsel;
+        TQuery *qry_folsel;
+        TUpdateSQL *uqry_folsel;
+        TActionList *ActionList1;
+        TAction *Selecciona;
+        TAction *Elimina;
+        TdxDBGridCurrencyColumn *dxDBGrid1COSTO;
+        TGroupBox *grp_folsel;
+        TdxDBGrid *dxDBGrid2;
+        TdxDBGridMaskColumn *folsel_folio;
+        TdxDBGridMaskColumn *folsel_serie;
+        TdxDBGridCurrencyColumn *folsel_costo;
+        TdxDBGridMaskColumn *folsel_modent;
+        TdxDBGridDateColumn *folsel_fechaent;
+        TdxDBGridMaskColumn *folsel_entcan;
+        TdxDBGridDateColumn *folsel_fecentori;
+        TdxDBGridMaskColumn *folsel_facpro;
+        TPanel *pnl_centro;
+        TBitBtn *BitBtn1;
+        TBitBtn *BitBtn2;
+        TBitBtn *btn_aceptar;
+        TBitBtn *btn_cancelar;
+        void __fastcall SeleccionaExecute(TObject *Sender);
+        void __fastcall FormResize(TObject *Sender);
+        void __fastcall EliminaExecute(TObject *Sender);
+        void __fastcall btn_cancelarClick(TObject *Sender);
+        void __fastcall btn_aceptarClick(TObject *Sender);
+        void __fastcall dxDBGrid1KeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall dxDBGrid2KeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall dxDBGrid1DblClick(TObject *Sender);
+        void __fastcall dxDBGrid2DblClick(TObject *Sender);
+        void __fastcall dxDBGrid1CustomDrawCell(TObject *Sender,
+          TCanvas *ACanvas, TRect &ARect, TdxTreeListNode *ANode,
+          TdxTreeListColumn *AColumn, bool ASelected, bool AFocused,
+          bool ANewItemRow, AnsiString &AText, TColor &AColor,
+          TFont *AFont, TAlignment &AAlignment, bool &ADone);
+private:	// User declarations
+        int seriesel_z;
+public:		// User declarations
+        __fastcall TForm_selserie(TComponent* Owner);
+        void __fastcall busca_series(String codigo_z, String alm_z, int numseries, TDateTime fecha);
+        void __fastcall sel_primeros_folios(int cuantos_z);
+        void __fastcall permitir_seleccionar(bool siono_z);
+        int nseries_z;
+        String tipoinv_z, fechaabierta_z;
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_selserie *Form_selserie;
+//---------------------------------------------------------------------------
+#endif

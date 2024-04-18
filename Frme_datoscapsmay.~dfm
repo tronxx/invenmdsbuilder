@@ -1,0 +1,273 @@
+object Frame_datoscapsmay: TFrame_datoscapsmay
+  Left = 0
+  Top = 0
+  Width = 598
+  Height = 107
+  TabOrder = 0
+  object lbl_total: TLabel
+    Left = 467
+    Top = 84
+    Width = 24
+    Height = 13
+    Caption = 'Total'
+  end
+  object lbl_iva: TLabel
+    Left = 288
+    Top = 82
+    Width = 15
+    Height = 13
+    Caption = 'Iva'
+  end
+  object lbl_importe: TLabel
+    Left = 24
+    Top = 82
+    Width = 35
+    Height = 13
+    Caption = 'Importe'
+  end
+  object lbl_alm: TLabel
+    Left = 23
+    Top = 11
+    Width = 41
+    Height = 13
+    Caption = 'Almacén'
+  end
+  object lbl_numero: TLabel
+    Left = 319
+    Top = 11
+    Width = 37
+    Height = 13
+    Caption = 'Número'
+  end
+  object Label6: TLabel
+    Left = 454
+    Top = 12
+    Width = 30
+    Height = 13
+    Caption = 'Fecha'
+  end
+  object lbl_mayoris: TLabel
+    Left = 19
+    Top = 36
+    Width = 45
+    Height = 13
+    Caption = 'Mayorista'
+  end
+  object lbl_status: TLabel
+    Left = 39
+    Top = 60
+    Width = 20
+    Height = 13
+    Caption = 'S/N'
+  end
+  object lbl_facorem: TLabel
+    Left = 220
+    Top = 59
+    Width = 76
+    Height = 13
+    Caption = 'Documento con'
+  end
+  object DBText1: TDBText
+    Left = 432
+    Top = 59
+    Width = 60
+    Height = 13
+    Alignment = taRightJustify
+    DataField = 'DESCRI'
+    DataSource = dts_tipofacmay
+  end
+  object lkcmb_almacen: TDBLookupComboBox
+    Left = 68
+    Top = 7
+    Width = 64
+    Height = 21
+    DropDownWidth = 200
+    KeyField = 'CLAVE'
+    ListField = 'CLAVE; NOMBRE'
+    ListSource = dts_almacen
+    TabOrder = 0
+    OnExit = lkcmb_almacenExit
+  end
+  object DBEdit1: TDBEdit
+    Left = 135
+    Top = 7
+    Width = 180
+    Height = 21
+    TabStop = False
+    DataField = 'NOMBRE'
+    DataSource = dts_almacen
+    TabOrder = 10
+  end
+  object dbedt_total: TdxDBCurrencyEdit
+    Left = 496
+    Top = 80
+    Width = 90
+    TabOrder = 9
+    TabStop = False
+    Alignment = taRightJustify
+    DataField = 'TOTAL'
+    StoredValues = 1
+  end
+  object dbedt_iva: TdxDBCurrencyEdit
+    Left = 308
+    Top = 80
+    Width = 121
+    TabOrder = 8
+    TabStop = False
+    Alignment = taRightJustify
+    DataField = 'IVA'
+    StoredValues = 1
+  end
+  object dbedt_importe: TdxDBCurrencyEdit
+    Left = 68
+    Top = 80
+    Width = 121
+    TabOrder = 7
+    TabStop = False
+    Alignment = taRightJustify
+    DataField = 'IMPORTE'
+    StoredValues = 1
+  end
+  object edt_numero: TdxCurrencyEdit
+    Left = 369
+    Top = 7
+    Width = 60
+    TabOrder = 1
+    Alignment = taRightJustify
+    DecimalPlaces = 0
+    DisplayFormat = '0'
+    Value = 1
+    StoredValues = 1
+  end
+  object date_fecha: TDateTimePicker
+    Left = 496
+    Top = 7
+    Width = 90
+    Height = 21
+    CalAlignment = dtaLeft
+    Date = 37548.4553024306
+    Time = 37548.4553024306
+    DateFormat = dfShort
+    DateMode = dmComboBox
+    Kind = dtkDate
+    ParseInput = False
+    TabOrder = 2
+    OnExit = date_fechaExit
+  end
+  object edt_numfac: TdxCurrencyEdit
+    Left = 496
+    Top = 56
+    Width = 90
+    TabOrder = 6
+    Alignment = taRightJustify
+    DecimalPlaces = 0
+    DisplayFormat = '0'
+    Value = 1
+    StoredValues = 1
+  end
+  object cmb_siono: TComboBox
+    Left = 68
+    Top = 56
+    Width = 60
+    Height = 21
+    Style = csDropDownList
+    ItemHeight = 13
+    TabOrder = 4
+    Items.Strings = (
+      'Si'
+      'No')
+  end
+  object lkcmb_facorem: TDBLookupComboBox
+    Left = 308
+    Top = 56
+    Width = 122
+    Height = 21
+    DropDownWidth = 200
+    KeyField = 'idtipofacturma'
+    ListField = 'descri'
+    ListSource = dts_tipofacmay
+    TabOrder = 5
+    OnExit = lkcmb_almacenExit
+  end
+  object lkcmb_mayoris: TDBLookupComboBox
+    Left = 68
+    Top = 32
+    Width = 64
+    Height = 21
+    DropDownWidth = 200
+    KeyField = 'codigo'
+    ListField = 'codigo'
+    ListSource = dts_mayorista
+    TabOrder = 3
+    OnExit = lkcmb_almacenExit
+  end
+  object DBEdit2: TDBEdit
+    Left = 135
+    Top = 31
+    Width = 450
+    Height = 21
+    TabStop = False
+    DataField = 'NOMBRE'
+    DataSource = dts_mayorista
+    TabOrder = 11
+  end
+  object qry_tipofacmay: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      'select * from tipo_facturma order by clavetipofac')
+    Left = 332
+    Top = 30
+  end
+  object dts_tipofacmay: TDataSource
+    AutoEdit = False
+    DataSet = qry_tipofacmay
+    Left = 364
+    Top = 30
+  end
+  object qry_Almacen: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      
+        'select clave, nombre from Almacen where Cia = :Cia order by clav' +
+        'e'
+      '')
+    Left = 396
+    Top = 30
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'Cia'
+        ParamType = ptUnknown
+      end>
+  end
+  object dts_almacen: TDataSource
+    AutoEdit = False
+    DataSet = qry_Almacen
+    Left = 428
+    Top = 30
+  end
+  object qry_mayorista: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      
+        'select codigo, nombre from mayoris where cia = :CIA and status =' +
+        ' '#39'A'#39
+      'order by codigo'
+      ''
+      '')
+    Left = 460
+    Top = 30
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'Cia'
+        ParamType = ptUnknown
+      end>
+  end
+  object dts_mayorista: TDataSource
+    AutoEdit = False
+    DataSet = qry_mayorista
+    Left = 492
+    Top = 30
+  end
+end

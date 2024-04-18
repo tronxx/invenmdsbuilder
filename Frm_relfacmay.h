@@ -1,0 +1,117 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_relfacmayH
+#define Frm_relfacmayH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include <ActnList.hpp>
+#include <Buttons.hpp>
+#include <ComCtrls.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <ExtCtrls.hpp>
+#include <ImgList.hpp>
+#include <StdActns.hpp>
+#include <ToolWin.hpp>
+#include <DBCtrls.hpp>
+#include "dxExEdtr.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxTL.hpp"
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+//---------------------------------------------------------------------------
+class TForm_relfacmay : public TForm
+{
+__published:	// IDE-managed Components
+        TQuery *qry_marcas;
+        TActionList *ActionList1;
+        TAction *nuevo;
+        TAction *modifica;
+        TAction *borra;
+        TAction *grabar;
+        TAction *cancelar;
+        TWindowClose *WindowClose1;
+        TAction *primero;
+        TAction *anterior;
+        TAction *siguiente;
+        TAction *ultimo;
+        TPanel *Panel1;
+        TLabel *Label1;
+        TEdit *edt_prmay;
+        TLabel *Label2;
+        TEdit *edt_ulmay;
+        TLabel *Label3;
+        TLabel *Label4;
+        TDateTimePicker *date_fecini;
+        TDateTimePicker *date_fecfin;
+        TDataSource *dts_marcas;
+        TBitBtn *BitBtn1;
+        TAction *exportar;
+        TBitBtn *BitBtn2;
+        TQuery *qry_mayoris;
+        TUpdateSQL *UpdateSQL1;
+        TDataSource *dts_mayoris;
+        TQuery *qry_meses;
+        TPageControl *page_acum;
+        TTabSheet *tbs_mensual;
+        TTabSheet *tbs_anual;
+        TdxDBGrid *dbgrd_doctos;
+        TdxDBGridMaskColumn *dbgrd_doctosMAYORIS;
+        TdxDBGridDateColumn *dbgrd_doctosFECHA;
+        TdxDBGridMaskColumn *dbgrd_doctosDOCTO;
+        TdxDBGridMaskColumn *dbgrd_doctosPAGARE;
+        TdxDBGridDateColumn *dbgrd_doctosVENCE;
+        TdxDBGridMaskColumn *dbgrd_doctosCONCEP;
+        TdxDBGridCurrencyColumn *dbgrd_doctosIMPORTE;
+        TdxDBGridCurrencyColumn *dbgrd_doctosSALDO;
+        TdxDBGrid *dbgrd_anual;
+        TdxDBGridMaskColumn *dbgrd_anualMAYORIS;
+        TdxDBGridCurrencyColumn *dbgrd_anualENE;
+        TdxDBGridCurrencyColumn *dbgrd_anualFEB;
+        TdxDBGridCurrencyColumn *dbgrd_anualABR;
+        TdxDBGridCurrencyColumn *dbgrd_anualMAR;
+        TdxDBGridCurrencyColumn *dbgrd_anualMAY;
+        TdxDBGridCurrencyColumn *dbgrd_anualJUN;
+        TdxDBGridCurrencyColumn *dbgrd_anualJUL;
+        TdxDBGridCurrencyColumn *dbgrd_anualAGO;
+        TdxDBGridCurrencyColumn *dbgrd_anualSEP;
+        TdxDBGridCurrencyColumn *dbgrd_anualOCT;
+        TdxDBGridCurrencyColumn *dbgrd_anualNOV;
+        TdxDBGridCurrencyColumn *dbgrd_anualDIC;
+        TdxDBGridCurrencyColumn *dbgrd_anualTOT;
+        TAction *imprimir;
+        void __fastcall FormCreate(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall qry_marcasAfterScroll(TDataSet *DataSet);
+        void __fastcall dbgrd_doctosCustomDrawCell(TObject *Sender,
+          TCanvas *ACanvas, TRect &ARect, TdxTreeListNode *ANode,
+          TdxTreeListColumn *AColumn, bool ASelected, bool AFocused,
+          bool ANewItemRow, AnsiString &AText, TColor &AColor,
+          TFont *AFont, TAlignment &AAlignment, bool &ADone);
+        void __fastcall BitBtn1Click(TObject *Sender);
+        void __fastcall exportarExecute(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm_relfacmay(TComponent* Owner);
+        void __fastcall desp_ptvt();
+        void __fastcall alta_ptvt();
+        void __fastcall modif_ptvt();
+        void __fastcall busca_ptvt(String ptvt_z);
+        void __fastcall mueve_hacia(String sql_z);
+        void __fastcall botones_onoff(int modo_z);
+        int cia_z;
+        String permis_z;
+
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_relfacmay *Form_relfacmay;
+//---------------------------------------------------------------------------
+#endif

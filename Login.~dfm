@@ -1,0 +1,176 @@
+object frmdlgLogin: TfrmdlgLogin
+  Left = 361
+  Top = 387
+  BorderStyle = bsDialog
+  Caption = 'Registro'
+  ClientHeight = 148
+  ClientWidth = 251
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 16
+  object Bevel1: TBevel
+    Left = 8
+    Top = 8
+    Width = 235
+    Height = 84
+  end
+  object RzLabel1: TLabel
+    Left = 32
+    Top = 19
+    Width = 61
+    Height = 16
+    Caption = 'USUARIO'
+    BlinkIntervalOff = 350
+    BlinkIntervalOn = 350
+    FrameSides = []
+    TextStyle = tsNormal
+  end
+  object RzLabel2: TLabel
+    Left = 16
+    Top = 59
+    Width = 79
+    Height = 16
+    Caption = 'PASSWORD'
+    BlinkIntervalOff = 350
+    BlinkIntervalOn = 350
+    FrameSides = []
+    TextStyle = tsNormal
+  end
+  object btnAceptar: TBitBtn
+    Left = 18
+    Top = 103
+    Width = 100
+    Height = 35
+    FrameFlat = True
+    Caption = '&Aceptar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
+    OnClick = btnAceptarClick
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      80000080000000808000800000008000800080800000C0C0C000808080000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00666666666666
+      66666666666666666666666666666666666666666666666666666666AC666666
+      66666666F86666666666666A22C666666666666F88866666666666A2222C6666
+      666666F88888666666666A222222C66666666F888888866666666A22CA222C66
+      66666F888F88886666666A2C66A222C666666F8866F8888666666AC6666A222C
+      66666F86666F8888666666666666A222C66666666666F8888666666666666A22
+      2C66666666666F8888666666666666A222C66666666666F8888666666666666A
+      22C666666666666F8886666666666666A2C6666666666666F886666666666666
+      6AC66666666666666F8666666666666666666666666666666666}
+    NumGlyphs = 2
+  end
+  object btnCancelar: TBitBtn
+    Left = 135
+    Top = 103
+    Width = 100
+    Height = 35
+    FrameFlat = True
+    Caption = '&Cancelar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
+    OnClick = btnCancelarClick
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      80000080000000808000800000008000800080800000C0C0C000808080000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00666666666666
+      6666666666666666666666666666666666666666666666666666666666666666
+      6666666666666666666669000666669000666F88866666F88866691110666911
+      10666F8888666F888866669111069111066666F88886F8888666666911101110
+      6666666F88888888666666669111110666666666F88888866666666669111066
+      666666666F888866666666669111110666666666F88888866666666911101110
+      6666666F888888886666669111069111066666F88886F8888666691110666911
+      10666F8888666F88886669999666669999666FFFF66666FFFF66666666666666
+      6666666666666666666666666666666666666666666666666666}
+    NumGlyphs = 2
+  end
+  object edtLogin: TEdit
+    Left = 104
+    Top = 16
+    Width = 132
+    Height = 24
+    CharCase = ecUpperCase
+    FrameColor = clGreen
+    FrameFlat = True
+    FrameFlatStyle = fsFlat
+    FrameFocusStyle = fsButtonDown
+    FrameVisible = True
+    TabOrder = 0
+  end
+  object edtPassword: TEdit
+    Left = 104
+    Top = 56
+    Width = 132
+    Height = 24
+    CharCase = ecUpperCase
+    FrameColor = clGreen
+    FrameFlat = True
+    FrameFlatStyle = fsFlat
+    FrameFocusStyle = fsButtonDown
+    FrameVisible = True
+    PasswordChar = '*'
+    TabOrder = 1
+    OnKeyDown = edtPasswordKeyDown
+  end
+  object qsUsarios: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      
+        'select * from Usarios where Nombre =:Nombre and Clave =:Password' +
+        ' and Cia = :Cia')
+    Left = 48
+    Top = 40
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'Nombre'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Password'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Cia'
+        ParamType = ptUnknown
+      end>
+  end
+  object qsPermiUsar: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      'select * from permiusar where iduse = :Iduse and Cia = :Cia')
+    Left = 88
+    Top = 48
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'Iduse'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Cia'
+        ParamType = ptUnknown
+      end>
+  end
+end

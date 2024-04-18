@@ -1,0 +1,81 @@
+Mantenimiento de Proyecciones:
+
+
+Objetivos:
+Poder defninir los datos de las proyecciones
+
+tablas involucradas:
+proycom
+subproycom
+zonainv
+
+Procedimientos:
+Definir una zona por su código, 01, 02, etc (char)
+nombre de zona
+Tiene Subzonas ? Si o No
+% Costo Sobre Ventas Contado
+% Costo Sobre Ventas Credito
+% Costo Sobre Ventas Fonacot
+% Costo Sobre Ventas Fide
+% Costo Sobre Ventas Imevi
+Si la Zona tiene Subzonas hay que definir:
+Clave de Subzona:
+% Costo Sobre Ventas Contado
+% Costo Sobre Ventas Credito
+% Costo Sobre Ventas Fonacot
+% Costo Sobre Ventas Fide
+% Costo Sobre Ventas Imevi
+
+Hay que definir de donde se toman los datos:
+Tipo: char (1) 
+Zona
+Subzona
+
+Tipo puede ser:
+C=Costo   Ventas Tradicional
+V=Importe Ventas Tradicional
+F=Costo   Ventas Fonacot    
+E=Importe Ventas Fonacot    
+I=Costo   Ventas FIDE       
+D=Importe Ventas FIDE       
+L=Costo   Ventas Celular    
+R=Importe Ventas Celular    
+M=Costo   Ventas IMEVI      
+N=Importe Ventas IMEVI
+
+Cuando es Importe se refiere a los datos de Cartera
+Cuando es Costo se refiere a los datos de Inven
+
+
+Tablas:
+* Buffer definitions for table proycom *
+M
+zona_pry                s3,
+subzona_pry             s5,
+descri_pry              s31,
+suboglo_pry             s2,
+porcon_pry              d,
+porcrd_pry              d,
+cia_pry                 i,
+porfon_pry              d,
+porfid_pry              d,
+porcel_pry              d,
+porime_pry              d,;
+* 11 columns (size for buffer = 91)*
+*
+insert into proycom (zona,subzona,descri,suboglo,porcon,porcrd,cia,porfon,porfid
+,porcel,porime)
+values (?,?,?,?,?,?,?,?,?,?,?)
+zona_pry,#,1,subzona_pry,#,1,descri_pry,#,1,suboglo_pry,#,1,porcon_pry,porcrd_pr
+y,cia_pry,porfon_pry,porfid_pry,porcel_pry,porime_pry,;
+*
+
+* Buffer definitions for table subproycom *
+M
+zona_spr  s3,
+subzona_spr  s5,
+tipo_spr  s2,
+zonaacu_spr  s3,
+ptvta_spr  s5,
+cia_spr  i,;
+* 6 columns (size for buffer = 20)*

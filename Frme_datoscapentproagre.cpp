@@ -1,0 +1,235 @@
+//---------------------------------------------------------------------------
+
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frme_datoscapentproagre.h"
+#include "dmod.h"
+#include "dialg_busartic.h"
+#include "Frme_datospedimento.h"
+#include "dialg_okcancel.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "dxCntner"
+#pragma link "dxEditor"
+#pragma link "dxEdLib"
+#pragma link "dxExEdtr"
+#pragma link "dxDBCtrl"
+#pragma link "dxDBGrid"
+#pragma link "dxDBTLCl"
+#pragma link "dxGrClms"
+#pragma link "dxTL"
+#pragma resource "*.dfm"
+TFrame_datoscapentproagre *Frame_datoscapentproagre;
+//---------------------------------------------------------------------------
+__fastcall TFrame_datoscapentproagre::TFrame_datoscapentproagre(TComponent* Owner)
+        : TFrame(Owner)
+{
+    cia_z = dm->cia_z;
+}
+//---------------------------------------------------------------------------
+void __fastcall TFrame_datoscapentproagre::edt_codigoKeyDown(
+      TObject *Sender, WORD &Key, TShiftState Shift)
+{
+  if(Key == VK_RETURN) edt_codigoExit(Sender);
+}
+//---------------------------------------------------------------------------
+void __fastcall TFrame_datoscapentproagre::edt_cantiExit(TObject *Sender)
+{
+  int folio_z = 1, cantidad_z;
+  String codigo_z,tipo_z, linea_z;
+  double costou_z;
+ int ancho_z, alto_z, numero_z=0;
+ double fecha_z;
+ bool todook_z = true;
+ Tdlg_okcancel *Dlg_analipol;
+ TFrame_datospedimento *Frame_datospedimento;
+
+  codigo_z =qry_inven->FieldByName("codigo")->AsString;
+  costou_z = qry_inven->FieldByName("costos")->AsFloat;
+  cantidad_z = edt_canti->Value;
+  qry_folsigent->Close();
+  qry_folsigent->ParamByName("codigo")->AsString = codigo_z;
+  qry_folsigent->ParamByName("alm")->AsString = alm_z;
+  qry_folsigent->ParamByName("cia")->AsInteger = cia_z;
+  qry_folsigent->Open();
+  if( !qry_folsigent->IsEmpty())
+    folio_z = qry_folsigent->FieldByName("ultfol")->AsInteger + 1;
+  edt_folios->Text = IntToStr(folio_z);
+  edt_costou->Value = costou_z;
+  tipo_z = qry_inven->FieldByName("tipo")->AsString;
+  linea_z = qry_inven->FieldByName("linea")->AsString;
+  if(tipo_z == "ALF" && ( dm->foliosalf_z || linea_z == dm->lineamot_z)) {
+     grp_series->Visible = true;
+     Dlg_analipol = new Tdlg_okcancel (this);
+     Dlg_analipol->AutoSize = false;
+     Frame_datospedimento = new TFrame_datospedimento (Dlg_analipol);
+     ancho_z = Frame_datospedimento->Width + 20;
+     alto_z = Frame_datospedimento->Height + Dlg_analipol->Panel2->Height + 80;
+     Frame_datospedimento->Parent = Dlg_analipol->Panel1;
+     Dlg_analipol->Width = ancho_z;
+     Dlg_analipol->Height = alto_z;
+     Dlg_analipol->Caption = "Captura de Datos";
+     Frame_datospedimento->Align = alClient;
+     Frame_datospedimento->lbl_codigo->Caption = "Folio";
+     //Frame_datospedimento->inicializa(sTipo);
+     //Frame_datospedimento->accion_z = NUEVO;
+     //Frame_datospedimento->nuevo();
+     Dlg_analipol->Position = poScreenCenter;
+     qry_datosped->Close();
+     qry_datosped->Open();
+     Frame_datospedimento->edt_serie->ReadOnly = false;
+     Frame_datospedimento->edt_serie->TabStop = true;
+     if(linea_z != dm->lineamot_z) {
+       Frame_datospedimento->solo_serie();
+       dbgrd_renentraSERIEMOT->Visible = false;
+       dbgrd_renentraPEDTO->Visible = false;
+       dbgrd_renentraADUANA->Visible = false;
+       dbgrd_renentraFECHAPED->Visible = false;
+     }
+     for(int ii_z=0; ii_z < cantidad_z; ii_z++) {
+       Frame_datospedimento->edt_codigo->Text = folio_z + ii_z;
+       if( Dlg_analipol->ShowModal() == mrOk) {
+         qry_datosped->Append();
+         qry_datosped->FieldByName("folio")->AsInteger = folio_z + ii_z;
+         qry_datosped->FieldByName("serie")->AsString = Frame_datospedimento->edt_serie->Text.Trim();
+         qry_datosped->FieldByName("seriemot")->AsString = Frame_datospedimento->edt_seriemot->Text.Trim();
+         qry_datosped->FieldByName("pedto")->AsString = Frame_datospedimento->edt_pedimento->Text.Trim();
+         qry_datosped->FieldByName("aduana")->AsString = Frame_datospedimento->edt_aduana->Text.Trim();
+         qry_datosped->FieldByName("fechaped")->AsDateTime = Frame_datospedimento->date_fecha->Date;
+         qry_datosped->Post();
+       }
+
+     }
+     delete Frame_datospedimento;
+     delete Dlg_analipol;
+  } else {
+     grp_series->Visible = false;
+  }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_datoscapentproagre::busca_cod(String codigo_z)
+{
+  edt_codigo->Text = codigo_z;
+  qry_inven->Close();
+  qry_inven->ParamByName("codigo")->AsString=codigo_z;
+  qry_inven->ParamByName("cia")->AsInteger = cia_z;
+  qry_inven->Open();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFrame_datoscapentproagre::edt_codigoExit(TObject *Sender)
+{
+  String codigo_z;
+  codigo_z = edt_codigo->Text;
+  qry_inven->Close();
+  qry_inven->ParamByName("codigo")->AsString = codigo_z;
+  qry_inven->ParamByName("cia")->AsInteger = cia_z;
+  qry_inven->Open();
+  if(qry_inven->IsEmpty()) {
+    // No Existe el código, habrá que buscarlo
+    Tdlg_busartic *dlg_busartic = new Tdlg_busartic (this);
+    dlg_busartic->busca_artic(codigo_z + "%", "-1");
+    if(dlg_busartic->ShowModal() == mrOk) {
+      qry_inven->Close();
+      qry_inven->ParamByName("codigo")->AsString = dlg_busartic->qry_inven->FieldByName("codigo")->AsString;
+      qry_inven->ParamByName("cia")->AsInteger = cia_z;
+      qry_inven->Open();
+      delete dlg_busartic;
+    }
+    edt_codigo->Text = qry_inven->FieldByName("codigo")->AsString;
+    //edt_costou->Value = qry_inven->FieldByName("costou")->AsFloat;
+  }
+  if(!qry_inven->IsEmpty()) {
+    edt_codigo->Text = qry_inven->FieldByName("codigo")->AsString;
+    edt_costou->Value = qry_inven->FieldByName("costos")->AsFloat;
+  }
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TFrame_datoscapentproagre::elimina_serieExecute(
+      TObject *Sender)
+{
+  if(qry_datosped->State == dsInactive) return;
+  if(qry_datosped->IsEmpty() ) return;
+  int ii_z = Application->MessageBox("Esta Seguro de Eliminar esta Serie ?", "Eliminar Serie", MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2);
+  if (ii_z != IDOK ) return;
+  qry_datosped->Delete();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_datoscapentproagre::modifica_serieExecute(
+      TObject *Sender)
+{
+  Tdlg_okcancel *Dlg_analipol;
+  TFrame_datospedimento *Frame_datospedimento;
+  if(qry_datosped->State == dsInactive) return;
+  if(qry_datosped->IsEmpty() ) return;
+  int alto_z, ancho_z;
+  String codigo_z, tipo_z, linea_z;
+
+  tipo_z = qry_inven->FieldByName("tipo")->AsString;
+  linea_z = qry_inven->FieldByName("linea")->AsString;
+  if(tipo_z != "ALF") return;
+  if(dm->foliosalf_z || linea_z == dm->lineamot_z) {
+     grp_series->Visible = true;
+     Dlg_analipol = new Tdlg_okcancel (this);
+     Dlg_analipol->AutoSize = false;
+     Frame_datospedimento = new TFrame_datospedimento (Dlg_analipol);
+     ancho_z = Frame_datospedimento->Width + 20;
+     alto_z = Frame_datospedimento->Height + Dlg_analipol->Panel2->Height + 80;
+     Frame_datospedimento->Parent = Dlg_analipol->Panel1;
+     Dlg_analipol->Width = ancho_z;
+     Dlg_analipol->Height = alto_z;
+     Dlg_analipol->Caption = "Captura de Datos";
+     Frame_datospedimento->Align = alClient;
+     //Frame_datospedimento->inicializa(sTipo);
+     //Frame_datospedimento->accion_z = NUEVO;
+     //Frame_datospedimento->nuevo();
+     Dlg_analipol->Position = poScreenCenter;
+     Frame_datospedimento->edt_serie->ReadOnly = false;
+     Frame_datospedimento->edt_serie->TabStop = true;
+     if(linea_z != dm->lineamot_z) {
+       Frame_datospedimento->solo_serie();
+       dbgrd_renentraSERIEMOT->Visible = false;
+       dbgrd_renentraPEDTO->Visible = false;
+       dbgrd_renentraADUANA->Visible = false;
+       dbgrd_renentraFECHAPED->Visible = false;
+     }
+     Frame_datospedimento->edt_serie->Text = qry_datosped->FieldByName("serie")->AsString;
+     Frame_datospedimento->edt_seriemot->Text = qry_datosped->FieldByName("seriemot")->AsString;
+     Frame_datospedimento->edt_pedimento->Text = qry_datosped->FieldByName("pedto")->AsString;
+     Frame_datospedimento->edt_aduana->Text =  qry_datosped->FieldByName("aduana")->AsString;
+     Frame_datospedimento->date_fecha->Date = qry_datosped->FieldByName("fechaped")->AsDateTime;
+     if( Dlg_analipol->ShowModal() == mrOk) {
+         qry_datosped->Edit();
+         qry_datosped->FieldByName("serie")->AsString = Frame_datospedimento->edt_serie->Text.Trim();
+         qry_datosped->FieldByName("seriemot")->AsString = Frame_datospedimento->edt_seriemot->Text.Trim();
+         qry_datosped->FieldByName("pedto")->AsString = Frame_datospedimento->edt_pedimento->Text.Trim();
+         qry_datosped->FieldByName("aduana")->AsString = Frame_datospedimento->edt_aduana->Text.Trim();
+         qry_datosped->FieldByName("fechaped")->AsDateTime = Frame_datospedimento->date_fecha->Date;
+         qry_datosped->Post();
+     }
+     delete Frame_datospedimento;
+     delete Dlg_analipol;
+  }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_datoscapentproagre::dbgrd_renentraKeyDown(
+      TObject *Sender, WORD &Key, TShiftState Shift)
+{
+  if(Key == VK_F2)     modifica_serieExecute(Sender);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_datoscapentproagre::agrega_serieExecute(
+      TObject *Sender)
+{
+  edt_cantiExit(Sender);
+}
+//---------------------------------------------------------------------------
+

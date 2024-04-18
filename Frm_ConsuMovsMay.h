@@ -1,0 +1,466 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_ConsuMovsMayH
+#define Frm_ConsuMovsMayH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <ExtCtrls.hpp>
+#include <Mask.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+//#include "dxmdaset.hpp"
+#include "dxTL.hpp"
+#include <ComCtrls.hpp>
+#include <ImgList.hpp>
+#include <DBCtrls.hpp>
+#include "dxDBELib.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include "dxExEdtr.hpp"
+#include <Chart.hpp>
+#include <Series.hpp>
+#include <TeEngine.hpp>
+#include <TeeProcs.hpp>
+#include <ActnList.hpp>
+#include <Menus.hpp>
+#include <DBChart.hpp>
+#include <Qrctrls.hpp>
+#include <QrTee.hpp>
+#include <QuickRpt.hpp>
+#include <Buttons.hpp>
+#include "AdvGrid.hpp"
+#include <Grids.hpp>
+#include <StdActns.hpp>
+//---------------------------------------------------------------------------
+void __fastcall ConsultaMovtosMayoris(TForm *Padre);
+//---------------------------------------------------------------------------
+class TForm_ConsuMovsMay : public TForm
+{
+__published:	// IDE-managed Components
+    TDataSource *dtsMovCli2;
+    TQuery *qsMovCli2;
+    TQuery *qsPendPag;
+    TDataSource *dtsPendPag;
+    TQuery *qsForPago;
+    TDataSource *dtsForPago;
+    TQuery *qsSumSaldo;
+        TQuery *qry_facturas;
+        TDataSource *dts_facturas;
+    TQuery *qsLetras;
+    TDataSource *dtsLetras;
+    TImageList *ImageList1;
+    TUpdateSQL *uqsLetras;
+    TQuery *qsSaldoMes;
+    TDataSource *dtsSaldoMes;
+        TQuery *qry_abonosxmes;
+        TDataSource *dts_abonosxmes;
+        TQuery *qry_abonos;
+        TDataSource *dts_abonos;
+        TQuery *qry_facxmes;
+        TDataSource *dts_facxmes;
+        TDataSource *dts_edoanu;
+        TQuery *qry_edoanu;
+        TQuery *qry_pronost;
+        TDataSource *dts_pronost;
+        TUpdateSQL *uqry_pronost;
+        TQuery *qry_vencs;
+        TPageControl *page_general;
+        TTabSheet *tsb_globales;
+        TTabSheet *tbs_detmayo;
+        TPageControl *page_movmay;
+        TTabSheet *tab_MovPag;
+        TPanel *Panel2;
+        TSplitter *Splitter1;
+        TTabSheet *tab_pendpag;
+        TTabSheet *tbs_pagos;
+        TGroupBox *GroupBox2;
+        TdxDBGrid *dbgrd_acumuanual;
+        TdxDBGridMaskColumn *dbgrd_acumuanualMAYORIS;
+        TdxDBGridMaskColumn *dbgrd_acumuanualNOMBRE;
+        TdxDBGridCurrencyColumn *dbgrd_acumuanualCOMPRAS;
+        TdxDBGridCurrencyColumn *dbgrd_acumuanualABONOS;
+        TdxDBGridCurrencyColumn *dbgrd_acumuanualCOMPAGOS;
+        TSplitter *Splitter2;
+        TGroupBox *GroupBox3;
+        TdxDBGrid *dbgrd_pagosafac;
+        TdxDBGridMaskColumn *dbgrd_pagosafacMAYORIS;
+        TdxDBGridMaskColumn *dbgrd_pagosafacDOCTO;
+        TdxDBGridMaskColumn *dbgrd_pagosafacPAGARE;
+        TdxDBGridMaskColumn *dbgrd_pagosafacCONSE;
+        TdxDBGridDateColumn *dbgrd_pagosafacFECHA;
+        TdxDBGridDateColumn *dbgrd_pagosafacVENCE;
+        TdxDBGridMaskColumn *dbgrd_pagosafacCONCEP;
+        TdxDBGridMaskColumn *dbgrd_pagosafacCOA;
+        TdxDBGridCurrencyColumn *dbgrd_pagosafacIMPORTE;
+        TdxDBGridCurrencyColumn *dbgrd_pagosafacSALDO;
+        TdxDBGridMaskColumn *dbgrd_pagosafacCIA;
+        TdxDBGridMaskColumn *dbgrd_pagosafacTIPAGO;
+        TdxDBGridColumn *dbgrd_pagosafacSTIPOPAGO;
+        TActionList *ActionList1;
+        TAction *exporta_dbgrid;
+        TPopupMenu *PopupMenu1;
+        TMenuItem *Exportar1;
+        TdxDBGridCurrencyColumn *dbgrd_acumuanualSALDO;
+        TSplitter *Splitter4;
+        TQuery *qry_consmay;
+        TDataSource *dts_consmay;
+        TTabSheet *tbs_graffacxabono;
+        TQuery *qry_compraspagosxmes;
+        TDataSource *dts_compraspagosxmes;
+        TChart *char_comprasanual;
+        TTabSheet *tbs_charcomprapago;
+        TChart *char_compraspagos;
+        TBarSeries *chartserie_compras;
+        TBarSeries *chartserie_pagos;
+        TPopupMenu *PopupMenuGraf;
+        TAction *impri_graph;
+        TMenuItem *imprigraph1;
+        TLineSeries *chartserie_anuantier;
+        TLineSeries *chartserie_anuayer;
+        TLineSeries *chartserie_anuhoy;
+        TAction *graba_bitmap;
+        TMenuItem *ExportaraBitmap1;
+        TTabSheet *tbs_cobranza;
+        TChart *char_cobranza;
+        TLineSeries *chartserie_cobranza;
+        TLineSeries *chartserie_pagos2;
+        TTabSheet *tbs_cartera;
+        TChart *char_cartera;
+        TLineSeries *chartserie_deuda;
+        TLineSeries *chartserie_cartera;
+        TTabSheet *TabSheet3;
+        TUpdateSQL *uqry_vencs;
+        TGroupBox *GroupBox4;
+        TLabel *Label16;
+        TDateTimePicker *date_fecedomay;
+        TLabel *Label17;
+        TdxCurrencyEdit *edt_cartera;
+        TLabel *Label18;
+        TdxCurrencyEdit *edt_cobranza;
+        TBitBtn *btn_grabadatomay;
+        TLabel *Label19;
+        TLabel *Label20;
+        TQuery *qry_pendpagglob;
+        TGroupBox *GroupBox5;
+        TAdvStringGrid *sgrd_pendpag;
+        TSplitter *Splitter5;
+        TQuery *qry_aboxtipo;
+        TDataSource *dts_aboxtipo;
+        TPanel *Panel3;
+        TGroupBox *RzGroupBox5;
+        TdxDBGrid *dxDBGrid1;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn12;
+        TdxDBGridCurrencyColumn *dxDBGridCurrencyColumn7;
+        TPanel *Panel4;
+        TGroupBox *GroupBox6;
+        TdxDBGrid *dbgrd_analipend;
+        TdxDBGridMaskColumn *dbgrd_analipendMAYORIS;
+        TdxDBGridMaskColumn *dbgrd_analipendDOCTO;
+        TdxDBGridMaskColumn *dbgrd_analipendPAGARE;
+        TdxDBGridMaskColumn *dbgrd_analipendCONSE;
+        TdxDBGridDateColumn *dbgrd_analipendFECHA;
+        TdxDBGridDateColumn *dbgrd_analipendVENCE;
+        TdxDBGridMaskColumn *dbgrd_analipendCONCEP;
+        TdxDBGridMaskColumn *dbgrd_analipendCOA;
+        TdxDBGridCurrencyColumn *dbgrd_analipendIMPORTE;
+        TdxDBGridCurrencyColumn *dbgrd_analipendSALDO;
+        TdxDBGridMaskColumn *dbgrd_analipendCIA;
+        TdxDBGridMaskColumn *dbgrd_analipendTIPAGO;
+        TdxDBGridMaskColumn *dbgrd_analipendSLLAVE;
+        TPanel *Panel5;
+        TSplitter *Splitter6;
+        TGroupBox *RzGroupBox4;
+        TdxDBGrid *dbgrd_vencxfac;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn17;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn18;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn19;
+        TdxDBGridDateColumn *dxDBGridDateColumn3;
+        TdxDBGridCurrencyColumn *dxDBGridCurrencyColumn8;
+        TdxDBGridImageColumn *dxDBGridImageColumn1;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn20;
+        TGroupBox *GroupBox7;
+        TdxDBGrid *dbgrd_formpagofac;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn21;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn22;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn23;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn24;
+        TdxDBGridDateColumn *dxDBGridDateColumn4;
+        TdxDBGridDateColumn *dxDBGridDateColumn5;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn25;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn26;
+        TdxDBGridCurrencyColumn *dxDBGridCurrencyColumn9;
+        TdxDBGridCurrencyColumn *dxDBGridCurrencyColumn10;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn27;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn28;
+        TdxDBGridColumn *dxDBGridColumn1;
+        TSplitter *Splitter7;
+        TGroupBox *GroupBox9;
+        TdxDBGrid *dbgrd_analipago;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn2;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn3;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn4;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn5;
+        TdxDBGridDateColumn *dxDBGridDateColumn1;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn6;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn7;
+        TdxDBGridCurrencyColumn *dxDBGridCurrencyColumn3;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn9;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn10;
+        TdxDBGridMaskColumn *dbgrd_analipagoColumn11;
+        TdxDBGridMaskColumn *dbgrd_analipagoColumn13;
+        TdxDBGridMaskColumn *dbgrd_analipagoColumn12;
+        TGroupBox *GroupBox8;
+        TdxDBGrid *dbgrd_pagosxmes;
+        TdxDBGridDateColumn *dbgrd_pagosxmesFECHA;
+        TdxDBGridCurrencyColumn *dbgrd_pagosxmesMERC;
+        TdxDBGridCurrencyColumn *dbgrd_pagosxmesINT;
+        TdxDBGridCurrencyColumn *dbgrd_pagosxmesMOR;
+        TdxDBGridCurrencyColumn *dbgrd_pagosxmesTOTAL;
+        TUpdateSQL *uqry_aboxtipo;
+        TQuery *qry_abonomesxtipo;
+        TSplitter *Splitter8;
+        TPageControl *page_global;
+        TTabSheet *tbs_pronosticos;
+        TGroupBox *GroupBox1;
+        TSplitter *Splitter3;
+        TdxDBGrid *dbgrd_pronostmens;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn11;
+        TdxDBGridCurrencyColumn *dxDBGridMaskColumn13;
+        TdxDBGridCurrencyColumn *dxDBGridDateColumn2;
+        TdxDBGridCurrencyColumn *dbgrd_pronostmensColumn6;
+        TdxDBGridCurrencyColumn *dbgrd_pronostmensColumn7;
+        TdxDBGridCurrencyColumn *dbgrd_pronostmensColumn12;
+        TdxDBGridCurrencyColumn *dbgrd_pronostmensColumn8;
+        TdxDBGridCurrencyColumn *dbgrd_pronostmensColumn13;
+        TdxDBGridCurrencyColumn *dbgrd_pronostmensColumn9;
+        TdxDBGridCurrencyColumn *dbgrd_pronostmensColumn10;
+        TdxDBGridCurrencyColumn *dxDBGridMaskColumn14;
+        TdxDBGridMaskColumn *dbgrd_pronostmensPORCENCUMPLE;
+        TPanel *Panel1;
+        TLabel *Label1;
+        TLabel *Label2;
+        TLabel *Label14;
+        TdxSpinEdit *edt_anu;
+        TdxSpinEdit *edt_mes;
+        TChart *chart_pronosticos;
+        TBarSeries *Series1;
+        TBarSeries *Series2;
+        TBarSeries *Series3;
+        TTabSheet *tbs_compraspagosglo;
+        TdxDBGrid *dxDBGrid2;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn1;
+        TdxDBGridCurrencyColumn *dxDBGridCurrencyColumn1;
+        TQuery *qry_facxmesglo;
+        TDataSource *dts_facxmesglo;
+        TdxDBGridCurrencyColumn *dxDBGrid2Column3;
+        TChart *chart_comprasglo;
+        TBarSeries *charseries_comprasglo;
+        TBarSeries *charseries_pagosglo;
+        TSplitter *Splitter9;
+        TQuery *qry_mayoristas;
+        TDataSource *dts_mayoristas;
+        TUpdateSQL *uqry_edoanu;
+        TdxDBGridCurrencyColumn *dbgrd_acumuanualSDOINI;
+        TTabSheet *TabSheet1;
+        TChart *char_vencglo;
+        TBarSeries *bar_vencglo;
+        TdxDBGrid *dbgrd_vencglo;
+        TdxDBGridMaskColumn *dbgrd_vencgloFECHAX;
+        TdxDBGridCurrencyColumn *dbgrd_vencgloSALDO;
+        TDataSource *dts_pendpagglob;
+    TdxDBGridCurrencyColumn *dbgrd_pagosxmesDEV;
+    TdxDBGridCurrencyColumn *dbgrd_pagosxmesBON;
+    TdxDBGridMaskColumn *dbgrd_pagosxmesFOLIO;
+        TdxDBGridCurrencyColumn *dbgrd_pagosxmesSUMAS;
+        TdxDBGridCurrencyColumn *dbgrd_analipendACUM;
+        TUpdateSQL *uqry_qsPendPag;
+        TUpdateSQL *uqry_facturas;
+        TAction *desp_datos_may;
+        TLabel *Label28;
+        TPanel *Panel6;
+        TGroupBox *GroupBox10;
+        TLabel *Label15;
+        TLabel *Label21;
+        TLabel *Label22;
+        TLabel *Label23;
+        TLabel *Label24;
+        TLabel *Label25;
+        TLabel *Label26;
+        TLabel *Label27;
+        TEdit *edt_codvnd;
+        TdxEdit *edt_nombre;
+        TEdit *edt_nombre2;
+        TdxEdit *edt_direc;
+        TEdit *edt_ciu;
+        TdxEdit *edt_rfc;
+        TdxCurrencyEdit *edt_pdsc;
+        TdxEdit *edt_tel;
+        TQuery *qry_mayrelac;
+        TDataSource *dts_mayrelac;
+        TdxDBGrid *dbgrd_telefonos;
+        TdxDBGridMaskColumn *dbgrd_telefonosTIPOTEL;
+        TdxDBGridMaskColumn *dbgrd_telefonosNUMTEL;
+        TQuery *qry_edoanuant;
+        TdxDBGridMaskColumn *dbgrd_acumuanualTIPO;
+        TPanel *Panel7;
+        TLabel *Label3;
+        TDBLookupComboBox *lkcmb_mayoris;
+        TDBEdit *DBEdit1;
+        TLabel *Label4;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit2;
+        TLabel *Label10;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit8;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit6;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit7;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit9;
+        TLabel *Label11;
+        TLabel *Label9;
+        TLabel *Label8;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit10;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit11;
+        TLabel *Label13;
+        TLabel *Label12;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit1;
+        TDBEdit *dbedt_descri;
+        TLabel *Label29;
+        TLabel *Label7;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit4;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit3;
+        TLabel *Label5;
+        TLabel *Label6;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit5;
+        TdxSpinEdit *edt_anumay;
+        TLabel *Label30;
+        TdxSpinEdit *edt_mesmay;
+        TBitBtn *BitBtn1;
+        TWindowClose *WindowClose1;
+        TAction *consulta_factura;
+        TLabel *Label31;
+        TGroupBox *GroupBox11;
+        TdxDBGrid *dbgrd_venctosxfac;
+        TdxDBGridMaskColumn *dbgrd_venctosxfacMAYORIS;
+        TdxDBGridMaskColumn *dbgrd_venctosxfacDOCTO;
+        TdxDBGridMaskColumn *dbgrd_venctosxfacPAGARE;
+        TdxDBGridDateColumn *dbgrd_venctosxfacVENCE;
+        TdxDBGridCurrencyColumn *dbgrd_venctosxfacIMPORTE;
+        TdxDBGridImageColumn *dbgrd_venctosxfacSGRATICO;
+        TdxDBGridMaskColumn *dbgrd_venctosxfacSFECHAPAGO;
+        TGroupBox *GroupBox12;
+        TdxDBGrid *dbgrd_analifac;
+        TdxDBGridMaskColumn *dbgrd_analifacTIPOFAC;
+        TdxDBGridMaskColumn *dbgrd_analifacNUM;
+        TdxDBGridDateColumn *dbgrd_analifacFECHA;
+        TdxDBGridCurrencyColumn *dbgrd_analifacTOTAL;
+        TdxDBGridCurrencyColumn *dbgrd_analifacACUM;
+        TdxDBGridMaskColumn *dbgrd_analifacNPAGOS;
+        TdxDBGridMaskColumn *dbgrd_analifacPLAZO;
+        TdxDBGridMaskColumn *dbgrd_analifacSTIPAGO;
+        TdxDBGridMaskColumn *dbgrd_analifacPRIMERVENC;
+        TdxDBGrid *dbgrd_facxmes;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn8;
+        TdxDBGridCurrencyColumn *dxDBGridCurrencyColumn2;
+        TGroupBox *GroupBox13;
+        TdxDBGrid *dbgrd_pendxmes;
+        TdxDBGridMaskColumn *dbgrd_pendxmesFECHAX;
+        TdxDBGridCurrencyColumn *dbgrd_pendxmesSALDO;
+        TQuery *qry_edoanu2;
+        TDataSource *dts_edoanu2;
+        TUpdateSQL *uqry_edoanu2;
+        TTabSheet *tbs_observaciones;
+        TPanel *pnl_cmdobs;
+        TAction *observs_may;
+        TBitBtn *BitBtn2;
+        TDataSource *dts_observs;
+        TQuery *qry_observs;
+        TdxDBGrid *dbgrd_observs;
+        TdxDBGridDateColumn *dbgrd_observsFECHA;
+        TdxDBGridMaskColumn *dbgrd_observsOBSERVS;
+        TAction *ver_permisiones;
+        TMenuItem *Permisiones1;
+    void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+    void __fastcall mdatMovCli2AfterScroll(TDataSet *DataSet);
+    void __fastcall btnImpEdoCtaClick(TObject *Sender);
+        void __fastcall qsSaldoMesAfterScroll(TDataSet *DataSet);
+        void __fastcall qry_abonosxmesAfterScroll(TDataSet *DataSet);
+        void __fastcall FormCreate(TObject *Sender);
+        void __fastcall qry_facxmesAfterScroll(TDataSet *DataSet);
+        void __fastcall qry_facturasAfterScroll(TDataSet *DataSet);
+        void __fastcall page_movmayChange(TObject *Sender);
+        void __fastcall lkcmb_mayorisKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall dbgrd_pronostmensCustomDraw(TObject *Sender,
+          TCanvas *ACanvas, TRect &ARect, TdxTreeListNode *ANode,
+          TdxDBTreeListColumn *AColumn, const AnsiString AText,
+          TFont *AFont, TColor &AColor, bool ASelected, bool AFocused,
+          bool &ADone);
+        void __fastcall edt_anuKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall exporta_dbgridExecute(TObject *Sender);
+        void __fastcall qry_edoanuAfterScroll(TDataSet *DataSet);
+        void __fastcall tbs_detmayoShow(TObject *Sender);
+        void __fastcall tbs_graffacxabonoShow(TObject *Sender);
+        void __fastcall impri_graphExecute(TObject *Sender);
+        void __fastcall graba_bitmapExecute(TObject *Sender);
+        void __fastcall date_fecedomayKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall btn_grabadatomayClick(TObject *Sender);
+        void __fastcall qsPendPagAfterScroll(TDataSet *DataSet);
+        void __fastcall page_generalChange(TObject *Sender);
+        void __fastcall qry_aboxtipoAfterScroll(TDataSet *DataSet);
+        void __fastcall page_globalChange(TObject *Sender);
+        void __fastcall edt_mesChange(TObject *Sender);
+        void __fastcall dbgrd_pagosxmesCustomDrawFooterNode(
+          TObject *Sender, TCanvas *ACanvas, TRect &ARect,
+          TdxTreeListNode *ANode, TdxTreeListColumn *AColumn,
+          int AFooterIndex, AnsiString &AText, TColor &AColor,
+          TFont *AFont, TAlignment &AAlignment, bool &ADone);
+        void __fastcall desp_datos_mayExecute(TObject *Sender);
+        void __fastcall lkcmb_mayorisExit(TObject *Sender);
+        void __fastcall dbgrd_analipendColumnSorting(TObject *Sender,
+          TdxDBTreeListColumn *Column, bool &Allow);
+        void __fastcall edt_anumayKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall edt_mesmayChange(TObject *Sender);
+        void __fastcall consulta_facturaExecute(TObject *Sender);
+        void __fastcall dbgrd_acumuanualDblClick(TObject *Sender);
+        void __fastcall observs_mayExecute(TObject *Sender);
+        void __fastcall ver_permisionesExecute(TObject *Sender);
+private:	// User declarations
+    void __fastcall DesplegarDatos();
+    void __fastcall DesplegarEstadoCuenta();
+    void __fastcall DesplegarPendientes();
+    void __fastcall DesplegarFacturas();
+public:		// User declarations
+    __fastcall TForm_ConsuMovsMay(TComponent* Owner);
+    void __fastcall DesplegarPagos();
+    void __fastcall DespliegaPronosticos();
+    void __fastcall DespliegaPronostMensual();
+    void __fastcall Cierra_Consultas();
+    void __fastcall DesplegarCharCompras();
+    void __fastcall DespliegaDatosFac(int docto_z, int tipofac_z);
+    void __fastcall Despliega_AbonosxDia();
+    void __fastcall Despliega_Abonos();
+    void __fastcall DespliegaCompraGLobal();
+    void __fastcall desp_tarjeta();
+    void __fastcall DesplegarPendientesDelMes();
+    void __fastcall RecalcularAcumulados(TObject *Sender);
+    void __fastcall DesplegarObserrvs();
+
+    int cia_z, mesesatras_z;
+    String mayoris_z, permis_z;
+    TDateTime dtFechaIni, dtFechaFin;
+    bool bEstado, ordenado_z;
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_ConsuMovsMay *Form_ConsuMovsMay;
+//---------------------------------------------------------------------------
+#endif

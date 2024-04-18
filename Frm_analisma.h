@@ -1,0 +1,107 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_analismaH
+#define Frm_analismaH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxTL.hpp"
+#include <ComCtrls.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <ExtCtrls.hpp>
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+#include <Buttons.hpp>
+#include <Menus.hpp>
+#include <ActnList.hpp>
+#include <stdio.h>
+//---------------------------------------------------------------------------
+class TForm_analisma : public TForm
+{
+__published:	// IDE-managed Components
+        TPanel *Panel1;
+        TdxDBGrid *dbgrd_renglones;
+        TQuery *qry_analisma;
+        TUpdateSQL *uqry_gpodiary;
+        TDataSource *dts_analisma;
+        TdxDBGridMaskColumn *dbgrd_renglonesLINEA;
+        TdxDBGridMaskColumn *dbgrd_renglonesCODIGO;
+        TdxDBGridMaskColumn *dbgrd_renglonesDESCRI;
+        TdxDBGridMaskColumn *dbgrd_renglonesEMPAQE;
+        TdxDBGridMaskColumn *dbgrd_renglonesUNIDS;
+        TdxDBGridCurrencyColumn *dbgrd_renglonesCOSTOU;
+        TdxDBGridCurrencyColumn *dbgrd_renglonesPRVTA;
+        TdxDBGridCurrencyColumn *dbgrd_renglonesCOSTOTOT;
+        TRadioGroup *grp_tiporep;
+        TRadioGroup *grp_netobru;
+        TRadioGroup *grp_statcan;
+        TRadioGroup *grp_statsino;
+        TPanel *Panel2;
+        TLabel *Label1;
+        TDateTimePicker *date_fecini;
+        TLabel *Label2;
+        TDateTimePicker *date_fecfin;
+        TBitBtn *btn_ejecutar;
+        TPopupMenu *PopupMenu1;
+        TMenuItem *Exportara1;
+        TActionList *ActionList1;
+        TAction *exporta_dbgrd;
+        TQuery *qry_abonos;
+        TQuery *qry_datopago;
+        TAction *acum_cob_mayo;
+        TAction *genera_analisma;
+        TAction *reporte_analimvm;
+        TQuery *qry_invulcos;
+        TAction *reporte_repcvta;
+        TLabel *lbl_alm;
+        TEdit *edt_almini;
+        void __fastcall FormCreate(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall Exportara1Click(TObject *Sender);
+        void __fastcall exporta_dbgrdExecute(TObject *Sender);
+        void __fastcall acum_cob_mayoExecute(TObject *Sender);
+        void __fastcall genera_analismaExecute(TObject *Sender);
+        void __fastcall date_feciniExit(TObject *Sender);
+        void __fastcall reporte_repcvtaExecute(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm_analisma(TComponent* Owner);
+        void __fastcall acumayo();
+        void __fastcall report_encab();
+        void __fastcall imprime_renglon();
+        void __fastcall report_total();
+        void __fastcall report_subtotmay();
+        String __fastcall busca_dato(String tipodato_z, String clave_z);
+        void __fastcall report_subencab();
+        void __fastcall salta_linea();
+        bool __fastcall checa_saltopag(int numero_de_lineas);
+        void __fastcall selecciona_tipo_rep(String tiporep_z);
+        void __fastcall subenc_analisma();
+        void __fastcall report_subtotlin(String tit_z, int unids_z, double costo_z);
+        void __fastcall imprime_ren_analisma();
+        void __fastcall report_subenclin_analisma();
+        void __fastcall report_subenclin_repcvta();
+        void __fastcall report_subenclin_alm();
+
+        void __fastcall elimina_invtpvtatmp();
+        void __fastcall graba_tipodedato();
+        void __fastcall tipo_reporte(String tipo_z);
+
+
+        int cia_z, idtarea_z, lineas_z, pagina_z, LINEAS_X_PAG;
+        FILE *archout;
+        String mayoris_z, antmayo_z, encab_z, linea_z, alm_z, ptvta_z;
+        double bonmay_z, devmay_z, totmay_z,
+        bontot_z, devtot_z, tottot_z;
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_analisma *Form_analisma;
+//---------------------------------------------------------------------------
+#endif

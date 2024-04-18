@@ -1,0 +1,77 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_condevprH
+#define Frm_condevprH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <Buttons.hpp>
+#include <ComCtrls.hpp>
+#include <ExtCtrls.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <stdio.h>
+//---------------------------------------------------------------------------
+class TForm_condevpr : public TForm
+{
+__published:	// IDE-managed Components
+        TPanel *Panel1;
+        TBitBtn *btn_imprel;
+        TGroupBox *pnl_datos;
+        TLabel *lbl_vigencia;
+        TLabel *lbl_corte;
+        TDateTimePicker *date_ini;
+        TDateTimePicker *date_fin;
+        TGroupBox *GroupBox3;
+        TLabel *Label1;
+        TLabel *Label3;
+        TEdit *edt_pini;
+        TEdit *edt_pfin;
+        TGroupBox *GroupBox5;
+        TRadioButton *rbtn_ralmsi;
+        TRadioButton *rbtn_ralmno;
+        TGroupBox *GroupBox1;
+        TRadioButton *rbtn_rcostosi;
+        TRadioButton *rbtn_rcostono;
+        TQuery *qry_compra;
+        TQuery *qry_almacen;
+        TQuery *qry_datos;
+        TQuery *qry_lineas;
+        TQuery *qry_cantline;
+        TQuery *qry_financ;
+        void __fastcall btn_imprelClick(TObject *Sender);
+        void __fastcall FormCreate(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm_condevpr(TComponent* Owner);
+        FILE *archout;
+        String tpdev_z,provini_z,provfin_z,antlineainv_z;
+        TDateTime fecini_z,fecfin_z;
+        int  lineas_z, pagina_z,cia_z,antnumero_z;
+        double totcostou,totiva_z,  gtotcostou_z,gtotsumm_z,totcostouinv_z,
+        totivainv_z,gtotcostouinv_z,gtotivainv_z ,gtotsumminv_z,totimporfinan_z,
+        totivafinan_z,tottotalfin_z,totctofin_z,totgtotfin_z;
+        void __fastcall report_encab();
+        void __fastcall encab1();
+        void __fastcall encab2();
+        void __fastcall encab3();
+        void __fastcall almacen(String alm_z, String nombre_z);
+        void __fastcall linea(String lineainv_z, String desinv_z);
+        void __fastcall sub_alamcen( int numero_z, TDateTime fecha_z,
+                 String prover_z, String nomprove_z);
+        void __fastcall tot_salidas();
+        void __fastcall tot_salidas_linea();
+        void __fastcall tot_general();
+        bool __fastcall checa_salto_pag(int margen_z);
+        void __fastcall imprimi_lineas();
+        void __fastcall tot_gensalidas_linea();
+        void __fastcall imprimi_financ();
+        void __fastcall tot_financieros();
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_condevpr *Form_condevpr;
+//---------------------------------------------------------------------------
+#endif

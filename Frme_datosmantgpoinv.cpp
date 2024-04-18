@@ -1,0 +1,55 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frme_datosmantgpoinv.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TFrame_datosmantgpoinv *Frame_datosmantgpoinv;
+//---------------------------------------------------------------------------
+__fastcall TFrame_datosmantgpoinv::TFrame_datosmantgpoinv(TComponent* Owner)
+        : TFrame(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_datosmantgpoinv::edt_ptovtaKeyDown(TObject *Sender, WORD &Key,
+      TShiftState Shift)
+{
+ if(Key == VK_RETURN) busca_ptvt(edt_ptovta->Text);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_datosmantgpoinv::busca_ptvt(String ptvt_z)
+{
+//   if(ptvt_z.Trim().IsEmpty()) return;
+//   qry_gpoinv->Close();
+//   qry_gpoinv->ParamByName("grupo")->AsString = ptvt_z;
+//   qry_gpoinv->ParamByName("cia")->AsInteger = cia_z;
+//   qry_gpoinv->Open();
+//   if(!qry_gpoinv->IsEmpty()) {
+//     desp_ptvt(); grabar->Tag = 0; botones_onoff(VISIBLES);
+//   }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TFrame_datosmantgpoinv::inicializa (String tipo_z)
+{
+   if (tipo_z == "GRUPOINVEN") {
+     lbl_codsat->Visible = true;
+     lkcmb_codsat->Visible = true;
+     dbedt_codsat->Visible = true;
+   }
+   if (tipo_z == "GRUPOSINTERNET") {
+     edt_ptovta->CharCase = ecNormal;
+     edt_nombre->CharCase = ecNormal;
+   }
+   qry_catprodsat->Close();
+   qry_catprodsat->Open();
+   if(!qry_catprodsat->IsEmpty()) {
+       lkcmb_codsat->KeyValue = qry_catprodsat->FieldByName("codigo")->AsString;
+   }
+}
+//---------------------------------------------------------------------------

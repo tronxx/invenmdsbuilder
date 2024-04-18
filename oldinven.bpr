@@ -1,0 +1,388 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.05.03"/>
+    <PROJECT value="..\..\exes\oldinven\oldinven.exe"/>
+    <OBJFILES value="..\..\obj\oldinven\oldinven.obj ..\..\obj\oldinven\Main.obj 
+      ..\..\obj\oldinven\ChildWin.obj ..\..\obj\oldinven\about.obj 
+      ..\..\obj\oldinven\Frm_consuinv.obj ..\..\obj\oldinven\dmod.obj 
+      ..\..\obj\oldinven\Frm_detmovart.obj ..\..\obj\oldinven\Frm_estadis.obj 
+      ..\..\obj\oldinven\Frm_dlgcriterio.obj ..\..\obj\oldinven\Frm_revision.obj 
+      ..\..\obj\oldinven\Frm_mantgpodia.obj 
+      ..\..\obj\oldinven\Frm_mantgpoinv.obj ..\..\obj\oldinven\Frm_capageemb.obj 
+      ..\..\obj\oldinven\Frm_exists.obj ..\..\obj\oldinven\numapal.obj 
+      ..\..\obj\oldinven\Frm_mantpzo.obj ..\..\obj\oldinven\imprigra.obj 
+      ..\..\obj\oldinven\impre.obj ..\..\obj\oldinven\Frm_CapturaVentas.obj 
+      ..\..\obj\oldinven\dlgCataAlmacen.obj 
+      ..\..\obj\oldinven\Frm_consufacma.obj ..\..\obj\oldinven\dlgFiltroConsFacMay.obj 
+      ..\..\obj\oldinven\dlgCnsMayorista.obj ..\..\obj\oldinven\Frm_capped.obj 
+      ..\..\obj\oldinven\dlgFiltroCnsPed.obj 
+      ..\..\obj\oldinven\Frm_cappedmanto.obj ..\..\obj\oldinven\dlgCnsProves.obj 
+      ..\..\obj\oldinven\dlgCnsCodInven.obj 
+      ..\..\obj\oldinven\dlgCnsConcepto.obj ..\..\obj\oldinven\Login.obj 
+      ..\..\obj\oldinven\RepCapPed.obj 
+      ..\..\obj\oldinven\Frm_consupolcobmayo.obj ..\..\obj\oldinven\Frm_cappolcobmay.obj 
+      ..\..\obj\oldinven\dlgCnsPenPagMay.obj ..\..\obj\oldinven\RepPolCobMa.obj 
+      ..\..\obj\oldinven\Frm_ConsuMovsMay.obj 
+      ..\..\obj\oldinven\RepEdoCtaMayoris.obj 
+      ..\..\obj\oldinven\dlgImpPendPagMay.obj 
+      ..\..\obj\oldinven\RepCarAboMay.obj ..\..\obj\oldinven\Frm_selserie.obj 
+      ..\..\obj\oldinven\Frm_mantcuocel.obj ..\..\obj\oldinven\Frm_kardex.obj 
+      ..\..\obj\oldinven\dlg_seltipoimp.obj ..\..\obj\oldinven\Frm_captrasp.obj 
+      ..\..\obj\oldinven\Frm_capcancel.obj ..\..\obj\oldinven\Frm_capsales.obj 
+      ..\..\obj\oldinven\Frm_canxcam.obj ..\..\obj\oldinven\Frm_mantempaqe.obj 
+      ..\..\obj\oldinven\Frm_capentes.obj ..\..\obj\oldinven\Frm_mantoprove.obj 
+      ..\..\obj\oldinven\Frm_mantovnd.obj ..\..\obj\oldinven\Frm_capentpro.obj 
+      ..\..\obj\oldinven\Frm_selecdb.obj ..\..\obj\oldinven\dialg_busartic.obj 
+      ..\..\obj\oldinven\Frm_cappedm.obj ..\..\obj\oldinven\Frm_analisma.obj 
+      ..\..\obj\oldinven\Frm_prever.obj ..\..\obj\oldinven\Frm_caprelvta.obj 
+      ..\..\obj\oldinven\Frm_consrelvta.obj ..\..\obj\oldinven\Frm_mantmayo.obj 
+      ..\..\obj\oldinven\Frm_relsurti.obj ..\..\obj\oldinven\Frm_mantoprm.obj 
+      ..\..\obj\oldinven\Frm_mantotiposctes.obj 
+      ..\..\obj\oldinven\Frm_mantotiposentrega.obj 
+      ..\..\obj\oldinven\Frm_mantoalm.obj 
+      ..\..\obj\oldinven\dialg_foliosdisp.obj ..\..\obj\oldinven\Frm_login.obj 
+      ..\..\obj\oldinven\Frm_mantousr.obj 
+      ..\..\obj\oldinven\dialg_datosagenda.obj 
+      ..\..\obj\oldinven\dialg_datosalm.obj ..\..\obj\oldinven\Frm_mantmarca.obj 
+      ..\..\obj\oldinven\dialg_datosrenagenda.obj 
+      ..\..\obj\oldinven\Frme_usuario.obj ..\..\obj\oldinven\dialg_okcancel.obj 
+      ..\..\obj\oldinven\Frm_mantpermis.obj 
+      ..\..\obj\oldinven\Frme_datosmarca.obj 
+      ..\..\obj\oldinven\Frm_relfacmay.obj ..\..\obj\oldinven\Frme_datosplazo.obj 
+      ..\..\obj\oldinven\Frm_repvtaxvnd.obj 
+      ..\..\obj\oldinven\Frme_datossabanavta.obj 
+      ..\..\obj\oldinven\Frme_datossabanaagre.obj 
+      ..\..\obj\oldinven\Frme_datoscappedm.obj 
+      ..\..\obj\oldinven\Frme_datoscappedmagrnuevo.obj 
+      ..\..\obj\oldinven\Frme_datoscaptrasp.obj 
+      ..\..\obj\oldinven\Frme_datoscaptraspagregaren.obj 
+      ..\..\obj\oldinven\Frme_datoscapcancel.obj 
+      ..\..\obj\oldinven\Frme_datoscapcancelagrega.obj 
+      ..\..\obj\oldinven\Frme_datoscapentpro.obj 
+      ..\..\obj\oldinven\Frme_datoscapentproagre.obj 
+      ..\..\obj\oldinven\Frme_imginven.obj 
+      ..\..\obj\oldinven\Frme_datosmantmayo.obj 
+      ..\..\obj\oldinven\Frme_datosmantovnd.obj 
+      ..\..\obj\oldinven\Frme_datosmantoprove.obj 
+      ..\..\obj\oldinven\Frme_datosmantotiposctes.obj 
+      ..\..\obj\oldinven\Frme_datospolcobma.obj 
+      ..\..\obj\oldinven\Frme_datosrenpolcobma.obj 
+      ..\..\obj\oldinven\Form_analivtacyc.obj 
+      ..\..\obj\oldinven\Frm_tabcvtcrdcon.obj 
+      ..\..\obj\oldinven\Frm_condevpr.obj ..\..\obj\oldinven\Frm_infent.obj 
+      ..\..\obj\oldinven\Frme_nvaobsped.obj ..\..\obj\oldinven\Frm_reltablas.obj 
+      ..\..\obj\oldinven\Frme_datoscambio.obj 
+      ..\..\obj\oldinven\Frme_datostabla.obj 
+      ..\..\obj\oldinven\Frme_agregarelac.obj 
+      ..\..\obj\oldinven\Frme_datosrencanxcam.obj 
+      ..\..\obj\oldinven\Frme_nuevasseries.obj 
+      ..\..\obj\oldinven\Frme_dircli.obj ..\..\obj\oldinven\Frme_datoscapsmay.obj 
+      ..\..\obj\oldinven\Frme_datosrensmay.obj 
+      ..\..\obj\oldinven\Frm_capsalmay.obj ..\..\obj\oldinven\Frm_listpre2.obj 
+      ..\..\obj\oldinven\Frm_analient.obj ..\..\obj\oldinven\Frm_analifon.obj 
+      ..\..\obj\oldinven\Frm_mantubivta.obj 
+      ..\..\obj\oldinven\Frme_datosubivta.obj 
+      ..\..\obj\oldinven\Frme_datosrelvta.obj ..\..\obj\oldinven\Frm_cvtaubi.obj 
+      ..\..\obj\oldinven\Frm_tabcvta.obj 
+      ..\..\obj\oldinven\Frme_datospedimento.obj 
+      ..\..\obj\oldinven\Frm_proycom.obj 
+      ..\..\obj\oldinven\Frme_datosmantproy.obj 
+      ..\..\obj\oldinven\Frme_datosmantsubproy.obj 
+      ..\..\obj\oldinven\Frm_mantproy.obj ..\..\obj\oldinven\Frm_exiubi.obj 
+      ..\..\obj\oldinven\Frm_polcampre.obj 
+      ..\..\obj\oldinven\Frme_datospolcampre.obj 
+      ..\..\obj\oldinven\Frme_datosrenpolcampre.obj 
+      ..\..\obj\oldinven\Frm_exican.obj ..\..\obj\oldinven\Frm_infcvtacyc.obj 
+      ..\..\obj\oldinven\Frm_hazfacma.obj ..\..\obj\oldinven\Frme_datosfacma.obj 
+      ..\..\obj\oldinven\Frme_datosrenfacma.obj 
+      ..\..\obj\oldinven\Frm_mantciu.obj ..\..\obj\oldinven\Frme_importa.obj 
+      ..\..\obj\oldinven\Frm_CapturaObsPed.obj 
+      ..\..\obj\oldinven\Frme_datosnvoprecio.obj 
+      ..\..\obj\oldinven\Frm_mantzona.obj ..\..\obj\oldinven\Frame_zonas.obj 
+      ..\..\obj\oldinven\Frm_mantlinea.obj 
+      ..\..\obj\oldinven\Frme_datosnvaobslin.obj 
+      ..\..\obj\oldinven\Frme_datosarticulo.obj 
+      ..\..\obj\oldinven\Frme_perfil.obj 
+      ..\..\obj\oldinven\Frme_datosmantgpoinv.obj 
+      ..\..\obj\oldinven\Frm_impriarch.obj ..\..\obj\oldinven\Frm_exispcon2.obj 
+      ..\..\obj\oldinven\Frm_exiserie.obj ..\..\obj\oldinven\Frm_analimvm.obj 
+      ..\..\obj\oldinven\Frm_relvenmy.obj 
+      ..\..\obj\oldinven\Frm_mantcatprodsat.obj 
+      ..\..\obj\oldinven\Frm_mantservi.obj ..\..\obj\oldinven\Frm_repvtaxgpo.obj 
+      ..\..\obj\oldinven\Frm_analisabvta.obj 
+      ..\..\obj\oldinven\Frme_datosinternet.obj"/>
+    <RESFILES value="oldinven.res"/>
+    <IDLFILES value=""/>
+    <IDLGENFILES value=""/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES) Main.dfm ChildWin.dfm about.dfm Frm_consuinv.dfm dmod.dfm 
+      Frm_detmovart.dfm Frm_estadis.dfm Frm_dlgcriterio.dfm Frm_revision.dfm 
+      Frm_mantgpodia.dfm Frm_mantgpoinv.dfm Frm_capageemb.dfm Frm_exists.dfm 
+      Frm_mantpzo.dfm Frm_CapturaVentas.dfm dlgCataAlmacen.dfm 
+      Frm_consufacma.dfm dlgFiltroConsFacMay.dfm dlgCnsMayorista.dfm 
+      Frm_capped.dfm dlgFiltroCnsPed.dfm Frm_cappedmanto.dfm dlgCnsProves.dfm 
+      dlgCnsCodInven.dfm dlgCnsConcepto.dfm Login.dfm RepCapPed.dfm 
+      Frm_consupolcobmayo.dfm Frm_cappolcobmay.dfm dlgCnsPenPagMay.dfm 
+      RepPolCobMa.dfm Frm_ConsuMovsMay.dfm RepEdoCtaMayoris.dfm 
+      dlgImpPendPagMay.dfm RepCarAboMay.dfm Frm_selserie.dfm Frm_mantcuocel.dfm 
+      Frm_kardex.dfm ..\Mislibs\dlg_seltipoimp.dfm Frm_captrasp.dfm 
+      Frm_capcancel.dfm Frm_capsales.dfm Frm_canxcam.dfm Frm_mantempaqe.dfm 
+      Frm_capentes.dfm Frm_mantoprove.dfm Frm_mantovnd.dfm Frm_capentpro.dfm 
+      Frm_selecdb.dfm dialg_busartic.dfm Frm_cappedm.dfm Frm_analisma.dfm 
+      ..\Mislibs\Frm_prever.dfm Frm_caprelvta.dfm Frm_consrelvta.dfm 
+      Frm_mantmayo.dfm Frm_relsurti.dfm Frm_mantoprm.dfm Frm_mantotiposctes.dfm 
+      Frm_mantotiposentrega.dfm Frm_mantoalm.dfm dialg_foliosdisp.dfm 
+      Frm_login.dfm Frm_mantousr.dfm dialg_datosagenda.dfm dialg_datosalm.dfm 
+      Frm_mantmarca.dfm dialg_datosrenagenda.dfm Frme_usuario.dfm 
+      dialg_okcancel.dfm Frm_mantpermis.dfm Frme_datosmarca.dfm 
+      Frm_relfacmay.dfm Frme_datosplazo.dfm Frm_repvtaxvnd.dfm 
+      Frme_datossabanavta.dfm Frme_datossabanaagre.dfm Frme_datoscappedm.dfm 
+      Frme_datoscappedmagrnuevo.dfm Frme_datoscaptrasp.dfm 
+      Frme_datoscaptraspagregaren.dfm Frme_datoscapcancel.dfm 
+      Frme_datoscapcancelagrega.dfm Frme_datoscapentpro.dfm 
+      Frme_datoscapentproagre.dfm Frme_imginven.dfm Frme_datosmantmayo.dfm 
+      Frme_datosmantovnd.dfm Frme_datosmantoprove.dfm 
+      Frme_datosmantotiposctes.dfm Frme_datospolcobma.dfm 
+      Frme_datosrenpolcobma.dfm Form_analivtacyc.dfm Frm_tabcvtcrdcon.dfm 
+      Frm_condevpr.dfm Frm_infent.dfm Frme_nvaobsped.dfm Frm_reltablas.dfm 
+      Frme_datoscambio.dfm Frme_datostabla.dfm Frme_agregarelac.dfm 
+      Frme_datosrencanxcam.dfm Frme_nuevasseries.dfm Frme_dircli.dfm 
+      Frme_datoscapsmay.dfm Frme_datosrensmay.dfm Frm_capsalmay.dfm 
+      Frm_listpre2.dfm Frm_analient.dfm Frm_analifon.dfm Frm_mantubivta.dfm 
+      Frme_datosubivta.dfm Frme_datosrelvta.dfm Frm_cvtaubi.dfm Frm_tabcvta.dfm 
+      Frme_datospedimento.dfm Frm_proycom.dfm Frme_datosmantproy.dfm 
+      Frme_datosmantsubproy.dfm Frm_mantproy.dfm Frm_exiubi.dfm 
+      Frm_polcampre.dfm Frme_datospolcampre.dfm Frme_datosrenpolcampre.dfm 
+      Frm_exican.dfm Frm_infcvtacyc.dfm Frm_hazfacma.dfm Frme_datosfacma.dfm 
+      Frme_datosrenfacma.dfm Frm_mantciu.dfm Frme_importa.dfm 
+      Frm_CapturaObsPed.dfm Frme_datosnvoprecio.dfm Frm_mantzona.dfm 
+      Frame_zonas.dfm Frm_mantlinea.dfm Frme_datosnvaobslin.dfm 
+      Frme_datosarticulo.dfm Frme_perfil.dfm Frme_datosmantgpoinv.dfm 
+      Frm_impriarch.dfm Frm_exispcon2.dfm Frm_exiserie.dfm Frm_analimvm.dfm 
+      Frm_relvenmy.dfm Frm_mantcatprodsat.dfm Frm_mantservi.dfm 
+      Frm_repvtaxgpo.dfm Frm_analisabvta.dfm Frme_datosinternet.dfm"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value="DXGREDC5.lib TeeUI50.lib TeeQR50.lib TeeDB50.lib Tee50.lib QRPT50.lib 
+      asgc5.lib EQGRIDC5.lib ECQDBCC5.lib EQTLC5.lib DXDBEDC5.lib DXELIBC5.lib 
+      DXCOMNC5.lib DXEDTRC5.lib VCLBDE50.lib"/>
+    <SPARELIBS value="Vcl50.lib VCLDB50.lib VCLBDE50.lib DXEDTRC5.lib DXCOMNC5.lib DXELIBC5.lib 
+      DXDBEDC5.lib EQTLC5.lib ECQDBCC5.lib EQGRIDC5.lib asgc5.lib VclX50.lib 
+      QRPT50.lib Tee50.lib TeeDB50.lib TeeQR50.lib TeeUI50.lib DXGREDC5.lib"/>
+    <PACKAGES value="VCL50.bpi VCLX50.bpi bcbsmp50.bpi VCLDB50.bpi VCLADO50.bpi"/>
+    <PATHCPP value=".;..\Mislibs"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="_DEBUG"/>
+    <SYSDEFINES value="NO_STRICT;_RTLDLL;USEPACKAGES"/>
+    <MAINSOURCE value="oldinven.cpp"/>
+    <INCLUDEPATH value="&quot;C:\Program Files\Borland\CBuilder5\Projects\&quot;;..\Inven;$(BCB)\include;$(BCB)\include\vcl;&quot;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\&quot;;&quot;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\&quot;;&quot;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\&quot;;&quot;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\&quot;;&quot;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\&quot;;C:\Componentes\advgrdc5\;..\Mislibs"/>
+    <LIBPATH value="..\Inven;&quot;Program Files\Borland\CBuilder5\Bin&quot;;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;&quot;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\&quot;;&quot;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\&quot;;&quot;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\&quot;;&quot;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\&quot;;&quot;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\&quot;;&quot;C:\Componentes\advgrdc5\&quot;"/>
+    <WARNINGS value="-w-par"/>
+  </MACROS>
+  <OPTIONS>
+    <IDLCFLAGS value="-I&quot;C:\Program Files\Borland\CBuilder5\Projects\.&quot; -I..\Inven 
+      -I$(BCB)\include -I$(BCB)\include\vcl 
+      -I&quot;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\.&quot; 
+      -I&quot;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\.&quot; 
+      -I&quot;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\.&quot; 
+      -I&quot;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\.&quot; 
+      -I&quot;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\.&quot; 
+      -IC:\Componentes\advgrdc5\. -I..\Mislibs -src_suffix cpp -D_DEBUG"/>
+    <CFLAG1 value="-Od -H=$(BCB)\lib\vcl50.csm -Hc -Vx -Ve -X- -r- -a8 -b- -k -y -v -vi- -c 
+      -tW -tWM"/>
+    <PFLAGS value="-N2..\..\obj\oldinven -N0..\..\obj\oldinven -$YD -$W -$O- -v -JPHNE -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zi"/>
+    <LFLAGS value="-I..\..\obj\oldinven -D&quot;&quot; -aa -Tpe -x -Gn -v"/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0w32.obj $(PACKAGES) Memmgr.Lib sysinit.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mti.lib"/>
+  </LINKER>
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=1
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=10
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=2058
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.10.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=Control de Modificaciones:
+DRBR 6-Sep-2004
+Modificado para agregar existencias expertas con control 
+de sumas y maximos y unidades vendidas.
+Version 1.0.6
+
+DRBR 1-Junio-2003
+Modificado para que use una tabla llamada inv_invhist que 
+contiene los datos de los artículos aunque no existan en 
+inven actual, ademas se creo una tabla llamada inv_relinv 
+que tiene la relación de los artículos tipo de dato y el id del 
+dato correspondiente
+
+
+DRBR 29-Nov-2003
+Modificado para que use lo menos posible los calcfields y 
+los calculos se hagan una sola vez en  la base de datos, 
+modifcado para que la lista de parámetros de avance se 
+cree automáticamente y agregar columnas de costo y 
+maximo en existencias
+
+
+DRBR 7-Abril-2003
+Modificado para que las formas se mantengan en el 
+tamaño de diseño, esto lo logro haciendo que 
+position=poDefaultPosOnly
+Versión 1.0.3
+
+DRBR 19-Julio-2002
+Modificado para corregir las estadísticas expertas, ahora 
+es una ventana flotante hija de la ventana madre, además 
+al eliminar el GrdLayOut ya no interfiere el dataset
+Version 1.0.2
+
+DRBR 23-Mayo-2002
+Modificado para corregir estadísticas, al consultar no 
+salian 
+las estadísticas correctas.
+Version 1.0.1
+
+DRBR 8-Marzo-2002
+Sale a la luz el programa, falta agregar la consulta detalles 
+del 
+movimiento con
+su correspondiente origen y destino
+
+
+[HistoryLists\hlIncludePath]
+Count=25
+Item0=C:\Program Files\Borland\CBuilder5\Projects\;..\Inven;$(BCB)\include;$(BCB)\include\vcl;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item1=C:\Program Files\Borland\CBuilder5\Projects\;..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item2=C:\Program Files\Borland\CBuilder5\Projects;..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item3=C:\Program Files\Borland\CBuilder5\Projects;..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item4=..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item5=..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item6=..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item7=..\oldcartera;..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item8=..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item9=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item10=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item11=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item12=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item13=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressPrinting System\C++Builder 5\Lib\
+Item14=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib;C:\Archivos de programa\Developer Express Inc\ExpressPrinting System\C++Builder 5\Lib
+Item15=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item16=C:\Archivos de programa\Borland\CBuilder5\Projects;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item17=$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;..\Mislibs
+Item18=$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Componentes\advgrdc5\;C:\apb\fuentes\Mislibs
+Item19=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Componentes\advgrdc5\
+Item20=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\include;$(BCB)\include\vcl;C:\Componentes\avgrd\ver5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item21=C:\Archivos de programa\Borland\CBuilder5\Projects;$(BCB)\include;$(BCB)\include\vcl;C:\Componentes\avgrd\ver5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item22=$(BCB)\include;$(BCB)\include\vcl;C:\Componentes\avgrd\ver5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item23=$(BCB)\include;$(BCB)\include\vcl;C:\Componentes\avgrd\ver5;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib
+Item24=$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=28
+Item0=..\Inven;Program Files\Borland\CBuilder5\Bin;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\
+Item1=C:\Program Files\Borland\CBuilder5\Projects\;C:\Archivos de programa\Borland\CBuilder5\Projects\;..\Inven;Program Files\Borland\CBuilder5\Bin;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\
+Item2=C:\Program Files\Borland\CBuilder5\Projects;C:\Archivos de programa\Borland\CBuilder5\Projects\;..\Inven;Program Files\Borland\CBuilder5\Bin;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\
+Item3=C:\Program Files\Borland\CBuilder5\Projects;C:\Archivos de programa\Borland\CBuilder5\Projects\;..\Inven;Program Files\Borland\CBuilder5\Bin;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\
+Item4=C:\Archivos de programa\Borland\CBuilder5\Projects\;..\Inven;C:Program Files\Borland\CBuilder5\Bin\;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\
+Item5=C:\Archivos de programa\Borland\CBuilder5\Projects\;..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Program Files\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Componentes\advgrdc5\
+Item6=C:\Archivos de programa\Borland\CBuilder5\Projects\;..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item7=C:\Archivos de programa\Borland\CBuilder5\Projects\;..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item8=C:\Archivos de programa\Borland\CBuilder5\Projects;..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item9=..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item10=..\oldcartera;..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin\;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item11=..\Inven;C:\Archivos de programa\Borland\CBuilder5\Bin;..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item12=..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item13=..\Mislibs;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item14=..\Mislibs;$(BCB)\Projects\Lib;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item15=..\Mislibs;$(BCB)\Projects\Lib;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\
+Item16=..\Mislibs;$(BCB)\Projects\Lib;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressPrinting System\C++Builder 5\Lib\
+Item17=..\Mislibs;$(BCB)\Projects\Lib;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressMemData\C++Builder 5\Lib;C:\Archivos de programa\Developer Express Inc\ExpressPrinting System\C++Builder 5\Lib
+Item18=..\Mislibs;$(BCB)\Projects\Lib;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item19=..\Mislibs;$(BCB)\Projects\Lib;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item20=..\Mislibs;$(BCB)\Projects\Lib;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item21=$(BCB)\Projects\Lib;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item22=$(BCB)\Projects\Lib;C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\avgrd\ver5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item23=C:\Archivos de programa\Borland\CBuilder5\Projects\;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\avgrd\ver5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item24=C:\Archivos de programa\Borland\CBuilder5\Projects;$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\avgrd\ver5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item25=$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\advgrdc5\;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib\;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib\
+Item26=$(BCB)\lib\obj;$(BCB)\lib;C:\Componentes\avgrd\ver5;C:\Archivos de programa\Developer Express Inc\ExpressCommon\C++Builder 5\Lib;C:\Archivos de programa\Developer Express Inc\ExpressEditors Library\C++Builder 5\Lib;C:\Archivos de programa\Developer Express Inc\ExpressInplaceEditors\C++Builder 5\Lib;C:\Archivos de programa\Developer Express Inc\ExpressQuantumGrid\C++Builder 5\Lib
+Item27=$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=1
+Item0=_DEBUG
+
+[HistoryLists\hlIntOutputDir]
+Count=4
+Item0=..\..\obj\oldinven
+Item1=C:\apb\obj\oldinven
+Item2=..\obj\invrob
+Item3=C:\apb\obj\invrob
+
+[HistoryLists\hlFinalOutputDir]
+Count=4
+Item0=..\..\exes\oldinven\
+Item1=C:\apb\exes\oldinven
+Item2=..\exes\invrob\
+Item3=C:\apb\exes\invrob
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+LinkCGLIB=0
+
+[CORBA]
+AddServerUnit=1
+AddClientUnit=1
+PrecompiledHeaders=1
+
+[Language]
+ActiveLang=
+ProjectLang=
+RootDir=
+  </IDEOPTIONS>
+</PROJECT>

@@ -1,0 +1,71 @@
+//---------------------------------------------------------------------------
+
+
+#ifndef Frme_datoscaptraspagregarenH
+#define Frme_datoscaptraspagregarenH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include "dxExEdtr.hpp"
+#include <DBCtrls.hpp>
+#include <Mask.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+//---------------------------------------------------------------------------
+class TFrame_datoscaptraspagregaren : public TFrame
+{
+__published:	// IDE-managed Components
+        TEdit *edt_codigo;
+        TLabel *Label8;
+        TLabel *Label11;
+        TDBLookupComboBox *lkcmb_ptovta;
+        TDBEdit *DBEdit6;
+        TLabel *Label12;
+        TLabel *Label9;
+        TdxCurrencyEdit *edt_canti;
+        TComboBox *lst_series;
+        TdxEdit *edt_folios;
+        TQuery *qry_inven;
+        TDataSource *dts_inven;
+        TQuery *qry_PuntoVta;
+        TDataSource *dts_puntovta;
+        TQuery *qry_buscod;
+        TDataSource *dts_buscod;
+        TQuery *qsEntradas;
+        TUpdateSQL *uqsEntradas;
+        TDataSource *dts_entradas;
+        TQuery *qry_ultfol;
+        TQuery *qsAlmacen;
+        TDataSource *dts_almacen;
+        TQuery *qry_folsel;
+        TUpdateSQL *uqry_folsel;
+        TLabel *Label1;
+        TDBEdit *DBEdit1descri;
+        TButton *Button1;
+        void __fastcall edt_cantiExit(TObject *Sender);
+        void __fastcall edt_codigoExit(TObject *Sender);
+        void __fastcall edt_cantiKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall Button1Click(TObject *Sender);
+        void __fastcall edt_codigoKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TFrame_datoscaptraspagregaren(TComponent* Owner);
+        void __fastcall busca_cod(String codigo_z);
+        void __fastcall pide_series();
+        int iTpcon, tipoest_z, cia_z, mi_entrada_z, lineas_z, pagina_z;
+        String sDescriEnt, sTipo, mensaje_z, este_z, titulo_z, cerrado_z,
+               alm_z, titmsg_z, genero_z;
+        TDateTime fecha_z;
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFrame_datoscaptraspagregaren *Frame_datoscaptraspagregaren;
+//---------------------------------------------------------------------------
+#endif

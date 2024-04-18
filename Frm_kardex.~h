@@ -1,0 +1,97 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_kardexH
+#define Frm_kardexH
+#include "situaciones.h"
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <ActnList.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+//---------------------------------------------------------------------------
+class TForm_kardex : public TForm
+{
+__published:	// IDE-managed Components
+        TQuery *qry_inven;
+        TUpdateSQL *uqry_inven;
+        TQuery *qry_exist;
+        TUpdateSQL *uqry_exist;
+        TQuery *qry_movart;
+        TUpdateSQL *uqry_movart;
+        TQuery *qry_estadis;
+    TUpdateSQL *uqry_estadis;
+        TActionList *ActionList1;
+    TQuery *qry_renentra;
+    TUpdateSQL *uqry_renentra;
+        TQuery *qry_almacen;
+        TQuery *qry_ultfol;
+        TQuery *qry_invulcos;
+        TUpdateSQL *uqry_invulcos;
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm_kardex(TComponent* Owner);
+        void __fastcall agrega_exist(String codigo_z, String alm_z, int cia_z);
+        void __fastcall agrega_movart();
+        bool salida_sabana_vtas(String codigo_z, String serie_z,
+          int folio_z, double fecha_z, String alm_z, String ptovta_z,
+          String tiposal_z, int idcomprador_z, String siono_z,
+          int nsabana_z, int npoblac_z, int numren_z
+        );
+        bool entrada_sabana_cancel(String codigo_z, String serie_z,
+          int folio_z, double fecha_z, String alm_z, String ptovta_z,
+          String tiposal_z, int idcomprador_z, String siono_z,
+          int nsabana_z, int npoblac_z, int numren_z, double costou_z,
+          String entcan_z, String prove_z
+        );
+        bool afecta_traspasos(String codigo_z, String serie_z,
+          int folent_z, int folsal_z, double fecha_z,
+          String alm_z, String recemi_z,
+          String tiposal_z, int idcomprador_z, int idprovee_z,
+          String siono_z, int nsabana_z, int npoblac_z, int numren_z
+        );
+        bool cancela_entrada_sabana_cancel(String codigo_z, String serie_z,
+          int folio_z, double fecha_z, String alm_z, String ptovta_z,
+          String tiposal_z, int idcomprador_z, String siono_z,
+          int nsabana_z, int npoblac_z, int numren_z, double costou_z,
+          String entcan_z
+        );
+        bool cancela_salida_sabana_vtas(String codigo_z, String serie_z,
+          int folio_z, double fecha_z, String alm_z, String ptovta_z,
+          String tiposal_z, int idcomprador_z, String siono_z,
+          int nsabana_z, int npoblac_z, int numren_z
+        );
+        bool cancela_afecta_traspasos(String codigo_z, String serie_z,
+          int folent_z, int folsal_z, double fecha_z,
+          String alm_z, String recemi_z,
+          String tiposal_z, int idcomprador_z, int idprovee_z,
+          String siono_z, int nsabana_z, int npoblac_z, int numren_z
+        );
+        bool afecta_estadis(
+          int tipoest_z, String codigo_z, String alm_z,
+          int anu_z, int mes_z, int unids_z, double costou_z
+        );
+        bool cambia_punto_venta(
+          double fecha_z, String nvoptovta_z,  String alm_z,
+          String tiposal_z,  int nsabana_z,  int numren_z
+        );
+        bool existe_tabla(String tabla_z);
+        void __fastcall actualiza_tablas();
+        bool __fastcall existe_registro(String sql_z);
+
+        void __fastcall actualiza_campos(String tabla_z,
+          TStringList *campos_nuevos_z,
+          TStringList *tipos_campos_nuevos_z,
+          TStringList *valoresxdefault_z,
+          String generador_z
+        );
+        void __fastcall datos_iniciales(TStringList *reginicial_z);
+        void __fastcall crea_tabla(String tabla_z, String estructura_z, TStringList *reginicial_z);
+        TStringList *errores_z;
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_kardex *Form_kardex;
+//---------------------------------------------------------------------------
+#endif

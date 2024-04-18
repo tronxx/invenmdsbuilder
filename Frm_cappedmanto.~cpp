@@ -1,0 +1,726 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frm_cappedmanto.h"
+#include "dmod.h"
+#include "dlgCnsProves.h"
+#include "dlgCnsCodInven.h"
+#include "dlgCnsConcepto.h"
+#include "Frm_CapturaObsPed.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "dxCntner"
+#pragma link "dxDBCtrl"
+#pragma link "dxDBGrid"
+#pragma link "dxTL"
+#pragma link "dxDBTLCl"
+#pragma link "dxGrClms"
+#pragma link "dxEditor"
+#pragma link "dxEdLib"
+#pragma link "dxExEdtr"
+#pragma resource "*.dfm"
+
+#define MENSA Application->MessageBox
+
+TfrmDlgCapPed *frmDlgCapPed;
+//---------------------------------------------------------------------------
+int __fastcall MantoCapturaPedido(TForm *Padre, int iNumero, String &sTipo, String &sAlmac, int iMODO_, AnsiString sIniciales_)
+{
+    int iResult=0;
+    try
+    {
+        frmDlgCapPed = new TfrmDlgCapPed(Padre, iNumero, sTipo, sAlmac, iMODO_, sIniciales_);
+        frmDlgCapPed->ShowModal();
+        if (frmDlgCapPed->bOk)
+        
+        delete frmDlgCapPed;
+    }
+    catch(...)
+    {   delete frmDlgCapPed;
+    }
+    return iResult;
+}
+//---------------------------------------------------------------------------
+
+__fastcall TfrmDlgCapPed::TfrmDlgCapPed(TComponent* Owner, int iNumerop, String &sTipop, String &sAlmacp, int iMODOp, AnsiString sInicialesp)
+    : TForm(Owner)
+{
+    iNumero = iNumerop;
+    sTipo   = sTipop;
+    sAlmac  = sAlmacp;
+    iMODO   = iMODOp;
+    sIniciales = sInicialesp;
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::FormShow(TObject *Sender)
+{
+    //TODO: TOMAR INICIALES DEL USUARIO
+
+    switch (iMODO) {
+      case 1: Caption = "CAPTURA NUEVO PEDIDO";
+              LimpiarPantalla();
+              ActivarControles(true);
+              qsAnios->Close();
+              qsAnios->ParamByName("Anio")->AsInteger = TDateTime::CurrentDate().FormatString("yyyy").ToInt();
+              qsAnios->Open();
+              sAlmac = qsAnios->FieldByName("Letra")->AsString + TDateTime::CurrentDate().FormatString("mm");
+              edtPeriodo->Text = sAlmac;
+
+              qsMaxPed->Close();
+              qsMaxPed->ParamByName("Tipo" )->AsString  = sTipo;
+              qsMaxPed->ParamByName("Almac")->AsString  = sAlmac;
+              qsMaxPed->ParamByName("Cia"  )->AsInteger = dm->cia_z;
+              qsMaxPed->Open();
+              iNumero = qsMaxPed->FieldByName("UltNumero")->AsInteger + 1;
+              qsMaxPed->Close();
+              edtNumero->Text = iNumero;
+              btnGuardar->Visible = false;
+              btnObserva->Visible = true;
+              break;
+      case 2: btnGuardar->Visible = true;
+      case 3:
+             if (iMODO == 2) Caption = "MODIFICACION PEDIDO";
+             else if (iMODO == 3) Caption = "CONSULTA DE PEDIDO";
+             BuscarPedido();
+             break;
+
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::LimpiarPantalla()
+{
+    LimpiarEncabezado();
+    LimpiarRenglones();
+    qsRenentra->Close();
+    //TODO: CERRAR QUERY DE RENGLONES
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::LimpiarEncabezado()
+{
+    edtPeriodo->Text  = "";
+    edtNumero ->Text  = "";
+    dtFecha   ->Date  = TDateTime::CurrentDate();
+    edtProve  ->Text  = "";
+    edtNomPro ->Text  = "";
+    edtContacto->Text = "";
+    edtPlazo  ->Text  = "";
+    edtImporte->Value = 0.00;
+    edtIva    ->Value = 0.00;
+    edtTotal  ->Value = 0.00;
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::LimpiarRenglones()
+{
+    edtCantidad ->Value = 0.00;
+    edtCodigo   ->Text  = "";
+    edtDescri   ->Text  = "";
+    edtCosto    ->Value = 0;
+    edtTotRen   ->Value = 0;
+    edtPrecLista->Value = 0;
+    edtMub      ->Value = 0;
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::BuscarPedido()
+{
+    qsPedido->Close();
+    qsPedido->ParamByName("Numero")->AsInteger = iNumero;
+    qsPedido->ParamByName("Almac" )->AsString  = sAlmac;
+    qsPedido->ParamByName("Tipo"  )->AsString  = sTipo;
+    qsPedido->ParamByName("Cia"   )->AsInteger = dm->cia_z;
+    qsPedido->Open();
+    if (qsPedido->IsEmpty() ) {
+       ActivarControles(false);
+       pnlPedido->Enabled = false;
+       btnObserva->Enabled = false;
+       btnGuardar->Visible = false;
+       btnCerrar->SetFocus();
+    }else {
+      DesplegarDatos(qsPedido);
+      DesplegarRenglones();
+      //TODO: Desplegar Renglones
+      if (iMODO == 2) {
+        //Modificar solo en estado Abierto otro estado no lo permite.
+        if (qsPedido->FieldByName("status")->AsString == "A") {
+           ActivarControles(true);
+           pnlPedido->Enabled = true;
+           btnObserva->Enabled = true;
+           dtFecha->SetFocus();
+        }else {
+           ActivarControles(false);
+           pnlPedido->Enabled = false;
+           btnObserva->Enabled = false;
+           btnGuardar->Visible = false;
+           btnCerrar->SetFocus();
+        }
+      }
+      else {
+           ActivarControles(false);
+           pnlPedido->Enabled = false;
+           btnObserva->Enabled = false;
+           btnGuardar->Visible = false;
+           btnCerrar->SetFocus();
+      }
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::ActivarControles(bool bb)
+{
+    edtPeriodo->Enabled = bb;
+    edtNumero ->Enabled = bb;
+    dtFecha   ->Enabled = bb;
+    edtProve  ->Enabled = bb;
+    edtNomPro ->Enabled = bb;
+    edtContacto->Enabled = bb;
+    edtPlazo  ->Enabled = bb;
+    edtImporte->Enabled = bb;
+    edtIva    ->Enabled = bb;
+    edtTotal  ->Enabled = bb;
+    //grpRenglon->Enabled = bb;
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::DesplegarDatos(TQuery  *qsPed)
+{
+    edtPeriodo->Text  = qsPed->FieldByName("Alm"      )->AsString;
+    edtNumero ->Text  = qsPed->FieldByName("Numero"   )->AsInteger;
+    dtFecha   ->Date  = qsPed->FieldByName("Fecha"    )->AsDateTime;
+    edtProve  ->Text  = qsPed->FieldByName("Prove"    )->AsString;
+    edtNomPro ->Text  = qsPed->FieldByName("sNomProve")->AsString;
+    edtContacto->Text = qsPed->FieldByName("Concepto" )->AsString;
+    edtPlazo  ->Text  = qsPed->FieldByName("facpro"   )->AsString;
+    edtImporte->Text  = FormatFloat("#,##0.00", qsPed->FieldByName("Importe"  )->AsFloat);
+    edtIva    ->Text  = FormatFloat("#,##0.00", qsPed->FieldByName("Iva"      )->AsFloat);
+    edtTotal  ->Text  = FormatFloat("#,##0.00", qsPed->FieldByName("Total"    )->AsFloat);
+    lblEstado ->Text  = qsPed->FieldByName("Sstatus"  )->AsString;
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::btnCerrarClick(TObject *Sender)
+{
+    if (bCambio) {
+      int iConf = MENSA("A EFECTUADO CAMBIOS\n¿Desea Guardar Los Cambios?", "Confirmación", MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2);
+      if (iConf == 6)
+         TfrmDlgCapPed::btnGuardarClick(this);
+      else bOk = false;
+      Close();
+    }
+    bOk = false;
+    Close();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::btnGuardarClick(TObject *Sender)
+{
+    //TODO: COMPARAR EL TIPO DE CONSULTA
+    if (edtProve->Text.Trim().IsEmpty() ) {
+        MENSA("Teclee La Clave del Proveedor !!", "Prove", MB_OK | MB_ICONWARNING);
+        return;
+    }
+    bool btrue=false;
+    try
+    {
+        dm->manvehi->StartTransaction();
+        quPedido->Close();
+        quPedido->ParamByName("Prove"    )->AsString  = edtProve->Text.Trim();
+        quPedido->ParamByName("PerEnvRec")->AsInteger = iConcepEnt;
+        quPedido->ParamByName("Status"   )->AsString  = qsPedido->FieldByName("Status")->AsString;
+        quPedido->ParamByName("ConIva"   )->AsString  = qsPedido->FieldByName("ConIva")->AsString;
+        quPedido->ParamByName("Fecha"    )->AsDateTime= dtFecha->Date;
+        quPedido->ParamByName("Importe"  )->AsFloat   = edtImporte->Value;
+        quPedido->ParamByName("Iva"      )->AsFloat   = edtIva->Value;
+        quPedido->ParamByName("Total"    )->AsFloat   = 0; //edtTotal->Value;
+        quPedido->ParamByName("Tipo"     )->AsString  = sTipo;
+        quPedido->ParamByName("Alm"      )->AsString  = sAlmac;
+        quPedido->ParamByName("Numero"   )->AsInteger = iNumero;
+        quPedido->ParamByName("Cia"      )->AsInteger = dm->cia_z;
+        quPedido->ExecSQL();
+        dm->manvehi->Commit();
+        btrue = true;
+    }
+    catch(...)
+    {
+        dm->manvehi->Rollback();
+        MENSA("NO FUE POSIBLE GUARDAR LOS CAMBIOS REALIZADOS !!", "Error", MB_OK | MB_ICONERROR);
+    }
+    if (btrue) {
+       bOk=true;
+       Close();
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::edtProveKeyDown(TObject *Sender, WORD &Key,
+      TShiftState Shift)
+{
+    if (Shift == TShiftState() ) {
+       if (Key != VK_RETURN) return;
+       if (!BuscarProveedor(edtProve->Text.Trim() ) ) {
+           MENSA("NO EXISTE LA CLAVE DEL PROVEEDOR SOLICITADO !!", "Prove.", MB_OK | MB_ICONQUESTION);
+           edtProve->SetFocus();
+           return;
+       }
+       edtContacto->SetFocus();
+    }
+}
+//---------------------------------------------------------------------------
+bool __fastcall TfrmDlgCapPed::BuscarProveedor(String sClave)
+{
+    bool bResult=false;
+    qsProve->Close();
+    qsProve->ParamByName("Prove")->AsString = sClave;
+    qsProve->ParamByName("Cia"  )->AsInteger = dm->cia_z;
+    qsProve->Open();
+    if (qsProve->IsEmpty() ) {
+       edtProve->Text = "";
+       edtNomPro->Text = "";
+    }else {
+       edtProve->Text  = qsProve->FieldByName("codigo")->AsString;
+       edtNomPro->Text = qsProve->FieldByName("Nombre")->AsString;
+       bResult = true;
+    }
+    return bResult;
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::edtProveExit(TObject *Sender)
+{
+    if (!edtProve->Text.Trim().IsEmpty() ) {
+       if (!BuscarProveedor(edtProve->Text.Trim() ) ) {
+           return;
+       }edtContacto->SetFocus();
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::edtProveAltBtnClick(TObject *Sender)
+{
+    AnsiString sClave = ConsultaProveedores(this);
+    if (sClave != "") {
+       edtProve->Text = sClave;
+       if (!BuscarProveedor(edtProve->Text.Trim() ) ) {
+           MENSA("NO EXISTE LA CLAVE DEL PROVEEDOR SOLICITADO !!", "Prove.", MB_OK | MB_ICONQUESTION);
+           edtProve->SetFocus();
+           return;
+       }
+       edtContacto->SetFocus();
+    }
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::edtCodigoKeyDown(TObject *Sender,
+      WORD &Key, TShiftState Shift)
+{
+    if (Shift == TShiftState() ) {
+       if (Key != VK_RETURN) return;
+           if (edtCodigo->Text.Trim().SubString(1,3) == "AUX") {
+           edtDescri->ReadOnly = false;
+           edtCosto ->ReadOnly = false;
+           edtTotRen->ReadOnly = false;
+           edtIvaRen->Enabled  = true;
+           edtIvaRen->ReadOnly = false;
+           edtDescri->SetFocus();
+       }else
+         if (!BuscarCodigo(edtCodigo->Text.Trim() ) ) {
+             qsExistencias->Close();
+             MENSA("NO EXISTE EL CODIGO SOLICITADO !!", "Codigo", MB_OK | MB_ICONQUESTION);
+             //int iOk = MENSA("NO EXISTE EL CODIGO SOLICITADO...¿CONTINUO?", "Codigo", MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2);
+             //if (iOk != 6) { edtCodigo->SetFocus(); return; }
+             //edtDescri->SetFocus();
+             return;
+         }
+    }
+}
+//---------------------------------------------------------------------------
+bool __fastcall TfrmDlgCapPed::BuscarCodigo(String sCodigo)
+{
+    bool bResult = false;
+    float fCosto=0, fMub = 0, fPrecioSinIva=0;
+    qsCodInv->Close();
+    qsCodInv->ParamByName("Codigo")->AsString = sCodigo;
+    qsCodInv->ParamByName("Cia"   )->AsInteger = dm->cia_z;
+    qsCodInv->Open();
+    if (!qsCodInv->IsEmpty() ) {
+       edtCodigo->Text = qsCodInv->FieldByName("Codigo")->AsString;
+       edtDescri->Text = qsCodInv->FieldByName("Descri")->AsString;
+       edtPrecLista->Text = FormatFloat("#,##0.00", qsCodInv->FieldByName("Precio")->AsFloat);
+       if (qsCodInv->FieldByName("pIva")->AsFloat > 0)
+            fCosto = qsCodInv->FieldByName("Costos")->AsFloat;
+       else fCosto = qsCodInv->FieldByName("Coston")->AsFloat;
+
+       edtIvaRen->Text = FormatFloat("0", qsCodInv->FieldByName("pIva")->AsFloat);
+       edtCosto ->Text = FormatFloat("0.00", fCosto);
+       edtTotRen->Text = FormatFloat("0.00", fCosto * edtCantidad->Value);
+       if (qsCodInv->FieldByName("Precio")->AsFloat > 0)
+          fPrecioSinIva = qsCodInv->FieldByName("Precio")->AsFloat / ((qsCodInv->FieldByName("pIva")->AsFloat/100)+1);
+       fMub = ((fCosto / fPrecioSinIva)-1)*100*-1;
+       edtMub->Text = FormatFloat("0.00", fMub);
+       MostrarExistencias(sCodigo);
+
+       edtDescri->ReadOnly = true;
+       edtCosto ->ReadOnly = true;
+       edtTotRen->ReadOnly = true;
+       bResult = true;
+    }
+    return bResult;
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::DesplegarRenglones()
+{
+    qsRenentra->Close();
+    qsRenentra->ParamByName("Numero")->AsInteger = iNumero;
+    qsRenentra->ParamByName("Almac" )->AsString  = sAlmac;
+    qsRenentra->ParamByName("Tipo"  )->AsString  = sTipo;
+    qsRenentra->ParamByName("Cia"   )->AsInteger = dm->cia_z;
+    qsRenentra->Open();
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::MostrarExistencias(AnsiString sCodigo)
+{
+    qsExistencias->Close();
+    qsExistencias->ParamByName("codigo")->AsString  = sCodigo;
+    qsExistencias->ParamByName("Cia"   )->AsInteger = dm->cia_z;
+    qsExistencias->Open();
+    if (qsExistencias->IsEmpty() ) qsExistencias->Close();
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::edtCodigoAltBtnClick(TObject *Sender)
+{
+    AnsiString sCodigo = "";
+    sCodigo = ConsultaCodInventario(this);
+    if (sCodigo != "") {
+       if (!BuscarCodigo(sCodigo) ) {
+           qsExistencias->Close();
+           MENSA("NO EXISTE EL CODIGO SOLICITADO !!", "Codigo", MB_OK | MB_ICONQUESTION);
+           edtCodigo->SetFocus();
+           return;
+       }
+    }
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::edtCantidadChange(TObject *Sender)
+{
+    CalcularTotalReng();
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::CalcularTotalReng()
+{
+    if (edtCantidad->Text.Trim().IsEmpty() || edtCodigo->Text.Trim().IsEmpty() ) return;
+
+    edtTotRen->Value = edtCantidad->Value * edtCosto->Value;
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::btnNuevoClick(TObject *Sender)
+{
+    LimpiarRenglones();
+    edtCantidad->SetFocus();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::btnAgregarClick(TObject *Sender)
+{
+    if (edtCantidad->Text.Trim().IsEmpty() || edtCantidad->Text.Trim().ToDouble() <= 0 ) {
+       MENSA("Teclee la cantidad de Articulos !!", "Cantidad", MB_OK | MB_ICONWARNING);
+       return;
+    }
+    if (edtCodigo->Text.Trim().IsEmpty() ) {
+       MENSA("Teclee el código del artículo !!", "Codigo", MB_OK | MB_ICONWARNING);
+       return;
+    }
+    if (edtDescri->Text.Trim().IsEmpty() ) {
+       MENSA("Teclee la decripción del artículo !!", "Descripción", MB_OK | MB_ICONWARNING);
+       return;
+    }
+    //TODO: EL COSTO PUEDE SER CERO ?
+    int iConse=0;
+    bool btrue=false;
+    try
+    {
+        dm->manvehi->StartTransaction();
+        qsPedido->Close();
+        qsPedido->ParamByName("Numero")->AsInteger = edtNumero->Text.Trim().ToIntDef(0);
+        qsPedido->ParamByName("Almac" )->AsString  = sAlmac;
+        qsPedido->ParamByName("Tipo"  )->AsString  = sTipo;
+        qsPedido->ParamByName("Cia"   )->AsInteger = dm->cia_z;
+        qsPedido->Open();
+        if (qsPedido->IsEmpty() ) {
+           //TODO: ALTA X PEDIDO NUEVO
+           qiPedido->Close();
+           qiPedido->ParamByName("Tipo"  )->AsString  = "B";
+           qiPedido->ParamByName("Alm"   )->AsString  = edtPeriodo->Text.Trim();
+           qiPedido->ParamByName("Recemi")->AsString  = "";
+           qiPedido->ParamByName("Numero")->AsInteger = edtNumero->Text.Trim().ToIntDef(-1);
+           qiPedido->ParamByName("FacPro")->AsString  = edtPlazo->Text.Trim();
+           qiPedido->ParamByName("Prove" )->AsString  = edtProve->Text.Trim();
+           qiPedido->ParamByName("PerenvRec")->AsInteger = iConcepto;
+           qiPedido->ParamByName("Status"   )->AsString  = "A";
+           lblEstado->Text = "ABIERTO";
+           if (cmbPedido->ItemIndex == 0)
+                qiPedido->ParamByName("ConIva")->AsString  = "S";
+           else qiPedido->ParamByName("ConIva")->AsString  = "N";
+           qiPedido->ParamByName("Fecha"   )->AsDateTime = dtFecha->Date;
+           qiPedido->ParamByName("Importe" )->AsFloat    = edtImporte->Value;
+           qiPedido->ParamByName("Iva"     )->AsFloat    = edtIva->Value;
+           qiPedido->ParamByName("Total"   )->AsFloat    = edtTotal->Value;
+           qiPedido->ParamByName("Vence"   )->AsDateTime = NULL;
+           qiPedido->ParamByName("CtoFin"  )->AsFloat    = 0;
+           qiPedido->ParamByName("Tascomp" )->AsFloat    = 0;
+           qiPedido->ParamByName("Taspro"  )->AsFloat    = 0;
+           qiPedido->ParamByName("FechaFac")->AsDateTime = dtFecha->Date;
+           qiPedido->ParamByName("Letras"  )->AsSmallInt = 0;
+           qiPedido->ParamByName("Plazocfp")->AsString   = "";
+           qiPedido->ParamByName("planp"   )->AsInteger  = 0;
+           qiPedido->ParamByName("Fletes"  )->AsFloat    = 0;
+           qiPedido->ParamByName("Desxap"  )->AsFloat    = 0;
+           qiPedido->ParamByName("Fechaprp")->AsDateTime = NULL;
+           qiPedido->ParamByName("CtoFincomp")->AsFloat  = 0;
+           qiPedido->ParamByName("Usuario" )->AsString   = sIniciales;
+           qiPedido->ParamByName("Cia"     )->AsInteger  = dm->cia_z;
+           qiPedido->ExecSQL();
+
+        }
+        
+        if (!qsRenentra->Active) {
+           qsRenentra->ParamByName("Numero")->AsInteger = -1;
+           qsRenentra->ParamByName("Almac" )->AsString  = "-1";
+           qsRenentra->ParamByName("Tipo"  )->AsString  = "-1";
+           qsRenentra->ParamByName("Cia"   )->AsInteger = -1;
+           qsRenentra->Open();
+        }
+        qsMaxReng->Close();
+        qsMaxReng->ParamByName("Numero")->AsInteger = edtNumero->Text.Trim().ToInt();
+        qsMaxReng->ParamByName("Almac" )->AsString  = sAlmac;
+        qsMaxReng->ParamByName("Tipo"  )->AsString  = sTipo;
+        qsMaxReng->ParamByName("Cia"   )->AsInteger = dm->cia_z;
+        qsMaxReng->Open();
+        if (qsMaxReng->IsEmpty() )
+             iConse = 1;
+        else {
+            if (qsMaxReng->FieldByName("siguiente")->AsInteger == NULL)
+                 iConse = 1;
+            else iConse = qsMaxReng->FieldByName("siguiente")->AsInteger;
+        }
+        qsMaxReng->Close();
+        qsRenentra->Append();
+        qsRenentra->FieldByName("Numero")->AsInteger = edtNumero->Text.Trim().ToInt();
+        qsRenentra->FieldByName("Alm"   )->AsString  = sAlmac;
+        qsRenentra->FieldByName("Tipo"  )->AsString  = sTipo;
+        qsRenentra->FieldByName("Conse" )->AsInteger = iConse;
+        qsRenentra->FieldByName("Recemi")->AsString  = "";
+        qsRenentra->FieldByName("CodInv")->AsString  = edtCodigo->Text.Trim();
+        qsRenentra->FieldByName("Serie" )->AsString  = "";
+        if (cmbPedido->ItemIndex == 0) {
+            qsRenentra->FieldByName("SioNo" )->AsString  = "S";
+            qsRenentra->FieldByName("PIva"  )->AsFloat   = edtIvaRen->Value;
+        }else {
+            qsRenentra->FieldByName("SioNo" )->AsString  = "N";
+            qsRenentra->FieldByName("PIva"  )->AsFloat   = 0;
+        }
+        qsRenentra->FieldByName("FolSal")->AsInteger = 0;
+        qsRenentra->FieldByName("Folent")->AsInteger = 0;
+        qsRenentra->FieldByName("Unids" )->AsFloat   = edtCantidad->Value;
+        qsRenentra->FieldByName("Costou")->AsFloat   = edtCosto->Value;
+        qsRenentra->FieldByName("Importe")->AsFloat  = edtTotRen->Value;
+        qsRenentra->FieldByName("CantMueve")->AsFloat = 0;
+        qsRenentra->FieldByName("Status")->AsString  = "A";
+        //BUSCAR EL CONCEPTO EN CONCEPS SI NO HAY AGREGARLO
+        //if (edtCodigo->Text.Trim() == "AUX")
+        //   BuscarConcepto(edtDescri->Text.Trim() );
+
+        qsRenentra->FieldByName("PerSenvRec")->AsInteger = iConcepto; //TODO: NUMERO DE CONCEPTO
+        qsRenentra->FieldByName("Cia"   )->AsInteger = dm->cia_z;
+        qsRenentra->FieldByName("Vend"  )->AsString  = "";
+        qsRenentra->FieldByName("Poblac")->AsString  = "";
+        qsRenentra->FieldByName("Tipago")->AsString  = "";
+        qsRenentra->FieldByName("prVta" )->AsFloat   = 0;
+        qsRenentra->FieldByName("EntoSal")->AsString = "";
+        qsRenentra->FieldByName("EntCan")->AsString  = "";
+        qsRenentra->ApplyUpdates();
+
+        quPedido->Close();
+        quPedido->ParamByName("Prove"    )->AsString  = edtProve->Text.Trim();
+        quPedido->ParamByName("PerEnvRec")->AsInteger = iConcepEnt;
+        if (lblEstado->Text == "ABIERTO")
+             quPedido->ParamByName("Status"   )->AsString  = "A";
+        else quPedido->ParamByName("Status"   )->AsString  = "C";
+        if (cmbPedido->ItemIndex == 0)
+             quPedido->ParamByName("ConIva"   )->AsString  = "S";
+        else quPedido->ParamByName("ConIva"   )->AsString  = "N";
+        quPedido->ParamByName("Fecha"    )->AsDateTime= dtFecha->Date;
+        quPedido->ParamByName("Importe"  )->AsFloat   = edtImporte->Value;
+        quPedido->ParamByName("Iva"      )->AsFloat   = edtIva->Value;
+        quPedido->ParamByName("Total"    )->AsFloat   = 0; //edtTotal->Value;
+        quPedido->ParamByName("Tipo"     )->AsString  = sTipo;
+        quPedido->ParamByName("Alm"      )->AsString  = sAlmac;
+        quPedido->ParamByName("Numero"   )->AsInteger = edtNumero->Text.Trim().ToIntDef(0);
+        quPedido->ParamByName("Cia"      )->AsInteger = dm->cia_z;
+        quPedido->ExecSQL();
+
+        dm->manvehi->Commit();
+        qsRenentra->CommitUpdates();
+        btrue = true;
+    }
+    catch(...)
+    {
+        dm->manvehi->Rollback();
+        MENSA("NO FUE POSIBLE AGREGAR EL RENGLON !!", "Error", MB_OK | MB_ICONERROR);
+
+    }
+    if (btrue) {
+       SumaRenglones();
+       iNumero = edtNumero->Text.Trim().ToIntDef(0);
+       DesplegarRenglones();
+       LimpiarRenglones();
+       lblEstado->Text = "ABIERTO";
+       edtCantidad->SetFocus();
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::SumaRenglones()
+{
+    qsRenentra->First();
+    float fIvaRen=0, fTotRen=0, fImporte=0, fIva=0, fTotal=0;
+    while (!qsRenentra->Eof){
+        fTotRen = qsRenentra->FieldByName("unids")->AsFloat * qsRenentra->FieldByName("costou")->AsFloat;
+        //TODO: Si pedido es si se calcula el iva
+        if (cmbPedido->ItemIndex == 0)
+             fIvaRen = fTotRen * (qsRenentra->FieldByName("pIva")->AsFloat/100);
+        else fIvaRen = 0;
+        fImporte += fTotRen;
+        fIva += fIvaRen;
+        fTotal = fImporte+fIva;
+        qsRenentra->Next();
+    }
+    edtImporte->Text = FormatFloat("0.00", fImporte);
+    edtIva    ->Text = FormatFloat("0.00", fIva);
+    edtTotal  ->Text = FormatFloat("0.00", fTotal);
+    dbgrdReng->GotoFirst();
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::edtContactoExit(TObject *Sender)
+{
+    if (!edtContacto->Text.Trim().IsEmpty() ) {
+        BuscarConcepto(edtContacto->Text.Trim() );
+        iConcepEnt = iConcepto;
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall TfrmDlgCapPed::BuscarConcepto(AnsiString sConceptop)
+{
+    qsConcepto->Close();
+    qsConcepto->ParamByName("concepto")->AsString = sConceptop;
+    qsConcepto->Open();
+    if (qsConcepto->IsEmpty() ) {
+       qsMaxConcep->Close();
+       qsMaxConcep->Open();
+       int iUltimo = qsMaxConcep->FieldByName("Ultimo")->AsInteger;
+       qiConceps->Close();
+       qiConceps->ParamByName("Concepto")->AsString  = sConceptop;
+       qiConceps->ParamByName("nCon"    )->AsInteger = iUltimo+1;
+       qiConceps->ExecSQL();
+       iConcepto = iUltimo+1;
+    }else {
+       iConcepto = qsConcepto->FieldByName("nCon")->AsInteger;
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::edtCodigoChange(TObject *Sender)
+{
+    if (edtCodigo->Text.Trim() == "AUX")
+         edtIvaRen->Enabled = true;
+    else edtIvaRen->Enabled = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::edtCostoChange(TObject *Sender)
+{
+    CalcularTotalReng();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::edtNumeroKeyDown(TObject *Sender, WORD &Key,
+      TShiftState Shift)
+{
+    if (Shift == TShiftState() ) {
+       if (Key != VK_RETURN) return;
+       iNumero = edtNumero->Text.Trim().ToIntDef(0);
+       sAlmac  = edtPeriodo->Text.Trim();
+       BuscarPedido();
+       if (qsPedido->FieldByName("status")->AsString == "A") {
+            ActivarControles(true);
+           pnlPedido->Enabled = false;
+           btnObserva->Enabled = false;
+           btnGuardar->Visible = false;
+           btnCerrar->SetFocus();            
+       }
+       else { ActivarControles(false);
+            grpRenglon->Enabled = false;
+            btnGuardar->Visible = false;
+            btnObserva->Visible = false;
+            btnCerrar->SetFocus();
+       }
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::edtContactoAltBtnClick(TObject *Sender)
+{
+    String sCon = BuscarConcepts(this);
+    if (!sCon.IsEmpty() )
+       BuscarConcepto(sCon);
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::btnObservaClick(TObject *Sender)
+{
+    if (!qsPedido->Active || qsPedido->IsEmpty() ) {
+       MENSA("NO EXISTE PEDIDO ACCESADO PARA PODER AGREGAR OBSERVACIONES !!", "Pedido", MB_OK | MB_ICONQUESTION);
+       return;
+    }
+    CapturaObservaPedido(this, sTipo, sAlmac, edtNumero->Text.Trim().ToIntDef(0), dm->cia_z,"");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::edtDescriExit(TObject *Sender)
+{
+    if (edtCodigo->Text.Trim().SubString(1,3) == "AUX") {
+       BuscarConcepto(edtDescri->Text.Trim() );
+    }
+
+}
+//---------------------------------------------------------------------------
+/*
+    qsRenentra->First();
+    while (!qsRenentra->Eof) {
+       qsRenentra->Edit();
+       if (qsRenentra->FieldByName("CodInv")->AsString.SubString(1,3) == "AUX") {
+           qsRenentra->FieldByName("Descri")->AsString = qsRenentra->FieldByName("Concepto")->AsString;
+           qsRenentra->Post();
+       }
+       qsRenentra->Next();
+    }
+}
+*/
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDlgCapPed::qsRenentraAfterOpen(TDataSet *DataSet)
+{
+
+    qsRenentra->First();
+    while (!qsRenentra->Eof) {
+       qsRenentra->Edit();
+       if (qsRenentra->FieldByName("CodInv")->AsString.SubString(1,3) == "AUX") {
+           qsRenentra->FieldByName("sConcepto")->AsString = qsRenentra->FieldByName("Concepto")->AsString;
+           qsRenentra->Post();
+       }
+       qsRenentra->Next();
+    }
+}
+//---------------------------------------------------------------------------
+

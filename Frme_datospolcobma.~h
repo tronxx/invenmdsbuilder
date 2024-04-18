@@ -1,0 +1,51 @@
+//---------------------------------------------------------------------------
+
+
+#ifndef Frme_datospolcobmaH
+#define Frme_datospolcobmaH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxDBELib.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include "dxExEdtr.hpp"
+#include <ComCtrls.hpp>
+#include <DBCtrls.hpp>
+#include <Mask.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+//---------------------------------------------------------------------------
+class TFrame_datospolcobma : public TFrame
+{
+__published:	// IDE-managed Components
+        TLabel *Label4;
+        TdxCurrencyEdit *edt_folio;
+        TLabel *Label3;
+        TDBLookupComboBox *lkcmb_almacen;
+        TLabel *Label5;
+        TEdit *edt_concepto;
+        TLabel *Label1;
+        TDateTimePicker *date_fecha;
+        TLabel *Label6;
+        TEdit *edt_usuario;
+        TDBEdit *DBEdit2;
+        TLabel *Label7;
+        TdxDBCurrencyEdit *dxDBCurrencyEdit1;
+        TLabel *Label2;
+        TDBEdit *DBEdit1;
+        TDataSource *dts_almacen;
+        TQuery *qry_almacen;
+        void __fastcall lkcmb_almacenExit(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TFrame_datospolcobma(TComponent* Owner);
+        int cia_z;
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFrame_datospolcobma *Frame_datospolcobma;
+//---------------------------------------------------------------------------
+#endif

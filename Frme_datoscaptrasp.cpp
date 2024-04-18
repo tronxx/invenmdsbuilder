@@ -1,0 +1,85 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frme_dircli.h"
+#include "Frme_datoscaptrasp.h"
+#include "dialg_okcancel.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "dxCntner"
+#pragma link "dxDBELib"
+#pragma link "dxEditor"
+#pragma link "dxEdLib"
+#pragma link "dxExEdtr"
+#pragma resource "*.dfm"
+#include "dmod.h"
+#include "situaciones.h"
+TFrame_datoscaptrasp *Frame_datoscaptrasp;
+//---------------------------------------------------------------------------
+__fastcall TFrame_datoscaptrasp::TFrame_datoscaptrasp(TComponent* Owner)
+        : TFrame(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_datoscaptrasp::inicializa(String mitipo_z)
+{
+  int idpermis_z=0, top1_z=0, top2_z=0, top3_z=0, top4_z=0;
+  tipo_z = mitipo_z;
+  cia_z = dm->cia_z;
+  qry_Almacen->Close();
+  qry_Almacen->ParamByName("cia")->AsInteger = cia_z;
+  qry_Almacen->Open();
+  lkcmb_almacen->KeyValue = qry_Almacen->FieldByName("clave")->AsString;
+  date_fecha->Date    = dm->ahora();
+  fecmin_z = dm->ahora() - 90;
+  fecmax_z = dm->ahora();
+  checafecha_z = ACTIVO;
+  accion_z = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_datoscaptrasp::nuevo()
+{
+  String alm_z;
+  int nument_z=0;
+  alm_z = qry_Almacen->FieldByName("clave")->AsString;
+  nument_z = dm->sigte_entrada(alm_z, tipo_z, nument_z, ULTIMO);
+  if(nument_z < 0) nument_z = 0;
+  nument_z++;
+  edt_numero->Text = IntToStr(nument_z);
+}
+//---------------------------------------------------------------------------
+void __fastcall TFrame_datoscaptrasp::lkcmb_almacenExit(TObject *Sender)
+{
+  if(accion_z == NUEVO) nuevo();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_datoscaptrasp::date_fechaExit(TObject *Sender)
+{
+   String strfecmin_z, strfecmax_z, strfechoy_z, strfecha_z,
+   msg_z, tit_z, format_z;
+   format_z = "yyyy/mm/dd";
+   if(dm->usermaster_z != "S") {
+     if(checafecha_z == ACTIVO) {
+       strfechoy_z = FormatDateTime(format_z, dm->ahora());
+       strfecmin_z = FormatDateTime(format_z, fecmin_z);
+       strfecmax_z = FormatDateTime(format_z, fecmax_z);
+       strfecha_z  = FormatDateTime(format_z, date_fecha->Date);
+       if(strfecha_z < strfecmin_z || strfecha_z > strfecmax_z) {
+         msg_z = "No puede teclear fechas menores a " + FormatDateTime("dd/mm/yyyy", fecmin_z);
+         msg_z += "\n Ni mayores a " + FormatDateTime("dd/mm/yyyy", fecmax_z);
+         tit_z = "Fecha Incorrecta";
+         Application->MessageBox(msg_z.c_str(), tit_z.c_str(), MB_ICONEXCLAMATION);
+         date_fecha->SetFocus();
+       }
+     }
+   }
+
+}
+//---------------------------------------------------------------------------
+
+

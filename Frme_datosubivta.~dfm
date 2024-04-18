@@ -1,0 +1,227 @@
+object Frame_datosubivta: TFrame_datosubivta
+  Left = 0
+  Top = 0
+  Width = 588
+  Height = 274
+  TabOrder = 0
+  object Label1: TLabel
+    Left = 16
+    Top = 11
+    Width = 41
+    Height = 13
+    Caption = 'Almacén'
+  end
+  object Label2: TLabel
+    Left = 16
+    Top = 35
+    Width = 74
+    Height = 13
+    Caption = 'Punto de Venta'
+  end
+  object Label3: TLabel
+    Left = 16
+    Top = 59
+    Width = 55
+    Height = 13
+    Caption = 'Zona Inven'
+  end
+  object Label4: TLabel
+    Left = 16
+    Top = 83
+    Width = 92
+    Height = 13
+    Caption = 'Venta/Cancelación'
+  end
+  object Label5: TLabel
+    Left = 16
+    Top = 107
+    Width = 62
+    Height = 13
+    Caption = 'Zona x P.Vta'
+  end
+  object Label6: TLabel
+    Left = 16
+    Top = 131
+    Width = 32
+    Height = 13
+    Caption = 'P.Vta2'
+  end
+  object Label7: TLabel
+    Left = 176
+    Top = 107
+    Width = 393
+    Height = 13
+    Caption = 
+      'Cuando un Punto de Venta debe Sumar las Ventas con Otro p:ejempl' +
+      'o FNMT y MT'
+  end
+  object Label8: TLabel
+    Left = 176
+    Top = 131
+    Width = 393
+    Height = 13
+    Caption = 
+      'Cuando un Punto de Venta debe Sumar las Ventas con Otro p:ejempl' +
+      'o FNMT y MT'
+  end
+  object Label9: TLabel
+    Left = 16
+    Top = 155
+    Width = 69
+    Height = 13
+    Caption = 'Zona Art.Desp'
+  end
+  object Label10: TLabel
+    Left = 176
+    Top = 155
+    Width = 265
+    Height = 13
+    Caption = 'La zona a la que debe sumarse lo artículos desplazados'
+  end
+  object Label11: TLabel
+    Left = 16
+    Top = 179
+    Width = 69
+    Height = 13
+    Caption = 'Zona de P.Vta'
+  end
+  object Label12: TLabel
+    Left = 176
+    Top = 179
+    Width = 304
+    Height = 13
+    Caption = 'La zona del Punto de Venta sin importar el almacén del cual sale'
+  end
+  object Label13: TLabel
+    Left = 16
+    Top = 203
+    Width = 77
+    Height = 13
+    Caption = 'Zona de Cartera'
+  end
+  object Label14: TLabel
+    Left = 178
+    Top = 203
+    Width = 183
+    Height = 13
+    Caption = 'La zona del Punto de Venta en cartera'
+  end
+  object Label15: TLabel
+    Left = 16
+    Top = 227
+    Width = 94
+    Height = 13
+    Caption = 'Subzona de Cartera'
+  end
+  object Label16: TLabel
+    Left = 178
+    Top = 227
+    Width = 202
+    Height = 13
+    Caption = 'La Subzona del Punto de Venta en cartera'
+  end
+  object Label17: TLabel
+    Left = 179
+    Top = 11
+    Width = 139
+    Height = 13
+    Caption = 'Almacén del Kardex de salida'
+  end
+  object Label18: TLabel
+    Left = 179
+    Top = 35
+    Width = 74
+    Height = 13
+    Caption = 'Punto de Venta'
+  end
+  object Label19: TLabel
+    Left = 179
+    Top = 59
+    Width = 160
+    Height = 13
+    Caption = 'Zona de Inven donde se acumula'
+  end
+  object edt_almac: TEdit
+    Left = 120
+    Top = 8
+    Width = 50
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 0
+  end
+  object edt_ptovta: TEdit
+    Left = 120
+    Top = 32
+    Width = 50
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 1
+  end
+  object edt_zonainv: TEdit
+    Left = 120
+    Top = 56
+    Width = 50
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 2
+  end
+  object edt_zonaptvta: TEdit
+    Left = 120
+    Top = 104
+    Width = 50
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 4
+  end
+  object edt_ptvta2: TEdit
+    Left = 120
+    Top = 128
+    Width = 50
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 5
+  end
+  object edt_zonartdesp: TEdit
+    Left = 120
+    Top = 152
+    Width = 50
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 6
+  end
+  object edt_zonapvta2: TEdit
+    Left = 120
+    Top = 176
+    Width = 50
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 7
+  end
+  object edt_zonacar: TEdit
+    Left = 120
+    Top = 200
+    Width = 50
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 8
+  end
+  object edt_subzoncar: TEdit
+    Left = 120
+    Top = 224
+    Width = 50
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 9
+  end
+  object cmb_voc: TComboBox
+    Left = 120
+    Top = 80
+    Width = 50
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 3
+    Items.Strings = (
+      'Venta'
+      'Cancelación')
+  end
+end

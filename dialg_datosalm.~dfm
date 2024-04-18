@@ -1,0 +1,236 @@
+object dlg_datosalm: Tdlg_datosalm
+  Left = 304
+  Top = 241
+  Width = 526
+  Height = 298
+  Caption = 'Datos del Almacén'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel2: TPanel
+    Left = 0
+    Top = 218
+    Width = 510
+    Height = 41
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 1
+    object BitBtn1: TBitBtn
+      Left = 169
+      Top = 8
+      Width = 75
+      Height = 25
+      TabOrder = 0
+      Kind = bkOK
+    end
+    object btn_cancel: TBitBtn
+      Left = 273
+      Top = 8
+      Width = 75
+      Height = 25
+      TabOrder = 1
+      Kind = bkCancel
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 510
+    Height = 218
+    Align = alClient
+    BevelOuter = bvNone
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 21
+      Top = 21
+      Width = 33
+      Height = 13
+      Caption = '&Código'
+    end
+    object Label2: TLabel
+      Left = 17
+      Top = 44
+      Width = 37
+      Height = 13
+      Caption = 'Nombre'
+    end
+    object Label3: TLabel
+      Left = 9
+      Top = 67
+      Width = 45
+      Height = 13
+      Caption = 'Dirección'
+    end
+    object Label4: TLabel
+      Left = 30
+      Top = 91
+      Width = 24
+      Height = 13
+      Caption = 'Diary'
+    end
+    object Label5: TLabel
+      Left = 112
+      Top = 91
+      Width = 108
+      Height = 13
+      Caption = 'Exhibicion/Almacenaje'
+    end
+    object Label6: TLabel
+      Left = 29
+      Top = 115
+      Width = 25
+      Height = 13
+      Caption = 'Zona'
+    end
+    object Label7: TLabel
+      Left = 288
+      Top = 91
+      Width = 113
+      Height = 13
+      Caption = 'Orden en Tabular Trasp'
+    end
+    object Label8: TLabel
+      Left = 24
+      Top = 133
+      Width = 30
+      Height = 13
+      Caption = 'Status'
+    end
+    object Label9: TLabel
+      Left = 5
+      Top = 161
+      Width = 56
+      Height = 13
+      Caption = 'lbl_relubivta'
+    end
+    object edt_codvnd: TEdit
+      Left = 58
+      Top = 16
+      Width = 49
+      Height = 21
+      CharCase = ecUpperCase
+      TabOrder = 0
+    end
+    object edt_nombre: TEdit
+      Left = 57
+      Top = 40
+      Width = 401
+      Height = 21
+      CharCase = ecUpperCase
+      TabOrder = 1
+    end
+    object edt_direc: TEdit
+      Left = 57
+      Top = 63
+      Width = 401
+      Height = 21
+      CharCase = ecUpperCase
+      TabOrder = 2
+    end
+    object edt_ordiary: TdxSpinEdit
+      Left = 57
+      Top = 86
+      Width = 50
+      TabOrder = 3
+    end
+    object edt_exib: TEdit
+      Left = 227
+      Top = 86
+      Width = 50
+      Height = 21
+      TabOrder = 4
+      Text = 'E'
+    end
+    object DBEdit1: TDBEdit
+      Left = 107
+      Top = 109
+      Width = 169
+      Height = 21
+      TabStop = False
+      DataField = 'NOMBRE'
+      DataSource = dts_zonas
+      TabOrder = 7
+    end
+    object edt_ordtab: TdxSpinEdit
+      Left = 407
+      Top = 86
+      Width = 50
+      TabOrder = 5
+    end
+    object lkcmb_zona: TDBLookupComboBox
+      Left = 57
+      Top = 109
+      Width = 50
+      Height = 21
+      KeyField = 'ZONA'
+      ListField = 'ZONA'
+      ListSource = dts_zonas
+      TabOrder = 6
+    end
+    object cmb_status: TComboBox
+      Left = 57
+      Top = 132
+      Width = 220
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 8
+      Items.Strings = (
+        'Activo'
+        'Baja')
+    end
+    object lkcmb_relubivta: TDBLookupComboBox
+      Left = 57
+      Top = 156
+      Width = 50
+      Height = 21
+      KeyField = 'UBICA'
+      ListField = 'UBICA'
+      ListSource = dts_relubivta
+      TabOrder = 9
+    end
+    object DBEdit2: TDBEdit
+      Left = 107
+      Top = 156
+      Width = 169
+      Height = 21
+      TabStop = False
+      DataField = 'DESCRI'
+      DataSource = dts_relubivta
+      TabOrder = 10
+    end
+  end
+  object qry_zonas: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      'select zona, nombre, tipo from zonainv order by zona')
+    Left = 400
+    Top = 32
+  end
+  object dts_zonas: TDataSource
+    DataSet = qry_zonas
+    Left = 400
+    Top = 64
+  end
+  object qry_relubivta: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      'select idubiptovta, ubica, descri, cia'
+      'order by ubica'
+      '')
+    Left = 432
+    Top = 32
+  end
+  object dts_relubivta: TDataSource
+    DataSet = qry_relubivta
+    Left = 432
+    Top = 64
+  end
+end

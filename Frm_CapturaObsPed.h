@@ -1,0 +1,82 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_CapturaObsPedH
+#define Frm_CapturaObsPedH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+#include "dxTL.hpp"
+#include <ComCtrls.hpp>
+#include <ExtCtrls.hpp>
+#include <Mask.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <ActnList.hpp>
+#include <Buttons.hpp>
+#include <StdActns.hpp>
+#include <Menus.hpp>
+//---------------------------------------------------------------------------
+void __fastcall CapturaObservaPedido(TForm *Padre, AnsiString sTipo, AnsiString sAlmac, int iNumero, int iCia, AnsiString sCodigo, AnsiString sPermi );
+//---------------------------------------------------------------------------
+class TForm_CapturaObsPed : public TForm
+{
+__published:	// IDE-managed Components
+    TQuery *qsObservPed;
+    TDataSource *dtsObservPed;
+    TQuery *qsMaxSec;
+        TPanel *Panel1;
+        TSpeedButton *SpeedButton1;
+        TSpeedButton *SpeedButton2;
+        TSpeedButton *SpeedButton3;
+        TSpeedButton *SpeedButton4;
+        TSpeedButton *SpeedButton5;
+        TActionList *ActionList1;
+        TAction *nuevo;
+        TAction *modif;
+        TAction *eliminar;
+        TAction *listar;
+        TUpdateSQL *uqry_ObservPed;
+        TdxDBGrid *dbgrdReng;
+        TdxDBGridMaskColumn *dbgrdRengColumn1;
+        TdxDBGridMaskColumn *dbgrdRengColumn2;
+        TAction *salir;
+        TPopupMenu *PopupMenu1;
+        TMenuItem *Nuevo1;
+        TMenuItem *Modificar1;
+        TMenuItem *Eliminar1;
+        void __fastcall nuevoExecute(TObject *Sender);
+        void __fastcall modifExecute(TObject *Sender);
+        void __fastcall listarExecute(TObject *Sender);
+        void __fastcall eliminarExecute(TObject *Sender);
+        void __fastcall dbgrdRengCustomDraw(TObject *Sender,
+          TCanvas *ACanvas, TRect &ARect, TdxTreeListNode *ANode,
+          TdxDBTreeListColumn *AColumn, const AnsiString AText,
+          TFont *AFont, TColor &AColor, bool ASelected, bool AFocused,
+          bool &ADone);
+        void __fastcall salirExecute(TObject *Sender);
+        void __fastcall qsObservPedAfterScroll(TDataSet *DataSet);
+        void __fastcall dbgrdRengKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+private:	// User declarations
+    void __fastcall MostrarRenglones();
+public:		// User declarations
+    void __fastcall agrega_obs(String modo_z, String observs_z, double fecha_z, int consec_z);
+    void __fastcall modifica_o_agrega(String modo_z);
+
+    int iNumero_, iCia_;
+    AnsiString sTipo_, sAlmac_, codigo_z, permis_z, abierto_z;
+    __fastcall TForm_CapturaObsPed(TComponent* Owner, AnsiString sTipop, AnsiString sAlmacp, int iNumerop, int iCiap, AnsiString sCodigop, AnsiString sPermip);
+
+    double hoy_z;
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_CapturaObsPed *Form_CapturaObsPed;
+//---------------------------------------------------------------------------
+#endif

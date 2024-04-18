@@ -1,0 +1,342 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frm_mantoprove.h"
+#include "dmod.h"
+#include "dialg_okcancel.h"
+#include "Frme_datosmantoprove.h"
+#include "situaciones.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "dxCntner"
+#pragma link "dxEditor"
+#pragma link "dxEdLib"
+#pragma link "dxExEdtr"
+#pragma link "dxDBELib"
+#pragma link "dxDBCtrl"
+#pragma link "dxDBGrid"
+#pragma link "dxTL"
+#pragma resource "*.dfm"
+
+TForm_mantoprove *Form_mantoprove;
+//---------------------------------------------------------------------------
+__fastcall TForm_mantoprove::TForm_mantoprove(TComponent* Owner)
+        : TForm(Owner)
+{
+  qry_prove->Close();
+  qry_prove->Open();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::FormClose(TObject *Sender,
+      TCloseAction &Action)
+{
+  Action = caFree;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::botones_onoff(int modo_z)
+{
+  switch (modo_z) {
+    case INVISIBLES:
+      nuevo->Enabled=false;
+      modifica->Enabled=false;
+      borra->Enabled=false;
+      grabar->Enabled=true;
+      cancelar->Enabled=true;
+//      pnl_btngral->Visible=false;
+      break;
+    case VISIBLES:
+//      pnl_btngral->Visible=true;
+      nuevo->Enabled=true;
+      modifica->Enabled=true;
+      borra->Enabled=true;
+      grabar->Enabled=false;
+      cancelar->Enabled=false;
+      break;
+  }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::desp_vnd()
+{
+  alta_o_modif(EN_ESPERA);
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm_mantoprove::nuevoExecute(TObject *Sender)
+{
+  if(permis_z != "A" && permis_z != "T") {
+    Application->MessageBox("Lo siento, no puede agregar datos", "Permisión Incorrecta", MB_ICONEXCLAMATION);
+    return;
+  }
+  alta_o_modif(NUEVO);
+}
+
+void __fastcall TForm_mantoprove::alta_o_modif(int modo_z)
+{
+   int ancho_z, alto_z, estado_z = 0, numero_z=0;
+   Tdlg_okcancel *Dlg_mantgpoinv;
+   Dlg_mantgpoinv = new Tdlg_okcancel (this);
+   Dlg_mantgpoinv->AutoSize = false;
+   TFrame_datosmantoprove *Frame_datosmantoprove;
+   Frame_datosmantoprove = new TFrame_datosmantoprove (Dlg_mantgpoinv);
+   ancho_z = Frame_datosmantoprove->Width + 20;
+   alto_z = Frame_datosmantoprove->Height + Dlg_mantgpoinv->Panel2->Height + 80;
+   Frame_datosmantoprove->Parent = Dlg_mantgpoinv->Panel1;
+   Dlg_mantgpoinv->Width = ancho_z ;
+   Dlg_mantgpoinv->Height = alto_z - 50;
+   Dlg_mantgpoinv->Caption = "Datos del Proveedor";
+   if(modo_z == MODIF || modo_z == EN_ESPERA) {
+     if (modo_z == EN_ESPERA) Dlg_mantgpoinv->btn_cancel->Visible = false;
+     Frame_datosmantoprove->edt_codvnd->Enabled = false;
+     Frame_datosmantoprove->edt_codvnd->Text = qry_prove->FieldByName("codigo")->AsString;
+     Frame_datosmantoprove->edt_nombre->Text = qry_prove->FieldByName("nombre")->AsString;
+     Frame_datosmantoprove->edt_direc->Text =  qry_prove->FieldByName("direc")->AsString;
+     Frame_datosmantoprove->edt_ciudad->Text = qry_prove->FieldByName("ciu")->AsString;
+     Frame_datosmantoprove->edt_tel->Text = qry_prove->FieldByName("tel")->AsString;
+     Frame_datosmantoprove->edt_rfc->Text =  qry_prove->FieldByName("rfc")->AsString;
+     Frame_datosmantoprove->edt_contacto->Text =  qry_prove->FieldByName("contacto")->AsString;
+     Frame_datosmantoprove->edt_limite->Value = qry_prove->FieldByName("limite")->AsFloat;
+     if (qry_prove->FieldByName("status")->AsString == "A") {
+       estado_z = 0;
+     } else {
+       estado_z = 1;
+     }
+   }
+   Frame_datosmantoprove->cmb_estado->ItemIndex = estado_z;
+   Dlg_mantgpoinv->Position = poScreenCenter;
+   if( Dlg_mantgpoinv->ShowModal() == mrOk && modo_z != EN_ESPERA ) {
+      String codigo_z,nombre_z,direccion_z,poblac_z,telefono_z,
+      rfc_z,contac_z;
+      double credito_z;
+
+      codigo_z = Frame_datosmantoprove->edt_codvnd->Text;
+      nombre_z = Frame_datosmantoprove->edt_nombre->Text;
+      direccion_z = Frame_datosmantoprove->edt_direc->Text;
+      poblac_z = Frame_datosmantoprove->edt_ciudad->Text;
+      telefono_z = Frame_datosmantoprove->edt_tel->Text;
+      rfc_z = Frame_datosmantoprove->edt_rfc->Text;
+      contac_z = Frame_datosmantoprove->edt_contacto->Text;
+      credito_z = Frame_datosmantoprove->edt_limite->Value;
+      estado_z = Frame_datosmantoprove->cmb_estado->ItemIndex;
+      try {
+         dm->manvehi->StartTransaction();
+         if(modo_z == NUEVO ) {
+           //idvnd_z=dm->busca_sigid(IDEMPLEAD);
+           qry_prove->Append();
+           //qry_prove->FieldByName("idemplead")->AsInteger = idvnd_z;
+           qry_prove->FieldByName("codigo")->AsString = codigo_z;
+           qry_prove->FieldByName("cia")->AsInteger = cia_z;
+           qry_prove->FieldByName("cargos")->AsFloat = 0;
+           qry_prove->FieldByName("abonos")->AsFloat = 0;
+           qry_prove->FieldByName("compraanu")->AsFloat = 0;
+           qry_prove->FieldByName("comprames")->AsFloat = 0;
+           qry_prove->FieldByName("ultmov")->AsInteger = 0;
+         } else {
+           qry_prove->Edit();
+         }
+         qry_prove->FieldByName("nombre")->AsString = nombre_z;
+         qry_prove->FieldByName("direc")->AsString = direccion_z;
+         qry_prove->FieldByName("ciu")->AsString = poblac_z;
+         qry_prove->FieldByName("rfc")->AsString = rfc_z;
+         qry_prove->FieldByName("tel")->AsString = telefono_z;
+         qry_prove->FieldByName("limite")->AsFloat = credito_z;
+         qry_prove->FieldByName("contacto")->AsString = contac_z;
+         if(estado_z == 0) {
+           qry_prove->FieldByName("status")->AsString = "A";
+         } else {
+           qry_prove->FieldByName("status")->AsString = "B";
+         }
+         qry_prove->Post();
+         qry_prove->ApplyUpdates();
+         dm->manvehi->Commit();
+      } catch (Exception &E) {
+         dm->manvehi->Rollback();
+         Application->MessageBox(("No pude grabar los datos:\n"+E.Message).c_str(), "ERROR", MB_ICONEXCLAMATION);
+      }
+   }
+   delete Frame_datosmantoprove;
+   delete Dlg_mantgpoinv;
+
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TForm_mantoprove::FormCreate(TObject *Sender)
+{
+
+  permis_z=dm->busca_permision(MANTOPROV);
+  cia_z = dm->cia_z;
+  if(permis_z == "N") {
+      Application->MessageBox("Lo siento, no puede accesar estos datos", "Permisión Incorrecta", MB_ICONEXCLAMATION);
+      Close();
+  }
+
+  qry_ciudades->Open();
+  //qry_puestos->Open();
+  //qry_status->Open();
+  qry_prove->Tag = EN_ESPERA;
+  qry_prove->Close();
+//qry_prove->ParamByName("grupo")->AsString=edt_ptovta->Text;
+  qry_prove->ParamByName("cia")->AsInteger = cia_z;
+  qry_prove->Open();
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm_mantoprove::modificaExecute(TObject *Sender)
+{
+  if(permis_z != "M" && permis_z != "T") {
+    Application->MessageBox("Lo siento, no puede agregar datos", "Permisión Incorrecta", MB_ICONEXCLAMATION);
+    return;
+  }
+  alta_o_modif(MODIF);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::borraExecute(TObject *Sender)
+{
+  if(permis_z != "B" && permis_z != "T") {
+    Application->MessageBox("Lo siento, no puede agregar datos", "Permisión Incorrecta", MB_ICONEXCLAMATION);
+    return;
+  }
+  if(qry_prove->IsEmpty()) return;
+  if(Application->MessageBox("Esta Seguro de Eliminar este Proveedor ?", "Eliminar Proveedor", MB_YESNO+MB_ICONQUESTION+MB_DEFBUTTON2) == IDYES) {
+    try {
+      dm->manvehi->StartTransaction();
+      qry_prove->Delete();
+      qry_prove->ApplyUpdates();
+      dm->manvehi->Commit();
+    } catch (Exception &E)
+    {
+      dm->manvehi->Rollback();
+      Application->MessageBox(("No pude grabar los datos:\n"+E.Message).c_str(), "ERROR", MB_ICONEXCLAMATION);
+    }
+  }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::mueve_hacia(String sql_z)
+{
+   dm->qry_maxidvnd->Close();
+   dm->qry_maxidvnd->SQL->Clear();
+   dm->qry_maxidvnd->SQL->Add(sql_z);
+   dm->qry_maxidvnd->Open();
+   if(dm->qry_maxidvnd->IsEmpty()) return;
+   busca_vnd(dm->qry_maxidvnd->FieldByName("codigo")->AsString);
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm_mantoprove::busca_vnd(String vnd_z)
+{
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm_mantoprove::primeroExecute(TObject *Sender)
+{
+   //mueve_hacia("select min (codigo) as codigo from proveedor where cia="+IntToStr(cia_z));
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::anteriorExecute(TObject *Sender)
+{
+   //mueve_hacia("select max (codigo) as codigo from proveedor where codigo < '"+ edt_codvnd->Text + "' and cia="+IntToStr(cia_z));
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::siguienteExecute(TObject *Sender)
+{
+  //mueve_hacia("select min (codigo) as codigo from proveedor where codigo > '"+ edt_codvnd->Text + "' and cia="+IntToStr(cia_z));
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::ultimoExecute(TObject *Sender)
+{
+   //mueve_hacia("select max (codigo) as codigo from proveedor where cia="+IntToStr(cia_z));
+
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm_mantoprove::dbgrd_proveedoresCustomDrawCell(TObject *Sender,
+      TCanvas *ACanvas, TRect &ARect, TdxTreeListNode *ANode,
+      TdxTreeListColumn *AColumn, bool ASelected, bool AFocused,
+      bool ANewItemRow, AnsiString &AText, TColor &AColor, TFont *AFont,
+      TAlignment &AAlignment, bool &ADone)
+{
+     if(!ASelected) if(ANode->Index % 2) AColor = clInfoBk;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::desp_ptvt()
+{
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::dbgrd_proveedoresKeyDown(TObject *Sender,
+      WORD &Key, TShiftState Shift)
+{
+  if(Key == VK_SPACE)   desp_vnd();
+  if(Key == VK_RETURN)  desp_vnd();
+  if(Key == VK_F2)      modificaExecute(Sender);
+  if(Key == VK_INSERT)  nuevoExecute(Sender);
+  if(Key == VK_DELETE)  borraExecute(Sender);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::dbgrd_proveedoresDblClick(
+      TObject *Sender)
+{
+  desp_vnd();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_mantoprove::exportarExecute(TObject *Sender)
+{
+  TSaveDialog *SaveDialog = new TSaveDialog (this);
+  TdxDBGrid* midbgrd_z;
+//  TAdvStringGrid* misgrd_z;
+  String tipogrd_z;
+  midbgrd_z = dbgrd_proveedores;
+  tipogrd_z="DBG";
+//  switch (page_detalles->ActivePageIndex) {
+//    case TBS_KARDEX  : midbgrd_z = dbgrd_kardex;   tipogrd_z="DBG"; break;
+//    case TBS_ESTADIS : midbgrd_z = dbgrd_estadis;  tipogrd_z="DBG"; break;
+//    case TBS_OBSERVS : midbgrd_z = dbgrd_observs;  tipogrd_z="DBG"; break;
+//    case TBS_DISPONI : midbgrd_z = dbgrd_dispo;    tipogrd_z="DBG"; break;
+//    case TBS_BUSSERIE: midbgrd_z = dbgrd_busserie; tipogrd_z="DBG"; break;
+//    case TBS_EXIST   : midbgrd_z = dbgrd_exist;    tipogrd_z="DBG"; break;
+//  }
+  SaveDialog->Filter = "Archivos de Texto (*.txt)|*.TXT|Archivos de Excel(*.xls)|*.XLS|Archivos HTML (*.html)|*.HTML";
+  SaveDialog->DefaultExt = "Archivos de Excel";
+  SaveDialog->FileName = midbgrd_z->Name + ".xls";
+  SaveDialog->FilterIndex = 2;
+  if (SaveDialog->Execute()) {
+    if(tipogrd_z == "DBG") {
+      switch( SaveDialog->FilterIndex) {
+        case 1: midbgrd_z->SaveToText(SaveDialog->FileName, true, "\t", "", ""); break;
+        case 2: midbgrd_z->SaveToXLS(SaveDialog->FileName, true); break;
+        case 3: midbgrd_z->SaveToHTML(SaveDialog->FileName, true); break;
+      }
+    }
+//    else if (tipogrd_z == "ADV") {
+//      switch( SaveDialog->FilterIndex) {
+//        case 1: misgrd_z->SaveToCSV(SaveDialog->FileName); break;
+//        case 2: misgrd_z->SaveToXLS(SaveDialog->FileName); break;
+//        case 3: misgrd_z->SaveToHTML(SaveDialog->FileName); break;
+//      }
+//    }
+  }
+  delete SaveDialog;
+}
+//---------------------------------------------------------------------------
+

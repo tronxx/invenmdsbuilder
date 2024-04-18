@@ -1,0 +1,122 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_mantmayoH
+#define Frm_mantmayoH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include "dxExEdtr.hpp"
+#include <Buttons.hpp>
+#include <ExtCtrls.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <ActnList.hpp>
+#include <ComCtrls.hpp>
+#include <ImgList.hpp>
+#include <StdActns.hpp>
+#include <ToolWin.hpp>
+#include <DBCtrls.hpp>
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxTL.hpp"
+#include <Menus.hpp>
+#include "Frme_datosmantmayo.h"
+//---------------------------------------------------------------------------
+class TForm_mantmayo : public TForm
+{
+__published:	// IDE-managed Components
+        TQuery *qry_mayoris;
+        TUpdateSQL *uqry_mayoris;
+        TToolBar *ToolBar1;
+        TActionList *ActionList1;
+        TAction *nuevo;
+        TAction *modifica;
+        TAction *borra;
+        TAction *grabar;
+        TAction *cancelar;
+        TWindowClose *WindowClose1;
+        TAction *primero;
+        TAction *anterior;
+        TAction *siguiente;
+        TAction *ultimo;
+        TToolButton *ToolButton2;
+  TQuery *qry_ciudades;
+  TDataSource *dts_ciudades;
+        TQuery *qry_ciupag;
+        TDataSource *dts_ciupag;
+        TQuery *qry_tipostel;
+        TAction *agrega_tel;
+        TAction *elimina_tel;
+        TPopupMenu *PopupMenu1;
+        TMenuItem *Eliminar1;
+        TQuery *qry_mostmayo;
+        TDataSource *dts_mayoris;
+        TdxDBGrid *dbgrd_mayoris;
+        TdxDBGridMaskColumn *dbgrd_mayorisCODIGO;
+        TdxDBGridMaskColumn *dbgrd_mayorisNOMBRE;
+        TdxDBGridMaskColumn *dbgrd_mayorisDIREC;
+        TdxDBGridMaskColumn *dbgrd_mayorisCIU;
+        TdxDBGridMaskColumn *dbgrd_mayorisRFC;
+        TdxDBGridMaskColumn *dbgrd_mayorisTEL;
+        TdxDBGridMaskColumn *dbgrd_mayorisPDSC;
+        TdxDBGridMaskColumn *dbgrd_mayorisNOMPAG1;
+        TdxDBGridMaskColumn *dbgrd_mayorisDIRPAG1;
+        TdxDBGridMaskColumn *dbgrd_mayorisDIRPAG2;
+        TdxDBGridMaskColumn *dbgrd_mayorisCIUPAG;
+        TdxDBGridMaskColumn *dbgrd_mayorisDESCRI;
+        TSpeedButton *SpeedButton1;
+        TSpeedButton *SpeedButton4;
+        TSpeedButton *SpeedButton5;
+        TSpeedButton *SpeedButton6;
+        TSpeedButton *SpeedButton7;
+        TSpeedButton *SpeedButton8;
+        TSpeedButton *SpeedButton10;
+        TSpeedButton *SpeedButton9;
+        TdxDBGridMaskColumn *dbgrd_mayorisColumn13;
+        TQuery *qry_datospago;
+        TUpdateSQL *uqry_datospago;
+        TQuery *qry_telefonos;
+        TUpdateSQL *uqry_telefonos;
+        TdxDBGridMaskColumn *dbgrd_mayorisContNombre;
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall nuevoExecute(TObject *Sender);
+        void __fastcall FormCreate(TObject *Sender);
+        void __fastcall modificaExecute(TObject *Sender);
+        void __fastcall borraExecute(TObject *Sender);
+        void __fastcall primeroExecute(TObject *Sender);
+        void __fastcall anteriorExecute(TObject *Sender);
+        void __fastcall siguienteExecute(TObject *Sender);
+        void __fastcall ultimoExecute(TObject *Sender);
+        void __fastcall dbgrd_mayorisKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall dbgrd_mayorisDblClick(TObject *Sender);
+        void __fastcall dbgrd_mayorisCustomDrawCell(TObject *Sender,
+          TCanvas *ACanvas, TRect &ARect, TdxTreeListNode *ANode,
+          TdxTreeListColumn *AColumn, bool ASelected, bool AFocused,
+          bool ANewItemRow, AnsiString &AText, TColor &AColor,
+          TFont *AFont, TAlignment &AAlignment, bool &ADone);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm_mantmayo(TComponent* Owner);
+        void __fastcall botones_onoff(int modo_z);
+        void __fastcall busca_vnd(String vnd_z);
+        void __fastcall mueve_hacia(String sql_z);
+        void __fastcall desp_vnd();
+        void __fastcall actualiza_tipostel();
+        void __fastcall agrega_relac(String mayoris_z, String dato1_z, String dato2_z, String tipodato_z);
+        void __fastcall agrega_o_modif(String accion_z);
+
+        int __fastcall busca_iddato(String text_z, int tipodato_z);
+        int cia_z;
+        String permis_z;
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_mantmayo *Form_mantmayo;
+//---------------------------------------------------------------------------
+#endif

@@ -1,0 +1,107 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_infcvtacycH
+#define Frm_infcvtacycH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxTL.hpp"
+#include <Buttons.hpp>
+#include <ComCtrls.hpp>
+#include <ExtCtrls.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <stdio.h>
+#include <ActnList.hpp>
+//---------------------------------------------------------------------------
+class TForm_infcvtacyc : public TForm
+{
+__published:	// IDE-managed Components
+        TPanel *Panel1;
+        TBitBtn *btn_imprel;
+        TGroupBox *pnl_datos;
+        TLabel *lbl_vigencia;
+        TLabel *lbl_corte;
+        TDateTimePicker *date_ini;
+        TDateTimePicker *date_fin;
+        TGroupBox *GroupBox5;
+        TRadioButton *rbtn_fona;
+        TRadioButton *rbtn_imevi;
+        TRadioButton *rbtn_fide;
+        TRadioButton *rbtn_cel;
+        TRadioButton *rbtn_total;
+        TRadioButton *rbtn_menude;
+        TdxDBGrid *dbgrd_renglones;
+        TQuery *qry_max;
+        TQuery *qry_delet;
+        TQuery *qry_maxidtar;
+        TQuery *qry_tpvtatmp;
+        TUpdateSQL *uqry_tpvtatmp;
+        TQuery *qry_deletinf;
+        TQuery *qry_insert;
+        TQuery *qry_updateuno;
+        TQuery *qry_updatedos;
+        TQuery *qry_datos;
+        TQuery *qry_vtasi;
+        TQuery *qry_vtano;
+        TQuery *qry_armar;
+        TQuery *qry_resul;
+        TQuery *qry_upda;
+        TQuery *qry_limp;
+        TQuery *qry_updatcan;
+        TDataSource *dts_armnar;
+        TdxDBGridMaskColumn *dbgrd_renglonesZONA;
+        TdxDBGridMaskColumn *dbgrd_renglonesPTVTA;
+        TdxDBGridMaskColumn *dbgrd_renglonesALMKDX;
+        TdxDBGridMaskColumn *dbgrd_renglonesVTASI;
+        TdxDBGridMaskColumn *dbgrd_renglonesVTANO;
+        TdxDBGridMaskColumn *dbgrd_renglonesNOMZON;
+        TdxDBGridMaskColumn *dbgrd_renglonesNOMPVTA;
+        TGroupBox *Group_venta;
+        TRadioButton *rbtn_conta;
+        TRadioButton *rbtn_credit;
+        TRadioButton *rbtn_totalv;
+        TActionList *ActionList1;
+        TAction *imprimir_reporte;
+        TQuery *qry_acumxzona;
+        void __fastcall FormCreate(TObject *Sender);
+        void __fastcall rbtn_menudeClick(TObject *Sender);
+        void __fastcall imprimir_reporteExecute(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall date_iniExit(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm_infcvtacyc(TComponent* Owner);
+        FILE *archout;
+        TDateTime fecini_z,fecfin_z;
+        String fonot_z,cat_z,antzona_z,anttipo_z,arch_z, encab_z;
+        int idtarmax_z,dtpvtatmp_z,idtipovta_z, factor_z,prfolent_z,ulfolent_z,
+        idtpvtatmp_z,cia_z,pagina_z,lineas_z;
+        double  sumas_z,totvtasi_z,totvtano_z,tototalg_z,vtasi_z,vtano_z,totalg_z,
+        gtotvtasi_z,gtotvtano_z,gtototalg_z, grantotsi_z, grantotno_z;
+        void __fastcall maxyagrega();
+        void __fastcall agrega_tpvtatmp();
+        void __fastcall acumula_infcvtatmp();
+        void __fastcall report_encab();
+        void __fastcall encab1();
+        void __fastcall encab_zona(String  zona_z, String nombzon_z);
+        void __fastcall total_vtas();
+        void __fastcall total_general();
+        void __fastcall total_zona();
+        bool __fastcall checa_salto_pag(int margen_z);
+        void __fastcall armar();
+        String __fastcall busca_nombre(String tipo_z, String dato_z);
+        void __fastcall report_encabtot();
+
+
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_infcvtacyc *Form_infcvtacyc;
+//---------------------------------------------------------------------------
+#endif

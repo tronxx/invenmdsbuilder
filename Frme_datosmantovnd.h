@@ -1,0 +1,44 @@
+//---------------------------------------------------------------------------
+
+
+#ifndef Frme_datosmantovndH
+#define Frme_datosmantovndH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include <Db.hpp>
+#include <DBCtrls.hpp>
+#include <DBTables.hpp>
+#include <Mask.hpp>
+#include <ComCtrls.hpp>
+//---------------------------------------------------------------------------
+class TFrame_datosmantovnd : public TFrame
+{
+__published:	// IDE-managed Components
+        TLabel *Label1;
+        TEdit *edt_cajera;
+        TLabel *Label2;
+        TdxEdit *edt_nombre;
+        TLabel *Label3;
+        TDBLookupComboBox *lkcmb_ptovta;
+        TDBEdit *DBEdit1;
+        TQuery *qry_ptovta;
+        TDataSource *dts_ptovta;
+        TLabel *lbs_status;
+        TComboBox *cmb_status;
+        TDateTimePicker *date_fecbaj;
+        TLabel *lbl_fecbaj;
+        void __fastcall cmb_statusChange(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TFrame_datosmantovnd(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFrame_datosmantovnd *Frame_datosmantovnd;
+//---------------------------------------------------------------------------
+#endif

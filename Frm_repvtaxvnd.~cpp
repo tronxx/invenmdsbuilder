@@ -1,0 +1,373 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frm_repvtaxvnd.h"
+#include "numapal.h"
+#include "imprigra.h"
+#include "stdio.h"
+#include "dmod.h"
+#include "Frm_prever.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "dxCntner"
+#pragma link "dxDBCtrl"
+#pragma link "dxDBGrid"
+#pragma link "dxTL"
+#pragma link "dxDBTLCl"
+#pragma link "dxGrClms"
+#pragma resource "*.dfm"
+#include "numapal.h"
+TForm_repvtaxvnd *Form_repvtaxvnd;
+//---------------------------------------------------------------------------
+__fastcall TForm_repvtaxvnd::TForm_repvtaxvnd(TComponent* Owner)
+        : TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_repvtaxvnd::FormCreate(TObject *Sender)
+{
+  cia_z = dm->cia_z;
+  date_fecini->Date = PrimerDiaMes(IncMonth(dm->ahora(), -1));
+  date_fecfin->Date = UltimoDiaMes(date_fecini->Date);
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_repvtaxvnd::BitBtn1Click(TObject *Sender)
+{
+  int idtpvtatmp_z=0, idtpvt_z=0;
+  String tipoent_z, siono1_z, siono2_z, entcan1_z, entcan2_z;
+  dm->qry_maxidvnd->Close();
+  dm->qry_maxidvnd->SQL->Text = "select max(IDTAREA) as idtarea, max(IDTPVTATMP) as idtpvtatmp from inv_tpvtatmp";
+  dm->qry_maxidvnd->Open();
+  idtarea_z = dm->qry_maxidvnd->FieldByName("idtarea")->AsInteger + 1;
+  idtpvtatmp_z = dm->qry_maxidvnd->FieldByName("idtpvtatmp")->AsInteger + 1;
+  dm->qry_maxidvnd->Close();
+  dm->qry_maxidvnd->SQL->Text = "insert into inv_tpvtatmp (IDTPVTATMP, IDTAREA, IDTIPOVTA, FACTOR, TIPOSAL) values ( :IDTPVTATMP, :IDTAREA, :IDTIPOVTA, :FACTOR, :TIPOSAL )";
+  idtpvt_z = grp_tiporep->ItemIndex;
+  if(grp_netobru->ItemIndex == 0 || grp_netobru->ItemIndex == 1) {
+    switch (idtpvt_z) {
+      case 0: tipoent_z = "V"; break;
+      case 1: tipoent_z = "F"; break;
+      case 2: tipoent_z = "H"; break;
+      case 3: tipoent_z = "Q"; break;
+      case 4: tipoent_z = "M"; break;
+      case 5: tipoent_z = "E"; break;
+    }
+    dm->qry_maxidvnd->ParamByName("IDTPVTATMP")->AsInteger = idtpvtatmp_z++;
+    dm->qry_maxidvnd->ParamByName("IDTAREA")->AsInteger = idtarea_z;
+    dm->qry_maxidvnd->ParamByName("IDTIPOVTA")->AsInteger = 0;
+    dm->qry_maxidvnd->ParamByName("FACTOR")->AsInteger = 1;
+    dm->qry_maxidvnd->ParamByName("TIPOSAL")->AsString = tipoent_z;
+    dm->qry_maxidvnd->ExecSQL();
+  }
+  if(grp_netobru->ItemIndex == 2 || grp_netobru->ItemIndex == 1) {
+    switch (idtpvt_z) {
+      case 0: tipoent_z = "C"; break;
+      case 1: tipoent_z = "Y"; break;
+      case 2: tipoent_z = "O"; break;
+      case 3: tipoent_z = "J"; break;
+      case 4: tipoent_z = "U"; break;
+      case 5: tipoent_z = "R"; break;
+    }
+    dm->qry_maxidvnd->ParamByName("IDTPVTATMP")->AsInteger = idtpvtatmp_z++;
+    dm->qry_maxidvnd->ParamByName("IDTAREA")->AsInteger = idtarea_z;
+    dm->qry_maxidvnd->ParamByName("IDTIPOVTA")->AsInteger = 0;
+    dm->qry_maxidvnd->ParamByName("FACTOR")->AsInteger = -1;
+    dm->qry_maxidvnd->ParamByName("TIPOSAL")->AsString = tipoent_z;
+    dm->qry_maxidvnd->ExecSQL();
+  }
+  if(grp_statcan->ItemIndex == 0 || grp_statcan->ItemIndex == 1) entcan1_z = "S";
+  if(grp_statcan->ItemIndex == 0 || grp_statcan->ItemIndex == 2) entcan2_z = "N";
+  if(grp_statsino->ItemIndex == 0 || grp_statsino->ItemIndex == 1) siono1_z = "S";
+  if(grp_statsino->ItemIndex == 0 || grp_statsino->ItemIndex == 2) siono2_z = "N";
+  qry_analisma->Close();
+  qry_analisma->ParamByName("idtarea")->AsInteger = idtarea_z;
+  qry_analisma->ParamByName("fecini")->AsDateTime = date_fecini->Date;
+  qry_analisma->ParamByName("fecfin")->AsDateTime = date_fecfin->Date;
+  qry_analisma->ParamByName("cia")->AsInteger = cia_z;
+  qry_analisma->ParamByName("siono1")->AsString = siono1_z;
+  qry_analisma->ParamByName("siono2")->AsString = siono2_z;
+  qry_analisma->ParamByName("entcan1")->AsString = entcan1_z;
+  qry_analisma->ParamByName("entcan2")->AsString = entcan2_z;
+  qry_analisma->Open();
+  dm->qry_maxidvnd->Close();
+  dm->qry_maxidvnd->SQL->Text = "delete from inv_tpvtatmp where IDTAREA = :IDTAREA";
+  dm->qry_maxidvnd->ExecSQL();
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_repvtaxvnd::FormClose(TObject *Sender,
+      TCloseAction &Action)
+{
+  Action = caFree;        
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_repvtaxvnd::Exportara1Click(TObject *Sender)
+{
+  TSaveDialog *SaveDialog = new TSaveDialog (this);
+  TdxDBGrid* midbgrd_z;
+//  TAdvStringGrid* misgrd_z;
+  String tipogrd_z;
+  midbgrd_z = dbgrd_renglones;
+  tipogrd_z="DBG";
+//  switch (page_detalles->ActivePageIndex) {
+//    case TBS_KARDEX  : midbgrd_z = dbgrd_kardex;   tipogrd_z="DBG"; break;
+//    case TBS_ESTADIS : midbgrd_z = dbgrd_estadis;  tipogrd_z="DBG"; break;
+//    case TBS_OBSERVS : midbgrd_z = dbgrd_observs;  tipogrd_z="DBG"; break;
+//    case TBS_DISPONI : midbgrd_z = dbgrd_dispo;    tipogrd_z="DBG"; break;
+//    case TBS_BUSSERIE: midbgrd_z = dbgrd_busserie; tipogrd_z="DBG"; break;
+//    case TBS_EXIST   : midbgrd_z = dbgrd_exist;    tipogrd_z="DBG"; break;
+//  }
+  SaveDialog->Filter = "Archivos de Texto (*.txt)|*.TXT|Archivos de Excel(*.xls)|*.XLS|Archivos HTML (*.html)|*.HTML";
+  SaveDialog->DefaultExt = "Archivos de Excel";
+  SaveDialog->FileName = "*.xls";
+  SaveDialog->FilterIndex = 2;
+  if (SaveDialog->Execute()) {
+    if(tipogrd_z == "DBG") {
+      switch( SaveDialog->FilterIndex) {
+        case 1: midbgrd_z->SaveToText(SaveDialog->FileName, true, "\t", "", ""); break;
+        case 2: midbgrd_z->SaveToXLS(SaveDialog->FileName, true); break;
+        case 3: midbgrd_z->SaveToHTML(SaveDialog->FileName, true); break;
+      }
+    }
+//    else if (tipogrd_z == "ADV") {
+//      switch( SaveDialog->FilterIndex) {
+//        case 1: misgrd_z->SaveToCSV(SaveDialog->FileName); break;
+//        case 2: misgrd_z->SaveToXLS(SaveDialog->FileName); break;
+//        case 3: misgrd_z->SaveToHTML(SaveDialog->FileName); break;
+//      }
+//    }
+  }
+  delete SaveDialog;
+        
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_repvtaxvnd::exporta_dbgrdExecute(TObject *Sender)
+{
+  TSaveDialog *SaveDialog = new TSaveDialog (this);
+  TdxDBGrid* midbgrd_z;
+//  TAdvStringGrid* misgrd_z;
+  String tipogrd_z;
+  midbgrd_z = dbgrd_renglones;
+  tipogrd_z="DBG";
+//  switch (page_detalles->ActivePageIndex) {
+//    case TBS_KARDEX  : midbgrd_z = dbgrd_kardex;   tipogrd_z="DBG"; break;
+//    case TBS_ESTADIS : midbgrd_z = dbgrd_estadis;  tipogrd_z="DBG"; break;
+//    case TBS_OBSERVS : midbgrd_z = dbgrd_observs;  tipogrd_z="DBG"; break;
+//    case TBS_DISPONI : midbgrd_z = dbgrd_dispo;    tipogrd_z="DBG"; break;
+//    case TBS_BUSSERIE: midbgrd_z = dbgrd_busserie; tipogrd_z="DBG"; break;
+//    case TBS_EXIST   : midbgrd_z = dbgrd_exist;    tipogrd_z="DBG"; break;
+//  }
+  SaveDialog->Filter = "Archivos de Texto (*.txt)|*.TXT|Archivos de Excel(*.xls)|*.XLS|Archivos HTML (*.html)|*.HTML";
+  SaveDialog->DefaultExt = "Archivos de Excel";
+  SaveDialog->FileName = midbgrd_z->Name + ".xls";
+  SaveDialog->FilterIndex = 2;
+  if (SaveDialog->Execute()) {
+    if(tipogrd_z == "DBG") {
+      switch( SaveDialog->FilterIndex) {
+        case 1: midbgrd_z->SaveToText(SaveDialog->FileName, true, "\t", "", ""); break;
+        case 2: midbgrd_z->SaveToXLS(SaveDialog->FileName, true); break;
+        case 3: midbgrd_z->SaveToHTML(SaveDialog->FileName, true); break;
+      }
+    }
+//    else if (tipogrd_z == "ADV") {
+//      switch( SaveDialog->FilterIndex) {
+//        case 1: misgrd_z->SaveToCSV(SaveDialog->FileName); break;
+//        case 2: misgrd_z->SaveToXLS(SaveDialog->FileName); break;
+//        case 3: misgrd_z->SaveToHTML(SaveDialog->FileName); break;
+//      }
+//    }
+  }
+  delete SaveDialog;
+
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TForm_repvtaxvnd::dbgrd_renglonesCustomDraw(
+      TObject *Sender, TCanvas *ACanvas, TRect &ARect,
+      TdxTreeListNode *ANode, TdxDBTreeListColumn *AColumn,
+      const AnsiString AText, TFont *AFont, TColor &AColor, bool ASelected,
+      bool AFocused, bool &ADone)
+{
+    if(!ASelected) if(ANode->Index % 2) AColor = clInfoBk;
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_repvtaxvnd::imprimirExecute(TObject *Sender)
+{
+  generar_reporte();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_repvtaxvnd::generar_reporte()
+{
+  double total_z=0, subtvend_z=0, subtzona_z=0;
+  int LINEAS_X_PAG = 60;
+  if (dm->tipoimp_z == IMPRESORA_GRAFICA ) LINEAS_X_PAG = 90;
+  String arch_z = "repvtaxvnd.txt", titremate_z, antnomubi_z,
+    mensaje_z, titmsg_z;
+  mensaje_z = "Desea imprimir el reporte ";
+  titmsg_z = "Impresión de Reporte de Ventas x Vendedor";
+  if(Application->MessageBox(mensaje_z.c_str(), titmsg_z.c_str(), MB_ICONQUESTION+MB_YESNO) != mrYes) return;
+  if( (archout = fopen(arch_z.c_str(), "wt")) == NULL) {
+    dm->MensajeError("No puedo abrir el archivo textual de salida", "Error");
+    return;
+  }
+  pagina_z = 1;
+  antzona_z  = "-1";
+  antvend_z = "-1";
+  //--- Aqui Va
+  qry_analisma->DisableControls();
+  for(qry_analisma->First(); !qry_analisma->Eof; qry_analisma->Next()) {
+    zona_z = qry_analisma->FieldByName("zonainv")->AsString;
+    vendedor_z = qry_analisma->FieldByName("vend")->AsString;
+    if(antzona_z == "-1") {
+      antzona_z = zona_z; antvend_z = vendedor_z;
+      report_encab();
+    }
+    if (zona_z != antzona_z) {
+        //reporte_subtot(subtvend_z, "Total de " + busca_dato("VENDEDOR", antvend_z), "");
+        //reporte_subtot(subtzona_z, "Total de " +    busca_dato("ZONA", antzona_z), "");
+        subtvend_z    = 0;
+        subtzona_z   = 0;
+        antzona_z = zona_z;
+        antvend_z = vendedor_z;
+        if(lineas_z > LINEAS_X_PAG - 6) {
+          fprintf(archout, "%c", 12); pagina_z++; report_encab();
+        } else {
+          report_subencabzona();
+        }
+    }
+    if (vendedor_z != antvend_z ) {
+        //reporte_subtot(subtvend_z, "Total de " + busca_dato("VENDEDOR", antvend_z), "");
+        subtvend_z    = 0;
+        antvend_z = vendedor_z;
+        if(lineas_z > LINEAS_X_PAG - 6) {
+          fprintf(archout, "%c", 12); pagina_z++; report_encab();
+        } else {
+          report_subencabvend();
+        }
+    }
+    if(lineas_z > LINEAS_X_PAG) {
+      fprintf(archout, "%c", 12); pagina_z++; report_encab();
+    }
+    fprintf(archout, "%s|", ljust(qry_analisma->FieldByName("recemi")->AsString, 5));
+    fprintf(archout, "%s|", FormatDateTime("dd/mm/yyyy", qry_analisma->FieldByName("fecha")->AsDateTime));
+    fprintf(archout, "%s|", ljust(qry_analisma->FieldByName("numero")->AsString, 5));
+    fprintf(archout, "%s|", ljust(qry_analisma->FieldByName("codigo")->AsString, 13));
+    fprintf(archout, "%s|", ljust(qry_analisma->FieldByName("descri")->AsString, 30));
+    fprintf(archout, "\n");
+    subtvend_z    += qry_analisma->FieldByName("costotot")->AsFloat;
+    total_z      += qry_analisma->FieldByName("costotot")->AsFloat;
+    subtzona_z   += qry_analisma->FieldByName("costotot")->AsFloat;
+    lineas_z++;
+  }
+  //reporte_subtot(subtvend_z, "Total de " + busca_dato("VENDEDOR", antvend_z), "");
+  //reporte_subtot(subtzona_z, "Total de " +    busca_dato("ZONA", zona_z), "");
+  //reporte_subtot(total_z, "Total General", "");
+  fclose(archout);
+  qry_analisma->EnableControls();
+
+//  vehiculo, kmts, serv, descri, chofer, costo, cambio
+  if(dm->preview_z) {
+    VistaPrevia(this, arch_z, dm->rutaimp_z, dm->tipoimp_z, dm->ff_z);
+  } else {
+    manda_imp(arch_z, dm->rutaimp_z, dm->tipoimp_z, dm->ff_z);
+  }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_repvtaxvnd::report_encab()
+{
+  titulo_z = "Relacion de Ventas";
+  fprintf(archout, "%s%s%s\n", dm->font_impre(dm->impre_z, PICA_PITCH),
+    dm->font_impre(dm->impre_z, CONDENSADO_OFF), cjust(dm->nemp_z, 80)
+  );
+  fprintf(archout, "%s%s%s%s Pag:%d\n", dm->font_impre(dm->impre_z, CONDENSADO_ON),
+    FormatDateTime("dd-mm-yyyy hh:mm", Now()),
+    dm->font_impre(dm->impre_z, CONDENSADO_OFF),  cjust(dm->diremp_z, 64), pagina_z
+  );
+  fprintf(archout, "Impresion de %s\n", titulo_z);
+  fprintf(archout, "Ventas del :%s  al %s%s \n",
+    FormatDateTime("dd-mm-yyyy", date_fecini->Date),
+    FormatDateTime("dd-mm-yyyy", date_fecfin->Date),
+    dm->font_impre(dm->impre_z, CONDENSADO_ON)
+  );
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, ELITE));
+  fprintf(archout, "%s%s",
+    dm->font_impre(dm->impre_z, SUBRAYADO_ON),
+    dm->font_impre(dm->impre_z, CONDENSADO_OFF)
+  );
+  fprintf(archout, "%s|", ljust("Suc", 4));
+  fprintf(archout, "%s|", ljust("Fecha Vta", 10));
+  fprintf(archout, "%s|", ljust("N.Sal", 5));
+  fprintf(archout, "%s|", ljust("Articulo", 44));
+  fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+  lineas_z = 5;
+  report_subencabzona();
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm_repvtaxvnd::report_subencabvend()
+{
+   String nombre_z="";
+   nombre_z = busca_dato("VENDEDOR", antvend_z);
+   fprintf(archout, "Vendedor: %s %s\n", antvend_z, nombre_z);
+   lineas_z++;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_repvtaxvnd::report_subencabzona()
+{
+   String nombre_z="";
+   nombre_z = busca_dato("ZONA", antzona_z);
+   fprintf(archout, "Zona: %s %s\n", antzona_z, nombre_z);
+   lineas_z++;
+   report_subencabvend();
+}
+//---------------------------------------------------------------------------
+
+String __fastcall TForm_repvtaxvnd::busca_dato(String tipodato_z, String clave_z)
+{
+   String nombre_z="", sql_z;
+   dm->qry_maxidvnd->Close();
+   dm->qry_maxidvnd->SQL->Clear();
+   if (tipodato_z == "VENDEDOR") {
+     sql_z = "select nombre from vendedor where codigo = :CLAVE";
+   } else if (tipodato_z == "ZONA") {
+     sql_z = "select nombre from zonainv where zona = :CLAVE";
+   }
+   dm->qry_maxidvnd->SQL->Add(sql_z);
+   dm->qry_maxidvnd->ParamByName("CLAVE")->AsString = clave_z;
+   dm->qry_maxidvnd->Open();
+   if(!dm->qry_maxidvnd->IsEmpty())
+     nombre_z = dm->qry_maxidvnd->FieldByName("nombre")->AsString;
+   return (nombre_z);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_repvtaxvnd::reporte_subtot(double importe_z, String tit_z, String tipo_z)
+{
+  double PIVA_Z = 15, antesiva_z;
+  if(tipo_z == "N") {
+    antesiva_z = importe_z / ( PIVA_Z / 100 + 1 );
+    fprintf(archout, "%s %s\n",
+      rjust(tit_z + " Antes de Iva", 105),
+      rjust(FormatFloat("###,##0.00", antesiva_z), 12)
+    );
+    lineas_z++;
+  }
+  fprintf(archout, "%s %s\n",
+    rjust(tit_z, 69),
+    rjust(FormatFloat("###,##0.00", importe_z), 12)
+  );
+  lineas_z++;
+}
+//---------------------------------------------------------------------------
+

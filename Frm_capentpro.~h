@@ -1,0 +1,213 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_capentproH
+#define Frm_capentproH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <ExtCtrls.hpp>
+#include <ComCtrls.hpp>
+#include <Mask.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxTL.hpp"
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+#include <ActnList.hpp>
+#include <ImgList.hpp>
+#include <StdActns.hpp>
+#include <DBCtrls.hpp>
+#include <ToolWin.hpp>
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include "dxExEdtr.hpp"
+#include <Buttons.hpp>
+#include "dxDBELib.hpp"
+#include <stdio.h>
+#include <Menus.hpp>
+#include "Frme_datoscapentpro.h"
+//---------------------------------------------------------------------------
+void _fastcall CapEntPro(TForm *Padre, String tipo, bool estado);
+//---------------------------------------------------------------------------
+class TForm_capentpro : public TForm
+{
+__published:	// IDE-managed Components
+        TdxDBGrid *dbgrd_renentra;
+        TQuery *qry_entradas;
+        TQuery *qry_renentra;
+    TDataSource *dtsRenEntra;
+        TdxDBGridMaskColumn *dbgrd_renentraCODINV;
+        TdxDBGridMaskColumn *dbgrd_renentraSERIE;
+        TdxDBGridMaskColumn *dbgrd_renentraSIONO;
+        TdxDBGridMaskColumn *dbgrd_renentraFOLSAL;
+        TdxDBGridMaskColumn *dbgrd_renentraFOLENT;
+        TdxDBGridMaskColumn *dbgrd_renentraUNIDS;
+        TdxDBGridMaskColumn *dbgrd_renentraPIVA;
+        TdxDBGridMaskColumn *dbgrd_renentraIMPORTE;
+        TdxDBGridMaskColumn *dbgrd_renentraSTATUS;
+        TdxDBGridColumn *dbgrd_renentraDESCRI;
+        TdxDBGridCurrencyColumn *dbgrd_renentraCOSTOU;
+        TActionList *ActionList1;
+        TAction *nuevo;
+        TAction *modifica;
+        TAction *borra;
+        TAction *grabar;
+        TAction *cancelar;
+        TWindowClose *WindowClose1;
+        TAction *primero;
+        TAction *anterior;
+        TAction *siguiente;
+        TAction *ultimo;
+        TAction *exporta_dbgrd;
+        TAction *selec_orden;
+        TToolBar *ToolBar1;
+        TToolButton *ToolButton3;
+        TUpdateSQL *uqry_entradas;
+        TGroupBox *grp_datosren;
+        TLabel *Label8;
+        TLabel *Label10;
+        TLabel *Label12;
+        TDBEdit *DBEdit4;
+        TBitBtn *btn_nvoren;
+        TdxCurrencyEdit *edt_canti;
+        TdxEdit *edt_folios;
+        TQuery *qry_inven;
+        TDataSource *dts_inven;
+        TQuery *qry_ultfol;
+        TAction *agreren;
+        TAction *acepta_ren;
+        TQuery *qry_folsale;
+        TUpdateSQL *uqry_renentra;
+        TDataSource *dts_entradas;
+        TAction *cancela_renglon;
+    TAction *CierraRen;
+    TPopupMenu *pop_menuren;
+    TMenuItem *AgregaReng1;
+    TMenuItem *CancelaRenglon1;
+    TMenuItem *Exportara1;
+    TMenuItem *CierraRenglon1;
+    TAction *imprime;
+        TLabel *Label6;
+        TQuery *qry_folsigent;
+        TQuery *qry_planesp;
+        TDataSource *dts_planesp;
+        TQuery *qry_prove;
+        TDataSource *dts_prove;
+        TQuery *qry_entpag;
+        TUpdateSQL *uqry_entpag;
+        TUpdateSQL *uqry_mventpag;
+        TQuery *qry_mventpag;
+        TDataSource *dts_mventpag;
+        TDataSource *dts_entpag;
+        TAction *cierra_ent;
+        TdxDBGridCurrencyColumn *dbgrd_renentraPRECIO;
+        TdxDBGridCurrencyColumn *dbgrd_renentraCOSTONETO;
+        TAction *capobs;
+        TAction *deshacer_afectar;
+        TMenuItem *DeshacerAfectacindelRengln1;
+        TEdit *edt_codigo;
+        TAction *modifica_pagares;
+        TMenuItem *Cambiara2Pagares1;
+        TSpeedButton *SpeedButton1;
+        TSpeedButton *SpeedButton2;
+        TSpeedButton *SpeedButton3;
+        TSpeedButton *SpeedButton4;
+        TSpeedButton *SpeedButton7;
+        TSpeedButton *SpeedButton8;
+        TSpeedButton *SpeedButton9;
+        TSpeedButton *SpeedButton10;
+        TSpeedButton *SpeedButton11;
+        TSpeedButton *SpeedButton12;
+        TSpeedButton *SpeedButton13;
+        TGroupBox *GroupBox1;
+        TFrame_datoscapentpro *Frame_datoscapentpro1;
+        TUpdateSQL *uqry_folsigent;
+        TBitBtn *BitBtn1;
+        TBitBtn *BitBtn2;
+        TdxCurrencyEdit *edt_costou;
+        TQuery *qry_diary;
+        TQuery *qry_descri2;
+        TAction *abre_entrada;
+        TSpeedButton *SpeedButton5;
+        TAction *ver_datosped;
+        TBitBtn *btn_pedimento;
+        TMenuItem *Pedimento1;
+        TMenuItem *Entradas1;
+        TMenuItem *Nueva1;
+        TMenuItem *Borra1;
+        TMenuItem *Observ1;
+        TMenuItem *CEntrad1;
+        TMenuItem *AbreEnt1;
+        TMenuItem *Primero1;
+        TMenuItem *Siguiente1;
+        TMenuItem *Anterior1;
+        TMenuItem *Ultimo1;
+        TMenuItem *Renglones1;
+        TAction *activar_menu;
+    void __fastcall btnNuevoClick(TObject *Sender);
+    void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall primeroExecute(TObject *Sender);
+        void __fastcall anteriorExecute(TObject *Sender);
+        void __fastcall siguienteExecute(TObject *Sender);
+        void __fastcall ultimoExecute(TObject *Sender);
+        void __fastcall nuevoExecute(TObject *Sender);
+        void __fastcall borraExecute(TObject *Sender);
+        void __fastcall grabarExecute(TObject *Sender);
+        void __fastcall agrerenExecute(TObject *Sender);
+    void __fastcall CierraRenExecute(TObject *Sender);
+    void __fastcall cancela_renglonExecute(TObject *Sender);
+    void __fastcall dbgrd_renentraCustomDrawCell(TObject *Sender,
+          TCanvas *ACanvas, TRect &ARect, TdxTreeListNode *ANode,
+          TdxTreeListColumn *AColumn, bool ASelected, bool AFocused,
+          bool ANewItemRow, AnsiString &AText, TColor &AColor,
+          TFont *AFont, TAlignment &AAlignment, bool &ADone);
+    void __fastcall exporta_dbgrdExecute(TObject *Sender);
+    void __fastcall imprimeExecute(TObject *Sender);
+    void __fastcall cancelarExecute(TObject *Sender);
+        void __fastcall edt_numentKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall cierra_entExecute(TObject *Sender);
+        void __fastcall capobsExecute(TObject *Sender);
+        void __fastcall deshacer_afectarExecute(TObject *Sender);
+        void __fastcall modifica_pagaresExecute(TObject *Sender);
+        void __fastcall Frame_datoscapentpro1edt_numentKeyDown(
+          TObject *Sender, WORD &Key, TShiftState Shift);
+        void __fastcall dbgrd_renentraKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall abre_entradaExecute(TObject *Sender);
+        void __fastcall ver_datospedExecute(TObject *Sender);
+        void __fastcall activar_menuExecute(TObject *Sender);
+private:	// User declarations
+    void __fastcall LimpiarPantalla();
+    bool __fastcall BuscarEntrada(int iNumero);
+    void __fastcall ListarRenglon();
+    void __fastcall SigteSabana(int tipo_mov);
+    void __fastcall botones_onoff(int modo_z);
+    void __fastcall alta_ptvt(String alm_z, double fecha_z, int nument_z);
+    void __fastcall modif_ptvt();
+    void __fastcall edicion_factible(int modo_z);
+public:		// User declarations
+    int iTpcon, tipoest_z, cia_z, mi_entrada_z, lineas_z, pagina_z;
+    AnsiString sDescriEnt, sTipo, mensaje_z, este_z, titulo_z, cerrado_z,
+      titmsg_z, genero_z, permis_z;
+    FILE *archout;
+    TDateTime fecha_z;
+    void __fastcall report_encab();
+    void __fastcall afecta_pagare();
+    bool __fastcall busca_cod(String codigo_z);
+    void __fastcall despliega_totales();
+    void __fastcall salta_linea();
+    String __fastcall obten_grupo(String dato_z, String codigo_z);
+    __fastcall TForm_capentpro(TComponent* Owner, String tipo_sabana, bool estado);
+    double pivapag_z;
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_capentpro *Form_capentpro;
+//---------------------------------------------------------------------------
+#endif

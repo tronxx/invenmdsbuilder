@@ -1,0 +1,645 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frm_infcvtacyc.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "dxCntner"
+#pragma link "dxDBCtrl"
+#pragma link "dxDBGrid"
+#pragma link "dxTL"
+#pragma resource "*.dfm"
+#include "imprigra.h"
+#include "numapal.h"
+#include "dmod.h"
+#include "situaciones.h"
+TForm_infcvtacyc *Form_infcvtacyc;
+const int MAX_LINEAS = 57;
+//---------------------------------------------------------------------------
+__fastcall TForm_infcvtacyc::TForm_infcvtacyc(TComponent* Owner)
+        : TForm(Owner)
+{
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_infcvtacyc::report_encab()
+{
+  String  tit2_z, tit1_z,ct_z,tic3_z;
+  fprintf(archout, "%s%s%s\n", dm->font_impre(dm->impre_z, ELITE),
+    dm->font_impre(dm->impre_z, CONDENSADO_OFF), cjust(dm->nemp_z, 90)
+  );
+  fprintf(archout, "%s%s%s%s Pag:%d\n", dm->font_impre(dm->impre_z, CONDENSADO_ON),
+     "Frm_infcvtacyc " + FormatDateTime("dd-mm-yyyy hh:nn", Now())+ " ",
+    dm->font_impre(dm->impre_z, CONDENSADO_OFF),  cjust(dm->diremp_z, 60),pagina_z
+  );
+   tit1_z = "INFORME DE DIRECCION ";
+   fprintf(archout, "%s", dm->font_impre(dm->impre_z, ON_LINE_EXPANDED_ON));
+   fprintf(archout, "%s\n", cjust( tit1_z,45));
+   fprintf(archout, "%s", dm->font_impre(dm->impre_z, ON_LINE_EXPANDED_OFF));
+   fprintf(archout, "%s", dm->font_impre(dm->impre_z, ON_LINE_EXPANDED_ON));
+   fprintf(archout, "%s\n", cjust( " DEL "  + FormatDateTime("dd/mm/yyyy",
+   date_ini->Date) + " AL "  + FormatDateTime("dd/mm/yyyy",
+   date_fin->Date),41));
+   fprintf(archout, "%s", dm->font_impre(dm->impre_z, ON_LINE_EXPANDED_OFF));
+
+   if(rbtn_credit->Checked ){
+     ct_z = "CREDITO";
+    }else if(rbtn_conta->Checked ){
+     ct_z = "CONTADO";
+    }else if(rbtn_totalv->Checked ){
+     ct_z = "CREDITO Y CONTADO";
+    }
+
+   tit2_z = "ANALISIS DE COSTOS DE MENUDEO VENTAS ";
+   fprintf(archout, "%s\n", cjust( tit2_z + ct_z ,85));
+
+    if(rbtn_fona->Checked ){
+       tic3_z = "ANALISIS DE COSTOS DE VENTAS FONACOT";
+    }else if(rbtn_fide->Checked ){
+        tic3_z = "ANALISIS DE COSTOS DE VENTAS FIDE ";
+    }else if(rbtn_imevi->Checked ){
+        tic3_z = "ANALISIS DE COSTOS DE VENTAS IMEVI";
+    }else if(rbtn_cel->Checked ){
+        tic3_z = "ANALISIS DE COSTOS DE VENTAS CELULARES";
+    }else if(rbtn_total->Checked ){
+        tic3_z = "ANALISIS DE COSTOS DE VENTAS MENUDEO + FONACOT + FIDE + CELULARES";
+    }
+   fprintf(archout, "%s\n", cjust( "VALIDACION DE COSTOS C/ANALITICOS" ,75));
+   fprintf(archout,"\n");
+   if(encab_z == "ANALISIS_X_ZONA") encab1();
+   if(encab_z == "TOTXZONA") report_encabtot();
+
+   lineas_z = 8;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_infcvtacyc::encab1()
+{
+   fprintf(archout, "%s", cjust(" ",30));
+   fprintf(archout, "%s|", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+   fprintf(archout, "%s|", cjust("*",15));
+   fprintf(archout, "%s|", cjust("",15));
+   fprintf(archout, "%s|", cjust("Total",12));
+   fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+   lineas_z += 1;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_infcvtacyc::report_encabtot()
+{
+   fprintf(archout, "%s", ljust(" ",10));
+   fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+   fprintf(archout, "%s|", cjust("",2));
+   fprintf(archout, "%s|", cjust("ZONA",30));
+   fprintf(archout, "%s|", cjust("Total",12));
+   fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+   lineas_z += 1;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_infcvtacyc::encab_zona(String  zona_z, String nombzon_z)
+{
+  fprintf(archout, "%s", ljust("Zona:" + zona_z + " " + nombzon_z, 50));
+  fprintf(archout,"\n");
+  lineas_z += 1;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_infcvtacyc::maxyagrega()
+{
+  int max_z;
+  fecini_z = date_ini->Date;
+  fecfin_z = date_fin->Date;
+
+  //Entrada MAX
+  qry_max->Close();
+  qry_max->Open();
+  max_z = qry_max->FieldByName("max")->AsInteger;
+
+  //Reporte De
+  if(rbtn_fona->Checked ){
+     fonot_z = "F";
+  }else if(rbtn_fide->Checked ){
+     fonot_z = "I ";
+  }else if(rbtn_imevi->Checked ){
+     fonot_z = "V";
+  }else if(rbtn_cel->Checked ){
+     fonot_z = "C";
+  }else if(rbtn_menude->Checked ){
+     fonot_z = "M";
+  }else if(rbtn_total->Checked ){
+     fonot_z = "T";
+  }
+  //Ventas De
+  if(rbtn_credit->Checked ){
+     cat_z = "C";
+  }else if(rbtn_conta->Checked ){
+     cat_z = "A";
+  }else if(rbtn_totalv->Checked ){
+     cat_z = "T";
+  }
+
+  qry_maxidtar->Close();
+  qry_maxidtar->Open();
+  idtarmax_z = qry_maxidtar->FieldByName("idmax")->AsInteger;
+  idtarmax_z  = idtarmax_z  + 1;
+
+  qry_delet->Close();
+  qry_delet->ParamByName("IDTAR")->AsString = idtarmax_z;
+  qry_delet->ExecSQL();
+
+  if ( fonot_z == "M" || fonot_z == "T" ){
+    idtpvtatmp_z = max_z + 1;
+
+    idtipovta_z = 1;
+    factor_z = 1;
+    if( fonot_z == "M" ){
+      if(cat_z == "C"){
+         prfolent_z = 2;
+         ulfolent_z = 2;
+      }
+      if(cat_z == "A" ){
+         prfolent_z = 1;
+         ulfolent_z = 1;
+      }
+      if(cat_z == "T"){
+         prfolent_z = 1;
+         ulfolent_z = 2;
+      }
+    }else{
+     prfolent_z = 0;
+     ulfolent_z = 9999999;
+    }
+
+    agrega_tpvtatmp();
+
+    ///////////////////////////////
+
+    idtpvtatmp_z = idtpvtatmp_z + 1;
+    idtipovta_z = 5;
+    factor_z = -1;
+    if( fonot_z == "M" ){
+      if(cat_z == "C"){
+         prfolent_z = 1;
+         ulfolent_z = 999999;
+      }
+      if(cat_z == "A" ){
+         prfolent_z = -1;
+         ulfolent_z = -1;
+      }
+      if(cat_z == "T"){
+         prfolent_z = 1;
+         ulfolent_z = 999999;
+      }
+    }else{
+     prfolent_z = 0;
+     ulfolent_z = 9999999;
+    }
+
+    agrega_tpvtatmp();
+  }
+
+  if(fonot_z == "F" || fonot_z == "T"){
+     idtpvtatmp_z = idtpvtatmp_z + 1;
+     idtipovta_z = 2;
+     factor_z = 1;
+     prfolent_z = 0; ulfolent_z = 9999999;
+     agrega_tpvtatmp();
+
+     idtpvtatmp_z = idtpvtatmp_z + 1;
+     idtipovta_z = 6; factor_z = -1;
+     prfolent_z = 0; ulfolent_z = 9999999;
+     agrega_tpvtatmp();
+  }
+
+  if(fonot_z == "V" || fonot_z == "T"){
+     idtpvtatmp_z = idtpvtatmp_z + 1;
+     idtipovta_z = 9;
+     factor_z = 1;
+     prfolent_z = 0; ulfolent_z = 9999999;
+     agrega_tpvtatmp();
+
+     idtpvtatmp_z = idtpvtatmp_z + 1;
+     idtipovta_z = 10; factor_z = -1;
+     prfolent_z = 0; ulfolent_z = 9999999;
+     agrega_tpvtatmp();
+  }
+
+  if(fonot_z == "I" || fonot_z == "T"){
+     idtpvtatmp_z = idtpvtatmp_z + 1;
+     idtipovta_z = 3;
+     factor_z = 1;
+     prfolent_z = 0; ulfolent_z = 9999999;
+     agrega_tpvtatmp();
+
+     idtpvtatmp_z = idtpvtatmp_z + 1;
+     idtipovta_z = 7; factor_z = -1;
+     prfolent_z = 0; ulfolent_z = 9999999;
+     agrega_tpvtatmp();
+  }
+
+  if(fonot_z == "C" || fonot_z == "T"){
+     idtpvtatmp_z = idtpvtatmp_z + 1;
+     idtipovta_z = 4;
+     factor_z = 1;
+     prfolent_z = 0; ulfolent_z = 9999999;
+     agrega_tpvtatmp();
+
+     idtpvtatmp_z = idtpvtatmp_z + 1;
+     idtipovta_z = 8; factor_z = -1;
+     prfolent_z = 0; ulfolent_z = 9999999;
+     agrega_tpvtatmp();
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_infcvtacyc::agrega_tpvtatmp()
+{
+    qry_tpvtatmp->Append();
+    qry_tpvtatmp->FieldByName("idtpvtatmp")->AsInteger = idtpvtatmp_z;
+    qry_tpvtatmp->FieldByName("idtarea")->AsInteger = idtarmax_z;
+    qry_tpvtatmp->FieldByName("idtipovta")->AsInteger = idtipovta_z;
+    qry_tpvtatmp->FieldByName("factor")->AsInteger = factor_z;
+    qry_tpvtatmp->FieldByName("tiposal")->AsString = "";
+    qry_tpvtatmp->FieldByName("folentini")->AsString = prfolent_z;
+    qry_tpvtatmp->FieldByName("folentfin")->AsString = ulfolent_z;
+    qry_tpvtatmp->Post();
+    try
+    {
+       dm->manvehi->StartTransaction();
+       qry_tpvtatmp->ApplyUpdates();
+       dm->manvehi->Commit();
+    }
+    catch(...)
+    {
+       dm->manvehi->Rollback();
+       Application->MessageBox("NO FUE POSIBLE AGREGAR REGISTRO", "Error", MB_OK | MB_ICONERROR);
+    }
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_infcvtacyc::acumula_infcvtatmp()
+{
+  //Eliminamos
+  qry_deletinf->Close();
+  qry_deletinf->ExecSQL();
+
+  //---------UNO
+  //insertamos en la tabla
+  qry_insert->Close();
+  qry_insert->ExecSQL();
+
+  //Actualizamos
+  qry_updateuno->Close();
+  qry_updateuno->ParamByName("CIA")->AsString = cia_z;
+  qry_updateuno->ExecSQL();
+
+ //---------DOS
+  //insertamos en la tabla
+  qry_insert->Close();
+  qry_insert->ExecSQL();
+
+  //Actualizamos
+  qry_updatedos->Close();
+  qry_updatedos->ParamByName("CIA")->AsString = cia_z;
+  qry_updatedos->ExecSQL();
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_infcvtacyc::armar()
+{
+
+  String voc_z,siono_z,ptvta_z,almkdx_z,tipo_z;
+  double totalno_z,totalsi_z;
+  qry_armar->Close();
+  qry_armar->Open();
+
+
+  for(qry_armar->First(); !qry_armar->Eof; qry_armar->Next()) {
+      ptvta_z = qry_armar->FieldByName("ptvta")->AsString;
+      almkdx_z = qry_armar->FieldByName("almkdx")->AsString;
+      tipo_z = qry_armar->FieldByName("tipo")->AsString;
+      for(int jj_z = 0; jj_z < 2; jj_z++) {
+        if(jj_z == 0)   voc_z = "V";
+        if(jj_z == 1)   voc_z = "C";
+
+        siono_z = "S";
+        qry_resul->Close();
+        qry_resul->ParamByName("IDTAR")->AsInteger = idtarmax_z;
+        qry_resul->ParamByName("VOC")->AsString =  voc_z;
+        qry_resul->ParamByName("ALM")->AsString = almkdx_z;
+        qry_resul->ParamByName("FECINI")->AsDateTime = fecini_z;
+        qry_resul->ParamByName("FECFIN")->AsDateTime =  fecfin_z;
+        qry_resul->ParamByName("CIA")->AsInteger = cia_z;
+        qry_resul->ParamByName("RECI")->AsString = ptvta_z;
+        qry_resul->ParamByName("SN")->AsString = siono_z;
+        qry_resul->Open();
+
+        totalsi_z =  qry_resul->FieldByName("total")->AsFloat;
+
+        siono_z = "N";
+        qry_resul->Close();
+        qry_resul->ParamByName("IDTAR")->AsInteger = idtarmax_z;
+        qry_resul->ParamByName("VOC")->AsString =  voc_z;
+        qry_resul->ParamByName("ALM")->AsString = almkdx_z;
+        qry_resul->ParamByName("FECINI")->AsDateTime = fecini_z;
+        qry_resul->ParamByName("FECFIN")->AsDateTime =  fecfin_z;
+        qry_resul->ParamByName("CIA")->AsInteger = cia_z;
+        qry_resul->ParamByName("RECI")->AsString = ptvta_z;
+        qry_resul->ParamByName("SN")->AsString = siono_z;
+        qry_resul->Open();
+
+        totalno_z =  qry_resul->FieldByName("total")->AsFloat;
+
+        qry_upda->Close();
+        qry_upda->ParamByName("SI")->AsFloat =  totalsi_z;
+        qry_upda->ParamByName("NO")->AsFloat =  totalno_z;
+        qry_upda->ParamByName("PTVTA")->AsString = ptvta_z;
+        qry_upda->ParamByName("ALM")->AsString = almkdx_z ;
+        qry_upda->ParamByName("CIA")->AsInteger = cia_z;
+        qry_upda->ExecSQL();
+
+      }
+  }
+
+  qry_limp->Close();
+  qry_limp->ExecSQL();
+
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TForm_infcvtacyc::FormCreate(TObject *Sender)
+{
+  date_ini->Date = PrimerDiaMes(IncMonth(dm->ahora(), -1));
+  date_fin->Date = UltimoDiaMes(date_ini->Date);
+  cia_z = dm->cia_z;
+  qry_tpvtatmp->Close();
+  qry_tpvtatmp->Open();
+  rbtn_credit->Enabled = false;
+  rbtn_conta->Enabled  = false;
+  rbtn_totalv->Enabled = false;
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_infcvtacyc::total_vtas()
+{
+  String tit_z = "Subtotal de ";
+  if(anttipo_z == "1")  tit_z += "Ventas";
+  if(anttipo_z == "-1") tit_z += "Cancelaciones";
+  fprintf(archout, "%s|", cjust(tit_z, 30));
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+  fprintf(archout, "%s", rjust(FormatFloat("###,##0.00",gtotvtasi_z )+ " + ",15 ));
+  fprintf(archout, "%s", rjust(FormatFloat("###,##0.00",gtotvtano_z )+ " = ",16 ));
+  fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00",gtototalg_z ),13 ));
+  fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+  lineas_z += 1;
+  grantotsi_z += gtotvtasi_z;
+  grantotno_z += gtotvtano_z;
+  gtototalg_z = gtotvtasi_z = gtotvtano_z = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_infcvtacyc::total_general()
+{
+  double total_z=0;
+  total_z = grantotsi_z + grantotno_z;
+  String tit_z = "Total General";
+  fprintf(archout, "%s|", cjust(tit_z, 30));
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+  fprintf(archout, "%s", rjust(FormatFloat("###,##0.00", grantotsi_z)+ " + ",15 ));
+  fprintf(archout, "%s", rjust(FormatFloat("###,##0.00", grantotno_z )+ " = ",16 ));
+  fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", total_z ),13 ));
+  fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+  lineas_z += 1;
+  grantotsi_z = grantotno_z = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_infcvtacyc::total_zona()
+{
+  fprintf(archout, "\n");
+  fprintf(archout, "%s|", ljust(" ", 30));
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+  fprintf(archout, "%s", rjust(FormatFloat("###,##0.00",totvtasi_z )+ " + ",15 ));
+  fprintf(archout, "%s", rjust(FormatFloat("###,##0.00",totvtano_z  )+ " = ",16 ));
+  fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00",tototalg_z ),13 ));
+  fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+  fprintf(archout, "\n");
+
+  gtotvtasi_z += totvtasi_z;
+  gtotvtano_z += totvtano_z;
+  gtototalg_z +=  tototalg_z;
+
+  lineas_z += 1;
+  totvtasi_z = totvtano_z = tototalg_z = 0;
+}
+//---------------------------------------------------------------------------
+bool __fastcall TForm_infcvtacyc::checa_salto_pag(int margen_z)
+{
+  bool haysalto_z = false;
+  if(lineas_z > (MAX_LINEAS - margen_z)) {
+    fprintf(archout, "%c", 12);
+    pagina_z++;
+    report_encab();
+    haysalto_z = true;
+  }
+  return (haysalto_z);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_infcvtacyc::rbtn_menudeClick(TObject *Sender)
+{
+   rbtn_credit->Enabled == true;
+   rbtn_conta->Enabled == true;
+   rbtn_totalv->Enabled == true;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm_infcvtacyc::imprimir_reporteExecute(TObject *Sender)
+{
+
+  String tipo_z,zona_z,nombzon_z,ptvta_z,nombre_z;
+  int line_z;
+  line_z = 0;
+  pagina_z = 1;
+  grantotsi_z = grantotno_z = 0;
+
+   if( rbtn_fona->Checked == false && rbtn_imevi->Checked == false && rbtn_menude->Checked == false && rbtn_fide->Checked == false && rbtn_cel->Checked == false && rbtn_total->Checked == false   ){
+       Application->MessageBox("Seleccione el Tipo de Reporte \n y  hacer click en el boton OK", "Datos Incompletos", MB_ICONQUESTION);
+       return;
+   }
+   if( rbtn_menude->Checked == true) {
+       if(rbtn_credit->Checked == false && rbtn_conta->Checked == false && rbtn_totalv->Checked == false  ){
+          Application->MessageBox("Seleccione el Tipo de Venta \n y  hacer click en el boton OK", "Datos Incompletos", MB_ICONQUESTION);
+          return;
+       }
+
+   }
+   arch_z = "frm_infcvtacyc.txt";
+   if( (archout = fopen(arch_z.c_str(), "w")) == NULL ) {
+       Application->MessageBox(("No puedo abrir archivo Textual de Salida:"+arch_z).c_str(), "No puedo escribir", MB_ICONEXCLAMATION);
+       return;
+   }
+
+
+  maxyagrega();
+  qry_resul->Close();
+  qry_resul->ParamByName("IDTAR")->AsInteger = idtarmax_z;
+  qry_resul->ParamByName("FECINI")->AsDateTime = fecini_z;
+  qry_resul->ParamByName("FECFIN")->AsDateTime =  fecfin_z;
+  qry_resul->ParamByName("CIA")->AsInteger = cia_z;
+  qry_resul->Open();
+
+  for(qry_resul->First(); !qry_resul->Eof; qry_resul->Next()) {
+    tipo_z = qry_resul->FieldByName("factor")->AsString;
+    zona_z = qry_resul->FieldByName("zona")->AsString;
+    nombzon_z = busca_nombre("ZONA", zona_z);
+    ptvta_z = qry_resul->FieldByName("ptvta")->AsString;
+    nombre_z = busca_nombre("UBICA", ptvta_z);
+    vtasi_z = qry_resul->FieldByName("vtasi")->AsFloat;
+    vtano_z = qry_resul->FieldByName("vtano")->AsFloat;
+
+    if(line_z == 0){
+      report_encab();
+      encab_zona(zona_z,nombzon_z);
+      antzona_z = zona_z;
+      anttipo_z = tipo_z;
+      line_z = 1;
+    }
+    if (anttipo_z != tipo_z){
+        total_zona(); total_vtas();
+        encab_zona(zona_z,nombzon_z);
+        antzona_z = zona_z;
+        anttipo_z = tipo_z;
+    }
+    if(antzona_z != zona_z){
+       total_zona();
+       encab_zona(zona_z,nombzon_z);
+       antzona_z = zona_z;
+    }
+
+    totalg_z =  vtasi_z + vtano_z;
+
+    fprintf(archout, "|");
+    fprintf(archout, "%s|", ljust(ptvta_z, 3));
+    fprintf(archout, "%s|", ljust(nombre_z, 25));
+    fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00",vtasi_z ) + " + ",15));
+    fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00",vtano_z) + " = ",15));
+    fprintf(archout, "%s|\n", rjust(FormatFloat("###,##0.00",totalg_z),12));
+
+    lineas_z += 1;
+    checa_salto_pag(3);
+
+    totvtasi_z += vtasi_z;
+    totvtano_z += vtano_z;
+    tototalg_z += totalg_z;
+
+  }
+  total_zona();
+  total_vtas();
+  total_general();
+  reporte_acum_x_zona();
+
+  fclose(archout);
+  dbgrd_renglones->FullExpand();
+  dm->manda_impresion(arch_z);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_infcvtacyc::reporte_acum_x_zona()
+{
+  encab_z = "TOTXZONA";
+  String zona_z, nombre_z;
+  int ii_z=0;
+  double total_z=0, grantot_z=0;
+  qry_acumxzona->Close();
+  qry_acumxzona->ParamByName("IDTAR")->AsInteger = idtarmax_z;
+  qry_acumxzona->ParamByName("FECINI")->AsDateTime = fecini_z;
+  qry_acumxzona->ParamByName("FECFIN")->AsDateTime =  fecfin_z;
+  qry_acumxzona->ParamByName("CIA")->AsInteger = cia_z;
+  qry_acumxzona->Open();
+  for(ii_z = 0; ii_z < 3; ii_z++) {
+    fprintf(archout, "\n");
+    lineas_z += 1;
+  }
+  if(!checa_salto_pag(5)) report_encabtot();
+
+  ii_z = qry_acumxzona->RecordCount;
+  for(qry_acumxzona->First(); !qry_acumxzona->Eof; qry_acumxzona->Next()) {
+    zona_z = qry_acumxzona->FieldByName("zona")->AsString;
+    nombre_z = busca_nombre("ZONA", zona_z);
+    total_z = qry_acumxzona->FieldByName("total")->AsFloat;
+    grantot_z += total_z;
+    ii_z--;
+    fprintf(archout, "%s", ljust("", 10));
+    if(!ii_z) {
+      fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+    }
+    fprintf(archout, "%s|", ljust(zona_z, 2));
+    fprintf(archout, "%s|", ljust(nombre_z, 30));
+    fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00",total_z),12));
+    if(!ii_z) {
+      fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+    }
+    fprintf(archout, "\n");
+    lineas_z += 1;
+    checa_salto_pag(3);
+  }
+  fprintf(archout, "%s", ljust("", 10));
+  fprintf(archout, "%s|", ljust("", 2));
+  fprintf(archout, "%s|", ljust("Total", 30));
+  fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00",grantot_z),12));
+  fprintf(archout, "\n");
+  lineas_z += 1;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_infcvtacyc::FormClose(TObject *Sender,
+      TCloseAction &Action)
+{
+  Action = caFree;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm_infcvtacyc::date_iniExit(TObject *Sender)
+{
+  date_fin->Date = UltimoDiaMes(date_ini->Date);
+
+}
+//---------------------------------------------------------------------------
+
+String __fastcall TForm_infcvtacyc::busca_nombre(String tipo_z, String dato_z)
+{
+  String sql_z, nombre_z="";
+  if(tipo_z == "UBICA") {
+    sql_z = "select nombre as nombre from ptovta where clave = :DATO and cia = :CIA";
+  }
+  if(tipo_z == "ZONA") {
+    sql_z = "select nombre as nombre from zonas where zona = :DATO";
+  }
+  if(tipo_z == "LINEA") {
+    sql_z = "select descri as nombre from lineas where numero = :DATO and cia = :CIA";
+  }
+  dm->qry_maxidvnd->Close();
+  dm->qry_maxidvnd->SQL->Text = sql_z;
+  dm->qry_maxidvnd->ParamByName("DATO")->AsString = dato_z;
+  if(tipo_z == "UBICA" || tipo_z == "LINEA") {
+    dm->qry_maxidvnd->ParamByName("cia")->AsInteger = cia_z;
+  }
+  dm->qry_maxidvnd->Open();
+  if(!dm->qry_maxidvnd->IsEmpty()) nombre_z = dm->qry_maxidvnd->FieldByName("nombre")->AsString;
+  if(tipo_z == "ZONA" && dato_z == "-1") nombre_z = "SUBTOTAL";
+  if(tipo_z == "ZONA" && dato_z == "-2") {
+    nombre_z = "nombremes_z(date_mesantini->Date, date_mesantfin->Date)";
+  }
+  if(tipo_z == "ZONA" && dato_z == "-3") {
+    nombre_z = "nombremes_z(date_anuantini->Date, date_anuantfin->Date)";
+  }
+  return(nombre_z);
+}
+//---------------------------------------------------------------------------
+

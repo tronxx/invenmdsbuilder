@@ -1,0 +1,127 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_consufacmaH
+#define Frm_consufacmaH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <ComCtrls.hpp>
+#include <ImgList.hpp>
+#include <ToolWin.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+#include "dxTL.hpp"
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <ExtCtrls.hpp>
+#include <ActnList.hpp>
+#include <Dialogs.hpp>
+//---------------------------------------------------------------------------
+void __fastcall ConsultaFacturaMayoreo(TForm *Padre);
+//---------------------------------------------------------------------------
+class TfrmConsuFactuMay : public TForm
+{
+__published:	// IDE-managed Components
+    TCoolBar *CoolBar1;
+    TToolBar *ToolBar1;
+    TToolButton *tbtnAgregar;
+    TToolButton *tbtnGuardar;
+    TToolButton *ToolButton8;
+    TToolButton *tbtnCerrar;
+    TToolButton *ToolButton4;
+    TToolButton *tbtnAyuda;
+    TImageList *imsg;
+    TToolButton *ToolButton1;
+    TToolButton *ToolButton2;
+    TToolButton *ToolButton3;
+    TToolButton *ToolButton5;
+    TStatusBar *RzStatusBar1;
+    TQuery *qsFacturas;
+    TDataSource *dtsFactura;
+    TQuery *qsRenFac;
+    TDataSource *dtsRenFac;
+    TGroupBox *RzGroupBox2;
+    TdxDBGrid *dbgrdRenFac;
+    TdxDBGridMaskColumn *dbgrdRenFacCODIGO;
+    TdxDBGridMaskColumn *dbgrdRenFacDESCRI;
+    TdxDBGridMaskColumn *dbgrdRenFacUNIDS;
+    TdxDBGridCurrencyColumn *dbgrdRenFacPRECIOU;
+    TdxDBGridCurrencyColumn *dbgrdRenFacIMPORTE;
+    TdxDBGridCurrencyColumn *dbgrdRenFacDESCU;
+    TdxDBGridCurrencyColumn *dbgrdRenFacIVA;
+    TdxDBGridCurrencyColumn *dbgrdRenFacTOTAL;
+    TdxDBGridCurrencyColumn *dbgrdRenFacCOSTOU;
+    TGroupBox *RzGroupBox3;
+    TdxDBGrid *dbgrdSeries;
+    TQuery *qsSeries;
+    TDataSource *dtsSeries;
+    TActionList *ActionList1;
+    TAction *actFiltro;
+    TAction *actBuscar;
+    TAction *actExpandir;
+    TAction *actAgrupar;
+    TAction *actImprimir;
+    TAction *actExcel;
+    TAction *actCerrar;
+    TdxDBGridMaskColumn *dbgrdSeriesFACTUR;
+    TdxDBGridMaskColumn *dbgrdSeriesRENGLON;
+    TdxDBGridMaskColumn *dbgrdSeriesCONSEC;
+    TdxDBGridMaskColumn *dbgrdSeriesCODINV;
+    TdxDBGridMaskColumn *dbgrdSeriesSERIE;
+    TdxDBGridMaskColumn *dbgrdSeriesCIA;
+    TToolButton *ToolButton6;
+    TAction *actPrevio;
+        TdxDBGrid *dbgrdFactura;
+        TdxDBGridMaskColumn *dbgrdFacturaNUM;
+        TdxDBGridMaskColumn *dbgrdFacturaMAYORIS;
+        TdxDBGridMaskColumn *dbgrdFacturaREFER;
+        TdxDBGridMaskColumn *dbgrdFacturaNOMAY;
+        TdxDBGridMaskColumn *dbgrdFacturaDIR;
+        TdxDBGridMaskColumn *dbgrdFacturaRFC;
+        TdxDBGridMaskColumn *dbgrdFacturaSTATUS;
+        TdxDBGridDateColumn *dbgrdFacturaFECHA;
+        TdxDBGridDateColumn *dbgrdFacturaVENCE;
+        TdxDBGridCurrencyColumn *dbgrdFacturaIMPORTE;
+        TdxDBGridCurrencyColumn *dbgrdFacturaDESCU;
+        TdxDBGridCurrencyColumn *dbgrdFacturaNETO;
+        TdxDBGridCurrencyColumn *dbgrdFacturaIVA;
+        TdxDBGridCurrencyColumn *dbgrdFacturaTOTAL;
+        TdxDBGridMaskColumn *dbgrdFacturaCIA;
+        TdxDBGridMaskColumn *dbgrdFacturaNPAGOS;
+        TdxDBGridMaskColumn *dbgrdFacturaPLAZO;
+        TdxDBGridMaskColumn *dbgrdFacturaTIPAGO;
+        TdxDBGridCurrencyColumn *dbgrdFacturaPDSC;
+        TdxDBGridMaskColumn *dbgrdFacturaMAYOMEN;
+        TdxDBGridMaskColumn *dbgrdFacturaSTIPAGO;
+        TdxDBGridMaskColumn *dbgrdFacturaSMAYOMEN;
+        TdxDBGridColumn *dbgrdFacturaSSTATUS;
+    void __fastcall FormShow(TObject *Sender);
+    void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+    void __fastcall actFiltroExecute(TObject *Sender);
+    void __fastcall actExpandirExecute(TObject *Sender);
+    void __fastcall actAgruparExecute(TObject *Sender);
+    void __fastcall actExcelExecute(TObject *Sender);
+    void __fastcall qsRenFacAfterScroll(TDataSet *DataSet);
+    void __fastcall actCerrarExecute(TObject *Sender);
+    void __fastcall actBuscarExecute(TObject *Sender);
+    void __fastcall dbgrdFacturaKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+    void __fastcall ToolButton5Click(TObject *Sender);
+    void __fastcall actPrevioExecute(TObject *Sender);
+    void __fastcall mdatFacturaAfterScroll(TDataSet *DataSet);
+private:	// User declarations
+    void __fastcall DesplegarRenglon();
+public:		// User declarations
+    int Valor;
+    bool bEstado;
+    __fastcall TfrmConsuFactuMay(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TfrmConsuFactuMay *frmConsuFactuMay;
+//---------------------------------------------------------------------------
+#endif

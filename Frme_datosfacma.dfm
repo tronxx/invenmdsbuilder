@@ -1,0 +1,520 @@
+object Frame_datosfacma: TFrame_datosfacma
+  Left = 0
+  Top = 0
+  Width = 646
+  Height = 208
+  TabOrder = 0
+  object Label1: TLabel
+    Left = 24
+    Top = 7
+    Width = 36
+    Height = 13
+    Caption = 'Factura'
+    FocusControl = edt_numfac
+  end
+  object Label4: TLabel
+    Left = 204
+    Top = 8
+    Width = 30
+    Height = 13
+    Caption = 'Fecha'
+    FocusControl = edt_numfac
+  end
+  object Label15: TLabel
+    Left = 335
+    Top = 7
+    Width = 30
+    Height = 13
+    Caption = 'Pagos'
+    FocusControl = edt_npagos
+  end
+  object Label16: TLabel
+    Left = 403
+    Top = 7
+    Width = 26
+    Height = 13
+    Caption = 'Plazo'
+    FocusControl = edt_pzoxlet
+  end
+  object lbl_mayoris: TLabel
+    Left = 24
+    Top = 32
+    Width = 36
+    Height = 13
+    Caption = 'Mayoris'
+  end
+  object Label2: TLabel
+    Left = 15
+    Top = 55
+    Width = 45
+    Height = 13
+    Caption = 'Dirección'
+  end
+  object Label3: TLabel
+    Left = 349
+    Top = 55
+    Width = 26
+    Height = 13
+    Caption = 'Refer'
+  end
+  object Label11: TLabel
+    Left = 354
+    Top = 79
+    Width = 21
+    Height = 13
+    Caption = 'RFC'
+  end
+  object Label14: TLabel
+    Left = 494
+    Top = 10
+    Width = 35
+    Height = 13
+    Caption = 'Importe'
+  end
+  object Label5: TLabel
+    Left = 495
+    Top = 32
+    Width = 34
+    Height = 13
+    Caption = 'Descto'
+  end
+  object Label20: TLabel
+    Left = 490
+    Top = 56
+    Width = 39
+    Height = 13
+    Caption = 'Subtotal'
+  end
+  object Label6: TLabel
+    Left = 514
+    Top = 78
+    Width = 15
+    Height = 13
+    Caption = 'Iva'
+  end
+  object Label7: TLabel
+    Left = 505
+    Top = 101
+    Width = 24
+    Height = 13
+    Caption = 'Total'
+  end
+  object Label8: TLabel
+    Left = 354
+    Top = 103
+    Width = 21
+    Height = 13
+    Caption = 'Tipo'
+  end
+  object Label9: TLabel
+    Left = 42
+    Top = 127
+    Width = 17
+    Height = 13
+    Caption = 'M/I'
+  end
+  object Label10: TLabel
+    Left = 343
+    Top = 127
+    Width = 32
+    Height = 13
+    Caption = 'Cliente'
+  end
+  object Label18: TLabel
+    Left = 14
+    Top = 149
+    Width = 46
+    Height = 13
+    Caption = 'M.Pago 1'
+  end
+  object Label19: TLabel
+    Left = 321
+    Top = 149
+    Width = 54
+    Height = 13
+    Caption = 'N.Cuenta 1'
+    FocusControl = edt_numcta1
+  end
+  object Label24: TLabel
+    Left = 14
+    Top = 173
+    Width = 46
+    Height = 13
+    Caption = 'M.Pago 2'
+  end
+  object Label25: TLabel
+    Left = 321
+    Top = 172
+    Width = 54
+    Height = 13
+    Caption = 'N.Cuenta 2'
+    FocusControl = edt_numcta2
+  end
+  object edt_numfac: TdxCurrencyEdit
+    Left = 124
+    Top = 5
+    Width = 56
+    TabOrder = 1
+    Alignment = taRightJustify
+    DecimalPlaces = 0
+    DisplayFormat = '0'
+    Value = 1
+    StoredValues = 1
+  end
+  object date_fecha: TDateTimePicker
+    Left = 239
+    Top = 5
+    Width = 90
+    Height = 21
+    CalAlignment = dtaLeft
+    Date = 37548.4553024306
+    Time = 37548.4553024306
+    DateFormat = dfShort
+    DateMode = dmComboBox
+    Kind = dtkDate
+    ParseInput = False
+    TabOrder = 2
+  end
+  object edt_npagos: TdxCurrencyEdit
+    Left = 369
+    Top = 5
+    Width = 30
+    TabOrder = 3
+    Alignment = taRightJustify
+    DecimalPlaces = 0
+    DisplayFormat = '0'
+    Value = 1
+    StoredValues = 1
+  end
+  object edt_pzoxlet: TdxCurrencyEdit
+    Left = 449
+    Top = 5
+    Width = 30
+    TabOrder = 4
+    Alignment = taRightJustify
+    DecimalPlaces = 0
+    DisplayFormat = '0'
+    Value = 30
+    StoredValues = 1
+  end
+  object edt_nombrefac: TEdit
+    Left = 124
+    Top = 29
+    Width = 355
+    Height = 21
+    CharCase = ecUpperCase
+    MaxLength = 50
+    TabOrder = 6
+  end
+  object edt_refer: TEdit
+    Left = 379
+    Top = 53
+    Width = 100
+    Height = 21
+    CharCase = ecUpperCase
+    MaxLength = 10
+    TabOrder = 9
+  end
+  object edt_rfc: TEdit
+    Left = 379
+    Top = 75
+    Width = 100
+    Height = 21
+    CharCase = ecUpperCase
+    MaxLength = 15
+    TabOrder = 7
+  end
+  object edt_import: TdxDBCurrencyEdit
+    Left = 537
+    Top = 5
+    Width = 100
+    TabOrder = 11
+    TabStop = False
+    Alignment = taRightJustify
+    DataField = 'IMPORTE'
+    StoredValues = 1
+  end
+  object edt_descto: TdxDBCurrencyEdit
+    Left = 537
+    Top = 29
+    Width = 100
+    TabOrder = 12
+    TabStop = False
+    Alignment = taRightJustify
+    DataField = 'DESCU'
+    StoredValues = 1
+  end
+  object edt_subtot: TdxDBCurrencyEdit
+    Left = 537
+    Top = 53
+    Width = 100
+    TabOrder = 13
+    TabStop = False
+    Alignment = taRightJustify
+    DataField = 'NETO'
+    StoredValues = 1
+  end
+  object edt_iva: TdxDBCurrencyEdit
+    Left = 537
+    Top = 75
+    Width = 100
+    TabOrder = 14
+    TabStop = False
+    Alignment = taRightJustify
+    DataField = 'IVA'
+    StoredValues = 1
+  end
+  object edt_total: TdxDBCurrencyEdit
+    Left = 537
+    Top = 98
+    Width = 100
+    TabOrder = 15
+    TabStop = False
+    Alignment = taRightJustify
+    DataField = 'TOTAL'
+    StoredValues = 1
+  end
+  object edt_mayoris: TEdit
+    Left = 64
+    Top = 29
+    Width = 56
+    Height = 21
+    CharCase = ecUpperCase
+    MaxLength = 4
+    TabOrder = 5
+    OnExit = edt_mayorisExit
+  end
+  object cmb_mayomen: TComboBox
+    Left = 379
+    Top = 99
+    Width = 100
+    Height = 21
+    Style = csDropDownList
+    ItemHeight = 13
+    TabOrder = 10
+    Items.Strings = (
+      'Mayoreo'
+      'Menudeo'
+      ' ')
+  end
+  object edt_tipomay: TEdit
+    Left = 379
+    Top = 122
+    Width = 100
+    Height = 21
+    TabStop = False
+    CharCase = ecUpperCase
+    ReadOnly = True
+    TabOrder = 16
+  end
+  object cmb_intomer: TComboBox
+    Left = 64
+    Top = 122
+    Width = 254
+    Height = 21
+    Style = csDropDownList
+    ItemHeight = 13
+    TabOrder = 8
+    Items.Strings = (
+      'Mercancía'
+      'Intereses Normales'
+      'Intereses Moratorios')
+  end
+  object edt_seriefac: TEdit
+    Left = 64
+    Top = 5
+    Width = 56
+    Height = 21
+    CharCase = ecUpperCase
+    MaxLength = 4
+    TabOrder = 0
+    OnExit = edt_seriefacExit
+  end
+  object lkcmb_metodopago: TDBLookupComboBox
+    Left = 64
+    Top = 146
+    Width = 254
+    Height = 21
+    DropDownWidth = 300
+    KeyField = 'IDTIPAGO'
+    ListField = 'descri'
+    ListSource = dts_mediospago
+    TabOrder = 17
+  end
+  object edt_numcta1: TEdit
+    Left = 379
+    Top = 146
+    Width = 154
+    Height = 21
+    CharCase = ecUpperCase
+    MaxLength = 4
+    TabOrder = 18
+  end
+  object lkcmb_metodopago2: TDBLookupComboBox
+    Left = 64
+    Top = 170
+    Width = 254
+    Height = 21
+    DropDownWidth = 300
+    KeyField = 'IDTIPAGO'
+    ListField = 'descri'
+    ListSource = dts_mediopago2
+    TabOrder = 19
+  end
+  object edt_numcta2: TEdit
+    Left = 379
+    Top = 170
+    Width = 154
+    Height = 21
+    CharCase = ecUpperCase
+    MaxLength = 4
+    TabOrder = 20
+  end
+  object mmo_direc: TMemo
+    Left = 64
+    Top = 53
+    Width = 254
+    Height = 66
+    Lines.Strings = (
+      'mmo_direc')
+    ScrollBars = ssVertical
+    TabOrder = 21
+    OnKeyDown = mmo_direcKeyDown
+  end
+  object qry_mayoris: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      'select codigo, nombre, direc, ciu, rfc,'
+      'pdsc, nompag1, nompag2, dirpag1, dirpag2,'
+      'ciupag, nombre2, tipo, b.descri as tipomay'
+      'from mayoris a join inv_tipomayoris b on a.tipo = b.idtipomay'
+      'where a.codigo = :MAYORIS and a.cia = :CIA'
+      ''
+      ' ')
+    Left = 57
+    Top = 81
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'MAYORIS'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftInteger
+        Name = 'CIA'
+        ParamType = ptUnknown
+      end>
+  end
+  object dts_mayoris: TDataSource
+    DataSet = qry_mayoris
+    Left = 57
+    Top = 110
+  end
+  object uqry_seriefacma: TUpdateSQL
+    ModifySQL.Strings = (
+      'update seriefacma'
+      'set'
+      '  IDSERIE = :IDSERIE'
+      'where'
+      '  IDSERIEFACMA = :OLD_IDSERIEFACMA')
+    InsertSQL.Strings = (
+      'insert into seriefacma'
+      '  (IDSERIEFACMA, IDFACTURMA, IDRENFACMA, IDSERIE)'
+      'values'
+      '  (:IDSERIEFACMA, :IDFACTURMA, :IDRENFACMA, :IDSERIE)')
+    DeleteSQL.Strings = (
+      'delete from seriefacma'
+      'where'
+      '  IDSERIEFACMA = :OLD_IDSERIEFACMA')
+    Left = 96
+    Top = 54
+  end
+  object qry_seriefacma: TQuery
+    CachedUpdates = True
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      'select idseriefacma, idfacturma, idrenfacma, idserie'
+      'from seriefacma'
+      'where idrenfacma = :IDRENFACMA order by idserie')
+    UpdateObject = uqry_seriefacma
+    Left = 97
+    Top = 83
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'IDRENFACMA'
+        ParamType = ptUnknown
+      end>
+  end
+  object dts_seriefacma: TDataSource
+    DataSet = qry_seriefacma
+    Left = 97
+    Top = 112
+  end
+  object qry_mediospago: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      'select'
+      'idtipago,'
+      'clave,'
+      'descri,'
+      'orden,'
+      'activo,'
+      'complem'
+      'from car_tipagocfdi'
+      'where activo = :ACTIVO'
+      'order by orden, clave')
+    Left = 162
+    Top = 53
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'ACTIVO'
+        ParamType = ptUnknown
+      end>
+  end
+  object qry_mediopago2: TQuery
+    DatabaseName = 'manvehi'
+    SQL.Strings = (
+      'select'
+      'idtipago,'
+      'clave,'
+      'descri,'
+      'orden,'
+      'activo,'
+      'complem'
+      'from car_tipagocfdi'
+      'where activo = :ACTIVO'
+      'order by orden, clave'
+      '')
+    Left = 162
+    Top = 84
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'ACTIVO'
+        ParamType = ptUnknown
+      end>
+  end
+  object dts_mediospago: TDataSource
+    DataSet = qry_mediospago
+    Left = 132
+    Top = 53
+  end
+  object dts_mediopago2: TDataSource
+    DataSet = qry_mediopago2
+    Left = 132
+    Top = 84
+  end
+  object ActionList1: TActionList
+    Left = 320
+    Top = 80
+    object pide_direc: TAction
+      Caption = 'Dirección'
+      OnExecute = pide_direcExecute
+    end
+    object grabar_uuid: TAction
+      Caption = 'Grabar Uuid'
+    end
+  end
+end

@@ -1,0 +1,20 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frme_pideseries.h"
+#include "dmod.h"
+#include "Frme_datosmarca.h"
+
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TFrame_pideseries *Frame_pideseries;
+//---------------------------------------------------------------------------
+__fastcall TFrame_pideseries::TFrame_pideseries(TComponent* Owner)
+        : TFrame(Owner)
+{
+}
+//---------------------------------------------------------------------------
+ 

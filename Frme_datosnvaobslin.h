@@ -1,0 +1,45 @@
+//---------------------------------------------------------------------------
+
+
+#ifndef Frme_datosnvaobslinH
+#define Frme_datosnvaobslinH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include "dxExEdtr.hpp"
+#include <Db.hpp>
+#include <DBCtrls.hpp>
+#include <DBTables.hpp>
+#include <ExtCtrls.hpp>
+//---------------------------------------------------------------------------
+class TFrame_datosnvaobslin : public TFrame
+{
+__published:	// IDE-managed Components
+        TPanel *Panel1;
+        TLabel *Label5;
+        TLabel *Label6;
+        TLabel *Label7;
+        TLabel *Label8;
+        TdxCurrencyEdit *edt_ordobs;
+        TdxEdit *edt_obser;
+        TDBLookupComboBox *lkcmb_fonini;
+        TDBLookupComboBox *lkcmb_fonfin;
+        TQuery *qry_fonini;
+        TQuery *qry_fonfin;
+        TDataSource *dts_fonfin;
+        TDataSource *dts_fonini;
+private:	// User declarations
+public:		// User declarations
+        __fastcall TFrame_datosnvaobslin(TComponent* Owner);
+        void __fastcall inicializa();
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFrame_datosnvaobslin *Frame_datosnvaobslin;
+//---------------------------------------------------------------------------
+#endif

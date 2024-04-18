@@ -1,0 +1,206 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_hazfacmaH
+#define Frm_hazfacmaH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include <ActnList.hpp>
+#include <Buttons.hpp>
+#include <ComCtrls.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <ExtCtrls.hpp>
+#include <ImgList.hpp>
+#include <StdActns.hpp>
+#include <ToolWin.hpp>
+#include <DBCtrls.hpp>
+#include "dxExEdtr.hpp"
+#include <Mask.hpp>
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxTL.hpp"
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+#include "dxDBELib.hpp"
+#include <stdio.h>
+#include <Menus.hpp>
+#include "Frm_selserie.h"
+#include "Frme_datosfacma.h"
+#include "Frme_datosrenfacma.h"
+//---------------------------------------------------------------------------
+class TForm_hazfacma : public TForm
+{
+__published:	// IDE-managed Components
+        TActionList *ActionList1;
+        TAction *nuevo;
+        TAction *modifica;
+        TAction *borra;
+        TAction *grabar;
+        TAction *cancelar;
+        TWindowClose *WindowClose1;
+        TAction *primero;
+        TAction *anterior;
+        TAction *siguiente;
+        TAction *ultimo;
+        TQuery *qry_renfacma;
+        TDataSource *dts_renfacma;
+        TQuery *qry_sigfacma;
+        TQuery *qry_facturma;
+        TUpdateSQL *uqry_facturma;
+        TAction *agreren;
+        TQuery *qry_ultfol;
+        TQuery *qry_conse;
+        TQuery *qry_borraren;
+        TUpdateSQL *uqry_renfacma;
+        TDataSource *dts_facturma;
+        TAction *cierraren;
+        TPopupMenu *pop_menuren;
+        TAction *borraren;
+        TMenuItem *EliminarRengln1;
+        TMenuItem *AgregaReng1;
+        TAction *exportdbgrid;
+        TMenuItem *Exportara1;
+        TAction *cierra_entrada;
+        TAction *impritext;
+        TGroupBox *GroupBox2;
+        TGroupBox *GroupBox3;
+        TQuery *qry_mayoris;
+        TDataSource *dts_mayoris;
+        TQuery *qry_preciofac;
+        TGroupBox *GroupBox1;
+        TdxDBGrid *dbgrd_rengnes;
+        TdxDBGridMaskColumn *dbgrd_rengnesCONCEPTO;
+        TdxDBGridMaskColumn *dbgrd_rengnesUNIDS;
+        TdxDBGridCurrencyColumn *dbgrd_rengnesPRECIOU;
+        TdxDBGridCurrencyColumn *dbgrd_rengnesIMPORTE;
+        TdxDBGridMaskColumn *dbgrd_rengnesPDSC;
+        TQuery *qry_venfacma;
+        TUpdateSQL *uqry_venfacma;
+        TQuery *qry_movmay;
+        TUpdateSQL *uqry_movmay;
+        TdxDBGridMaskColumn *dbgrd_rengnesCODIGO;
+        TQuery *qry_borraseries;
+        TFrame_datosfacma *Frame_datosfacma1;
+        TUpdateSQL *uqry_seriefacma;
+        TQuery *qry_seriefacma;
+        TDataSource *dts_seriefacma;
+        TToolBar *ToolBar1;
+        TSpeedButton *SpeedButton5;
+        TSpeedButton *SpeedButton3;
+        TSpeedButton *SpeedButton9;
+        TSpeedButton *SpeedButton2;
+        TSpeedButton *SpeedButton8;
+        TToolButton *ToolButton3;
+        TSpeedButton *SpeedButton11;
+        TSpeedButton *SpeedButton10;
+        TSpeedButton *SpeedButton7;
+        TSpeedButton *SpeedButton6;
+        TSpeedButton *SpeedButton1;
+        TFrame_datosrenfacma *Frame_datosrenfacma1;
+        TSpeedButton *SpeedButton4;
+        TPanel *Panel1;
+        TSpeedButton *SpeedButton12;
+        TSpeedButton *SpeedButton13;
+        TQuery *qry_datospago;
+        TUpdateSQL *uqry_datospago;
+        TAction *despliega_menu;
+        TPopupMenu *PopupMenu1;
+        TMenuItem *Facturas1;
+        TMenuItem *Renglones1;
+        TMenuItem *Nuevo1;
+        TMenuItem *Modifica1;
+        TMenuItem *Borra1;
+        TMenuItem *Cerrar1;
+        TMenuItem *Anterior1;
+        TMenuItem *Siguiente1;
+        TMenuItem *primero1;
+        TMenuItem *Ultimo1;
+        TMenuItem *Imprimir1;
+        TMenuItem *Nuevo2;
+        TMenuItem *Borra2;
+        TAction *tomar_salida_mayoreo;
+        TQuery *qry_datosmayoris;
+        TAction *graba_uuid;
+        TMenuItem *GrabarUuid1;
+        TAction *graba_permision_precio;
+        TSpeedButton *SpeedButton14;
+        TMenuItem *Cancelar1;
+        void __fastcall anteriorExecute(TObject *Sender);
+        void __fastcall borraExecute(TObject *Sender);
+        void __fastcall modificaExecute(TObject *Sender);
+        void __fastcall nuevoExecute(TObject *Sender);
+        void __fastcall primeroExecute(TObject *Sender);
+        void __fastcall siguienteExecute(TObject *Sender);
+        void __fastcall ultimoExecute(TObject *Sender);
+        void __fastcall FormCreate(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall agrerenExecute(TObject *Sender);
+        void __fastcall dbgrd_rengnesKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall borrarenExecute(TObject *Sender);
+        void __fastcall exportdbgridExecute(TObject *Sender);
+        void __fastcall cierra_entradaExecute(TObject *Sender);
+        void __fastcall impritextExecute(TObject *Sender);
+        void __fastcall qry_renfacmaAfterScroll(TDataSet *DataSet);
+        void __fastcall Frame_datosfacma1edt_numfacKeyDown(TObject *Sender,
+          WORD &Key, TShiftState Shift);
+        void __fastcall Frame_datosrenfacma1edt_codigoKeyDown(
+          TObject *Sender, WORD &Key, TShiftState Shift);
+        void __fastcall despliega_menuExecute(TObject *Sender);
+        void __fastcall Frame_datosrenfacma1edt_codigoExit(
+          TObject *Sender);
+        void __fastcall dbgrd_rengnesCustomDrawCell(TObject *Sender,
+          TCanvas *ACanvas, TRect &ARect, TdxTreeListNode *ANode,
+          TdxTreeListColumn *AColumn, bool ASelected, bool AFocused,
+          bool ANewItemRow, AnsiString &AText, TColor &AColor,
+          TFont *AFont, TAlignment &AAlignment, bool &ADone);
+        void __fastcall graba_uuidExecute(TObject *Sender);
+        void __fastcall graba_permision_precioExecute(TObject *Sender);
+        void __fastcall cancelarExecute(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm_hazfacma(TComponent* Owner);
+        void __fastcall desp_ptvt();
+        void __fastcall alta_ptvt(String modo_z);
+        void __fastcall modif_ptvt();
+        void __fastcall busca_ptvt(String ptvt_z);
+        void __fastcall mueve_hacia(String sql_z);
+        void __fastcall botones_onoff(int modo_z);
+        void __fastcall edicion_factible(int modo_z);
+        void __fastcall report_encab();
+        void __fastcall report_subencab();
+        void __fastcall asigna_tipo(int tipo_z);
+        void __fastcall calcu_prvta();
+        void __fastcall salta_linea(int numlineas_z);
+        void __fastcall imprime_renglones();
+        void __fastcall imprime_finfac();
+        void __fastcall impri_encabfac();
+        void __fastcall genera_cfdi();
+
+        void __fastcall agrega_relac(String mayoris_z, String dato1_z, String dato2_z, String tipodato_z);
+        String __fastcall obten_datospago(String codigomay_z, String tipodato_z);
+        String __fastcall obten_datosmayoris(String codigomay_z, String tipodato_z);
+        bool __fastcall genera_layout(
+            int numfac_z, String concepto_z, double importe_z,
+            double poriva_z, int canti_z);
+
+        int cia_z, mi_entrada_z, entrapor_z, lineas_z, pagina_z;
+        String permis_z, tipoent_z, titulo_z, genero_z, este_z, cerrado_z,
+          mensaje_z, titmsg_z;
+        TForm_selserie *Form_selserie;
+        FILE *archout;
+        double feccap_z;
+
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_hazfacma *Form_hazfacma;
+//---------------------------------------------------------------------------
+#endif
+

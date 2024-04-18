@@ -1,0 +1,169 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_tabcvtaH
+#define Frm_tabcvtaH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxTL.hpp"
+#include <ComCtrls.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <ExtCtrls.hpp>
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+#include <Buttons.hpp>
+#include <Menus.hpp>
+#include <ActnList.hpp>
+#include <stdio.h>
+//---------------------------------------------------------------------------
+class TForm_tabcvta : public TForm
+{
+__published:	// IDE-managed Components
+        TPanel *Panel1;
+        TdxDBGrid *dbgrd_renglones;
+        TQuery *qry_analisma;
+        TUpdateSQL *uqry_gpodiary;
+        TDataSource *dts_analisma;
+        TdxDBGridMaskColumn *dbgrd_renglonesLINEA;
+        TdxDBGridMaskColumn *dbgrd_renglonesCODIGO;
+        TdxDBGridMaskColumn *dbgrd_renglonesDESCRI;
+        TdxDBGridMaskColumn *dbgrd_renglonesEMPAQE;
+        TdxDBGridMaskColumn *dbgrd_renglonesUNIDS;
+        TdxDBGridCurrencyColumn *dbgrd_renglonesCOSTOTOT;
+        TPanel *Panel2;
+        TPopupMenu *PopupMenu1;
+        TMenuItem *Exportara1;
+        TActionList *ActionList1;
+        TAction *exporta_dbgrd;
+        TAction *imprimir_reporte;
+        TQuery *qry_analixalm;
+        TQuery *qry_analixart;
+        TQuery *qry_lineas;
+        TLabel *Label1;
+        TDateTimePicker *date_fecini;
+        TLabel *Label2;
+        TDateTimePicker *date_fecfin;
+        TBitBtn *BitBtn1;
+        TMenuItem *Imprimir1;
+        TQuery *qry_acumxsit;
+        TQuery *qry_acumxlin;
+        TQuery *qry_acumxpvt;
+        TRadioGroup *grp_tiporep;
+        TGroupBox *GroupBox1;
+        TLabel *Label3;
+        TDateTimePicker *date_anuantini;
+        TLabel *Label4;
+        TDateTimePicker *date_anuantfin;
+        TGroupBox *GroupBox2;
+        TLabel *Label5;
+        TLabel *Label6;
+        TDateTimePicker *date_mesantini;
+        TDateTimePicker *date_mesantfin;
+        TCheckBox *chk_reacumular;
+        TQuery *qry_eliminaacuant;
+        TQuery *qry_acumulados;
+        TQuery *qry_tabcvta;
+        TUpdateSQL *uqry_tabcvta;
+        TQuery *qry_ubivta;
+        TQuery *qry_zonas;
+        TQuery *qry_acumxzonlin;
+        TQuery *qry_dato_zona_pvta_linea;
+        TQuery *qry_exiulcos;
+        TQuery *qry_zonas2;
+        TUpdateSQL *uqry_zonas2;
+        TUpdateSQL *uqry_acumxlin;
+        TUpdateSQL *uqry_lineas;
+        TQuery *qry_zonas3;
+        TQuery *qry_dato_x_tipovta;
+        TQuery *qry_ctovtamay;
+        TQuery *qry_credcont;
+        TQuery *qry_credoconcancel;
+        TQuery *qry_cartera_cl;
+        TQuery *qry_cartera_cylp_zona;
+        void __fastcall FormCreate(TObject *Sender);
+        void __fastcall BitBtn1Click(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall exporta_dbgrdExecute(TObject *Sender);
+        void __fastcall imprimir_reporteExecute(TObject *Sender);
+        void __fastcall date_feciniExit(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm_tabcvta(TComponent* Owner);
+        void __fastcall agrega_invtpvtatmp(int idtpvtatmp_z, int idtipovta_z, int factor_z, String tipoent_z);
+        void __fastcall impri_renglon(String codigo_z, String situacion_z);
+        void __fastcall elimina_invtmp();
+        void __fastcall report_subtotxlinea();
+        void __fastcall report_encab();
+        void __fastcall report_subencab();
+        void __fastcall salta_linea();
+        void __fastcall graba_invtmp(String modo_z);
+        void __fastcall busca_ubicaciones_x_linea(String linea_z);
+        bool __fastcall checa_saltopag(int numero_de_lineas);
+        void __fastcall reporte_datos_x_sit();
+        void __fastcall report_subencab_sit();
+        void __fastcall acumular_datos();
+        void __fastcall genera_reporte_x_zona(String mizona_z);
+        String __fastcall busca_nombre(String tipo_z, String dato_z);
+        void __fastcall report_subencab_tabla_x_zona();
+        void __fastcall imprime_ren_x_zona(bool ultimo_z);
+        void __fastcall report_subencab_tabla_zonas_general();
+        void __fastcall imprime_total_x_zona();
+        String __fastcall calcu_strporc(double imp_z, double tot_z, String formato_z);
+        double __fastcall busca_credito_o_contado(
+          String tipo_z, String alm_z, String pvta_z, String linea_z, int modo_z
+        );
+        String __fastcall divent(int columnas_z, int anchocol_z, int colextra_z);
+        void __fastcall tabla_total_x_zona();
+        String __fastcall nombremes_z(double mesini_z, double mesfin_z);
+        void __fastcall imprime_tabla_x_zona_global();
+        double __fastcall busca_dato_mesant(double mesini_z, double mesfin_z,
+          String prlinea_z, String ullinea_z, String almini_z, String almfin_z,
+          String zonaini_z, String zonafin_z
+        );
+        void __fastcall participacion_existencias();
+        double __fastcall obten_ultimo_costo(double fecha_z,
+          String almini_z, String almfin_z,
+          String lineaini_z, String lineafin_z,
+          String zonaini_z, String zonafin_z);
+        void __fastcall report_subencab_participacion_existencias();
+        void __fastcall report_subencab_exhib_x_linea();
+        void __fastcall tabla_exhibicion_x_linea();
+        void __fastcall imprime_tabla_exhib_x_linea();
+        void __fastcall report_subencab_tabla_x_tipo_vta();
+        void __fastcall tabla_costo_x_tipo_vta();
+        double __fastcall obten_costo_x_tipo(
+          String tipo_z, String prlinea_z, String ullinea_z, String crdocon_z,
+          String ptvtaini_z, String ptvtafin_z);
+
+        void __fastcall imprime_tabla_credito_y_contado();
+        void __fastcall tabla_costo_credito_y_contado_x_zona(String mizona_z);
+        void __fastcall report_subencab_tabla_cyc();
+        void __fastcall imprime_ren_cyc_x_zona(bool ultimo_z, int numdato_z);
+        void __fastcall imprime_total_cyc_x_zona(int numdato_z);
+        double __fastcall TForm_tabcvta::busca_credito_o_contado_cancel(
+          String tipo_z, String alm_z, String pvta_z, String linea_z, int modo_z
+        );
+        void __fastcall tabla_costo_x_tipo_vta_cyc();
+        void __fastcall report_subencab_tabla_x_tipo_vta_cyc();
+        double __fastcall obten_vtas_clp( String cl_z, String ptvtaini_z, String ptvtafin_z);
+
+
+        int cia_z, idtarea_z, lineas_z, pagina_z,
+            primero_z, primerelem_z, ultimoelem_z, anchopag_z;
+        String antlin_z, linea_z, enc_z, zona_z;
+        TDateTime fecini_z, fecfin_z;
+        double totcosxlin_z, totcospvtaxzona_z, totcosxzon_z,
+          totexizon_z, exixlin_z, totcosvta_z, totcoscan_z,
+          totcosmesan_z, totcosanuan_z;
+        FILE *archout;
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_tabcvta *Form_tabcvta;
+//---------------------------------------------------------------------------
+#endif

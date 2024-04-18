@@ -1,0 +1,27 @@
+//---------------------------------------------------------------------------
+
+
+#ifndef Frme_pideseriesH
+#define Frme_pideseriesH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <ActnList.hpp>
+#include <ExtCtrls.hpp>
+//---------------------------------------------------------------------------
+class TFrame_pideseries : public TFrame
+{
+__published:	// IDE-managed Components
+        TPanel *Panel1;
+        TActionList *ActionList1;
+        TListBox *ListBox1;
+private:	// User declarations
+public:		// User declarations
+        __fastcall TFrame_pideseries(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFrame_pideseries *Frame_pideseries;
+//---------------------------------------------------------------------------
+#endif

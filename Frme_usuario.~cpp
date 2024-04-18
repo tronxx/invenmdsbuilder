@@ -1,0 +1,160 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frme_usuario.h"
+#include "situaciones.h"
+#include "dmod.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "dxCntner"
+#pragma link "dxDBCtrl"
+#pragma link "dxDBGrid"
+#pragma link "dxEditor"
+#pragma link "dxEdLib"
+#pragma link "dxExEdtr"
+#pragma link "dxTL"
+#pragma resource "*.dfm"
+TFrame_usuario *Frame_usuario;
+//---------------------------------------------------------------------------
+__fastcall TFrame_usuario::TFrame_usuario(TComponent* Owner)
+        : TFrame(Owner)
+{
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_usuario::inicializa(int idusuario_z)
+{
+  int idperfil_z=0;
+  qry_perfiles->Tag = INACTIVO;
+  qry_perfiles->Close();
+  qry_perfiles->Open();
+  qry_permgrant->Close();
+  qry_permgrant->ParamByName("idusuario")->AsInteger = idusuario_z;
+  qry_permgrant->Open();
+  if(!qry_permgrant->IsEmpty()) {
+    idperfil_z=qry_permgrant->FieldByName("idperfil")->AsInteger;
+    qry_permisiones->Close();
+    qry_permisiones->ParamByName("idperfil")->AsInteger = idperfil_z;
+    qry_permisiones->Open();
+    lkcmb_perfil->KeyValue = idperfil_z;
+  }
+  qry_perfiles->Tag = ACTIVO;
+  date_fecbaja->Date = dm->ahora();
+  chk_bajaClick(this);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_usuario::agrega_perfil_usuario(int idusuario_z)
+{
+  int idperfilusuario_z=0, idperfil_z=0;
+  idperfil_z = qry_perfiles->FieldByName("idperfil")->AsInteger;
+  qry_permgrant->Close();
+  qry_permgrant->ParamByName("IDUSUARIO")->AsInteger = idusuario_z;
+  qry_permgrant->Open();
+
+  if(qry_permgrant->IsEmpty()) {
+    dm->qry_maxidvnd->Close();
+    dm->qry_maxidvnd->SQL->Clear();
+    dm->qry_maxidvnd->SQL->Add("select max (IDPERFILUSUARIO) as idperfil from car_perfilusuario where idperfilusuario > 0");
+    dm->qry_maxidvnd->Open();
+    if(!dm->qry_maxidvnd->IsEmpty())
+      idperfilusuario_z = dm->qry_maxidvnd->FieldByName("idperfil")->AsInteger + 1;
+    qry_permgrant->Append();
+    qry_permgrant->FieldByName("idusuario")->AsInteger = idusuario_z;
+    qry_permgrant->FieldByName("idperfil")->AsInteger = idperfil_z;
+    qry_permgrant->FieldByName("idperfilusuario")->AsInteger = idperfilusuario_z;
+    qry_permgrant->Post();
+  } else {
+    if (qry_permgrant->FieldByName("idperfil")->AsInteger != idperfil_z) {
+      qry_permgrant->Edit();
+      qry_permgrant->Post();
+    }
+  }
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TFrame_usuario::chk_verpwdClick(TObject *Sender)
+{
+  if(chk_verpwd->Checked)
+    edt_passw->PasswordChar = 0;
+  else
+    edt_passw->PasswordChar = '*';
+        
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_usuario::dbgrd_permisKeyDown(TObject *Sender,
+      WORD &Key, TShiftState Shift)
+{
+  if(Key == VK_DELETE) {
+    if(Application->MessageBox("Seguro de Eliminar este permiso ?", "Eliminar Permiso", MB_ICONQUESTION+MB_YESNO) != mrYes) return;
+    qry_permgrant->Delete();
+  }
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFrame_usuario::exportarExecute(TObject *Sender)
+{
+  TSaveDialog *SaveDialog = new TSaveDialog (this);
+  TdxDBGrid* midbgrd_z;
+//  TAdvStringGrid* misgrd_z;
+  String tipogrd_z;
+  midbgrd_z = dbgrd_permis;
+  tipogrd_z="DBG";
+//  switch (page_detalles->ActivePageIndex) {
+//    case TBS_KARDEX  : midbgrd_z = dbgrd_kardex;   tipogrd_z="DBG"; break;
+//    case TBS_ESTADIS : midbgrd_z = dbgrd_estadis;  tipogrd_z="DBG"; break;
+//    case TBS_OBSERVS : midbgrd_z = dbgrd_observs;  tipogrd_z="DBG"; break;
+//    case TBS_DISPONI : midbgrd_z = dbgrd_dispo;    tipogrd_z="DBG"; break;
+//    case TBS_BUSSERIE: midbgrd_z = dbgrd_busserie; tipogrd_z="DBG"; break;
+//    case TBS_EXIST   : midbgrd_z = dbgrd_exist;    tipogrd_z="DBG"; break;
+//  }
+  SaveDialog->Filter = "Archivos de Texto (*.txt)|*.TXT|Archivos de Excel(*.xls)|*.XLS|Archivos HTML (*.html)|*.HTML";
+  SaveDialog->DefaultExt = "Archivos de Excel";
+  SaveDialog->FileName = midbgrd_z->Name + ".xls";
+  SaveDialog->FilterIndex = 2;
+  if (SaveDialog->Execute()) {
+    if(tipogrd_z == "DBG") {
+      switch( SaveDialog->FilterIndex) {
+        case 1: midbgrd_z->SaveToText(SaveDialog->FileName, true, "\t", "", ""); break;
+        case 2: midbgrd_z->SaveToXLS(SaveDialog->FileName, true); break;
+        case 3: midbgrd_z->SaveToHTML(SaveDialog->FileName, true); break;
+      }
+    }
+//    else if (tipogrd_z == "ADV") {
+//      switch( SaveDialog->FilterIndex) {
+//        case 1: misgrd_z->SaveToCSV(SaveDialog->FileName); break;
+//        case 2: misgrd_z->SaveToXLS(SaveDialog->FileName); break;
+//        case 3: misgrd_z->SaveToHTML(SaveDialog->FileName); break;
+//      }
+//    }
+  }
+  delete SaveDialog;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_usuario::chk_bajaClick(TObject *Sender)
+{
+  date_fecbaja->Visible = chk_baja->Checked;
+  lbl_fecbaja->Visible = date_fecbaja->Visible;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFrame_usuario::qry_perfilesAfterScroll(TDataSet *DataSet)
+{
+  int idperfil_z = 0;
+  if (qry_perfiles->Tag == INACTIVO) return;
+  idperfil_z = qry_perfiles->FieldByName("idperfil")->AsInteger;
+  qry_permisiones->Close();
+  qry_permisiones->ParamByName("idperfil")->AsInteger = idperfil_z;
+  qry_permisiones->Open();
+
+}
+//---------------------------------------------------------------------------
+

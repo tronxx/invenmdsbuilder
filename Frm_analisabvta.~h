@@ -1,0 +1,107 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_analisabvtaH
+#define Frm_analisabvtaH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "dxCntner.hpp"
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxTL.hpp"
+#include <Buttons.hpp>
+#include <ComCtrls.hpp>
+#include <ExtCtrls.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+#include <stdio.h>
+#include <ActnList.hpp>
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+//---------------------------------------------------------------------------
+class TForm_analisabvta : public TForm
+{
+__published:	// IDE-managed Components
+        TPanel *Panel1;
+        TGroupBox *pnl_datos;
+        TLabel *lbl_vigencia;
+        TLabel *lbl_corte;
+        TDateTimePicker *date_ini;
+        TDateTimePicker *date_fin;
+        TGroupBox *GroupBox3;
+        TLabel *Label1;
+        TLabel *Label3;
+        TGroupBox *GroupBox6;
+        TLabel *Label2;
+        TLabel *Label4;
+        TEdit *edt_situini;
+        TEdit *edt_situfin;
+        TEdit *edt_almini;
+        TEdit *edt_almfin;
+        TdxDBGrid *dbgrd_renglones;
+        TQuery *qry_punto;
+        TQuery *qry_analitico;
+        TQuery *qry_totline;
+        TQuery *qry_lineas;
+        TDataSource *dts_llena;
+        TQuery *qry_totsuc;
+        TQuery *qry_gtotal;
+        TBitBtn *BitBtn1;
+        TQuery *qry_llena;
+        TdxDBGridMaskColumn *dbgrd_renglonesRECEMI;
+        TdxDBGridMaskColumn *dbgrd_renglonesCODINV;
+        TdxDBGridMaskColumn *dbgrd_renglonesDESCRI;
+        TdxDBGridMaskColumn *dbgrd_renglonesCONCEPTO;
+        TdxDBGridMaskColumn *dbgrd_renglonesUNIDS;
+        TdxDBGridMaskColumn *dbgrd_renglonesTIPO;
+        TActionList *ActionList1;
+        TAction *imprimir_reporte;
+        TdxDBGridCurrencyColumn *dbgrd_renglonesTOTAL;
+        TdxDBGridMaskColumn *dbgrd_renglonesALM;
+        TdxDBGridMaskColumn *dbgrd_renglonesCREDCON;
+        TdxDBGridColumn *dbgrd_renglonesFOLIO;
+        TdxDBGridColumn *dbgrd_renglonesSERIE;
+        TBitBtn *btn_versabanas;
+        TAction *ver_sabanas;
+        TdxDBGridMaskColumn *dbgrd_renglonesNUMERO;
+        TdxDBGridDateColumn *dbgrd_renglonesFECHA;
+        TAction *Exportar;
+        void __fastcall FormCreate(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall imprimir_reporteExecute(TObject *Sender);
+        void __fastcall date_iniExit(TObject *Sender);
+        void __fastcall ver_sabanasExecute(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm_analisabvta(TComponent* Owner);
+        FILE *archout;
+        TStringList *sum;
+        TStringList *sumgen;
+        int lineas_z, pagina_z,cia_z,puntt_z,cuant_z,termin_z,fin_z ;
+        TDateTime fecini_z,fecfin_z;
+        String almini_z,almfin_z,pvta_z,pcan_z,empini_z,empfin_z,tpvta_z,
+        tpcan_z,recemi_z,nombre_z,arch_z;
+        double tottotal_z,totgen_z,misuma_z,sumagen_z,gto_z,sumdiv_z;
+        void __fastcall report_encab();
+        void __fastcall parametros();
+        //void __fastcall encab2();
+        //void __fastcall datos();
+        bool __fastcall checa_salto_pag(int margen_z);
+        void __fastcall encab_punto(String recemi_z, String nombre_z);
+        void __fastcall total_punto();
+        void __fastcall total_gen();
+        void __fastcall imprime_analit();
+        void __fastcall encab();
+        void __fastcall tabla_lineas();
+        void __fastcall GENERATABLA(int inicia_z, int termin_z);
+        void __fastcall imprimir_informe (int inicia_z, int termin_z);
+        void __fastcall totales();
+        void __fastcall gtot();
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_analisabvta *Form_analisabvta;
+//---------------------------------------------------------------------------
+#endif

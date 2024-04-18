@@ -1,0 +1,584 @@
+//---------------------------------------------------------------------------
+
+#ifndef Frm_consuinvH
+#define Frm_consuinvH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <Db.hpp>
+#include <DBCtrls.hpp>
+#include <DBTables.hpp>
+#include <Mask.hpp>
+#include "dxCntner.hpp"
+#include "dxDBELib.hpp"
+#include "dxEditor.hpp"
+#include "dxEdLib.hpp"
+#include "dxExEdtr.hpp"
+#include "AdvGrid.hpp"
+#include <Grids.hpp>
+#include <ActnList.hpp>
+#include <ComCtrls.hpp>
+#include <ImgList.hpp>
+#include <StdActns.hpp>
+#include <ToolWin.hpp>
+#include "dxDBCtrl.hpp"
+#include "dxDBGrid.hpp"
+#include "dxDBTLCl.hpp"
+#include "dxGrClms.hpp"
+#include "dxTL.hpp"
+#include <ExtCtrls.hpp>
+#include "dxLayout.hpp"
+#include <Buttons.hpp>
+#include <Menus.hpp>
+#include "Frm_dlgcriterio.h"
+#include "Frme_imginven.h"
+#include "Frme_datosinternet.h"
+//---------------------------------------------------------------------------
+class TForm_consuinv : public TForm
+{
+__published:	// IDE-managed Components
+        TQuery *qry_inven;
+        TDataSource *dts_inven;
+        TGroupBox *GroupBox1;
+        TLabel *etiqcodigo;
+        TEdit *edt_codigo;
+        TLabel *etiqdesc;
+        TLabel *etiqtipo;
+        TLabel *etiqcodaux;
+        TLabel *etiqprove;
+        TQuery *qry_diary;
+        TDataSource *dts_diary;
+        TStringField *qry_invenCODIGO;
+        TStringField *qry_invenCOD2;
+        TStringField *qry_invenDESCRI;
+        TStringField *qry_invenTIPO;
+        TStringField *qry_invenPROVE;
+        TStringField *qry_invenLINEA;
+        TStringField *qry_invenEMPAQE;
+        TSmallintField *qry_invenMINIMO;
+        TSmallintField *qry_invenMAXIMO;
+        TFloatField *qry_invenPRECIO;
+        TFloatField *qry_invenPIVA;
+        TFloatField *qry_invenCOSTOS;
+        TFloatField *qry_invenCOSTON;
+        TFloatField *qry_invenINICIALS;
+        TFloatField *qry_invenENTCOMS;
+        TFloatField *qry_invenENTCANS;
+        TFloatField *qry_invenENTESPS;
+        TFloatField *qry_invenSALVTAS;
+        TFloatField *qry_invenSALFONS;
+        TFloatField *qry_invenSALESPS;
+        TFloatField *qry_invenSALMAYS;
+        TFloatField *qry_invenEXISTES;
+        TFloatField *qry_invenINICIALN;
+        TFloatField *qry_invenENTCOMN;
+        TFloatField *qry_invenENTCANN;
+        TFloatField *qry_invenENTESPN;
+        TFloatField *qry_invenSALVTAN;
+        TFloatField *qry_invenSALFONN;
+        TFloatField *qry_invenSALESPN;
+        TFloatField *qry_invenSALMAYN;
+        TFloatField *qry_invenEXISTEN;
+        TFloatField *qry_invenCOSINICIALS;
+        TFloatField *qry_invenCOSENTCOMS;
+        TFloatField *qry_invenCOSENTCANS;
+        TFloatField *qry_invenCOSENTESPS;
+        TFloatField *qry_invenCOSSALVTAS;
+        TFloatField *qry_invenCOSSALFONS;
+        TFloatField *qry_invenCOSSALESPS;
+        TFloatField *qry_invenCOSSALMAYS;
+        TFloatField *qry_invenCOSEXISTES;
+        TFloatField *qry_invenCOSINICIALN;
+        TFloatField *qry_invenCOSENTCOMN;
+        TFloatField *qry_invenCOSENTCANN;
+        TFloatField *qry_invenCOSENTESPN;
+        TFloatField *qry_invenCOSSALVTAN;
+        TFloatField *qry_invenCOSSALFONN;
+        TFloatField *qry_invenCOSSALESPN;
+        TFloatField *qry_invenCOSSALMAYN;
+        TFloatField *qry_invenCOSEXISTEN;
+        TDateField *qry_invenFECALTA;
+        TSmallintField *qry_invenCIA;
+        TStringField *qry_invenMDS;
+        TStringField *qry_invenELEC;
+        TFloatField *qry_invenPRECELEC;
+        TFloatField *qry_invenmubmds;
+        TFloatField *qry_invenmubelec;
+        TIntegerField *qry_invenmaxi;
+        TQuery *qry_buscod;
+        TDataSource *dts_buscod;
+  TDBEdit *DBEdit1;
+  TDBEdit *DBEdit2;
+  TDBEdit *DBEdit3;
+  TDBEdit *DBEdit4;
+  TLabel *Label1;
+        TDBEdit *dbedt_linea;
+  TLabel *Label2;
+  TdxDBCurrencyEdit *dxDBCurrencyEdit1;
+  TLabel *Label3;
+  TDBEdit *DBEdit6;
+        TLabel *lbl_costos;
+        TdxDBCurrencyEdit *dbedt_costos;
+        TLabel *lbl_coston;
+        TdxDBCurrencyEdit *dbedt_coston;
+        TLabel *lbl_preciomds;
+        TdxDBCurrencyEdit *dbedt_preciomds;
+        TLabel *lbl_preciofide;
+        TdxDBCurrencyEdit *dbedt_preciofide;
+  TLabel *Label8;
+  TLabel *Label9;
+  TdxDBCurrencyEdit *dxDBCurrencyEdit7;
+  TdxDBCurrencyEdit *dxDBCurrencyEdit8;
+  TLabel *Label12;
+  TDBEdit *DBEdit7;
+  TLabel *Label13;
+  TDBEdit *DBEdit8;
+  TLabel *Label14;
+  TDBEdit *DBEdit9;
+  TLabel *Label15;
+  TDBEdit *DBEdit10;
+  TDBLookupComboBox *lkcmb_codigos;
+  TQuery *qry_invulpre;
+  TDataSource *dts_invulpre;
+  TAdvStringGrid *sgrd_tarjeta;
+  TQuery *qry_exist;
+  TDataSource *dts_exist;
+  TAdvStringGrid *sgrd_exist;
+  TDataSource *dts_alms;
+  TQuery *qry_alms;
+  TToolBar *ToolBar1;
+  TToolButton *ToolButton2;
+  TActionList *ActionList1;
+  TAction *nuevo;
+  TAction *modifica;
+  TAction *borra;
+  TAction *grabar;
+  TAction *cancelar;
+  TWindowClose *WindowClose1;
+  TAction *primero;
+  TAction *anterior;
+  TAction *siguiente;
+  TAction *ultimo;
+  TQuery *qry_haciainv;
+  TDataSource *dts_haciainv;
+  TLabel *Label16;
+  TDBEdit *DBEdit11;
+  TQuery *qry_marca;
+  TDataSource *dts_marca;
+  TQuery *qry_movart;
+  TDataSource *dts_movart;
+  TQuery *qry_conceps;
+  TQuery *qry_estadis;
+  TDataSource *dts_estadis;
+  TUpdateSQL *uqry_estadis;
+  TQuery *qry_estadialm;
+  TQuery *qry_exisgpo;
+        TQuery *qry_ordenalm;
+        TQuery *qry_observs;
+        TDataSource *dts_observs;
+        TQuery *qry_exigrid;
+        TDataSource *dts_exigrid;
+        TUpdateSQL *uqry_exigrid;
+        TSplitter *Splitter1;
+        TQuery *qry_mvartdisp;
+        TDataSource *dts_mvartdisp;
+        TAction *exporta_dbgrd;
+        TPopupMenu *PopupMenu1;
+        TMenuItem *Exportara1;
+        TPageControl *page_detalles;
+        TTabSheet *tbs_kardex;
+        TPanel *Panel1;
+        TLabel *Label17;
+        TDBLookupComboBox *lkcmb_alm;
+        TDBEdit *DBEdit12;
+        TdxDBGrid *dbgrd_kardex;
+        TdxDBGridDateColumn *dbgrd_kardexFECHA;
+        TdxDBGridMaskColumn *dbgrd_kardexMODENT;
+        TdxDBGridMaskColumn *dbgrd_kardexNENTRADA;
+        TdxDBGridColumn *dbgrd_kardexProveedor;
+        TdxDBGridMaskColumn *dbgrd_kardexFOLIO;
+        TdxDBGridMaskColumn *dbgrd_kardexSERIE;
+        TdxDBGridMaskColumn *dbgrd_kardexMODSAL;
+        TdxDBGridColumn *dbgrd_kardexfechsalida;
+        TdxDBGridColumn *dbgrd_kardexComprador;
+        TTabSheet *tbs_estadis;
+        TdxDBGrid *dbgrd_estadis;
+        TPanel *Panel2;
+        TSplitter *Splitter2;
+        TSplitter *Splitter3;
+        TGroupBox *GroupBox3;
+        TLabel *Label18;
+        TLabel *Label19;
+        TComboBox *cmb_tipoestadi;
+        TdxSpinEdit *edt_anuestadis;
+        TPanel *Panel4;
+        TBitBtn *btn_estadis;
+        TBitBtn *btn_estadiexp;
+        TGroupBox *GroupBox2;
+        TLabel *llbl_estadisde;
+        TComboBox *cmb_gpoestadis;
+        TTabSheet *tbs_exist;
+        TPanel *Panel3;
+        TGroupBox *GroupBox4;
+        TLabel *lbl_exisgpo;
+        TLabel *Label20;
+        TEdit *edt_gpoexi;
+        TComboBox *cmb_tipoexis;
+        TPanel *Panel5;
+        TBitBtn *btn_okxis;
+        TTabSheet *tbs_observs;
+        TdxDBGrid *dbgrd_observs;
+        TdxDBGridDateColumn *dbgrd_observsFECHA;
+        TdxDBGridMaskColumn *dbgrd_observsOBSERVS;
+        TTabSheet *tbs_disponible;
+        TdxDBGrid *dbgrd_dispo;
+        TdxDBGridColumn *dbgrd_dispoAlm;
+        TdxDBGridDateColumn *dxDBGridFecha;
+        TdxDBGridMaskColumn *dxDBGridMODENT;
+        TdxDBGridMaskColumn *dxDBGridNENTRADA;
+        TdxDBGridColumn *dxDBGridPROVE;
+        TdxDBGridMaskColumn *dxDBGridFOLIO;
+        TdxDBGridMaskColumn *dxDBGridSERIE;
+        TdxDBGridMaskColumn *dxDBGridMODSAL;
+        TAction *selec_orden;
+        TQuery *qry_revision;
+        TQuery *qry_movto;
+        TMemo *mmo_sql;
+        TTabSheet *tbs_busserie;
+        TPanel *Panel6;
+        TdxDBGrid *dbgrd_busserie;
+        TdxDBGridColumn *dxDBGridColumn1;
+        TdxDBGridDateColumn *dxDBGridDateColumn1;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn1;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn2;
+        TdxDBGridColumn *dxDBGridColumn2;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn3;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn4;
+        TdxDBGridMaskColumn *dxDBGridMaskColumn5;
+        TdxDBGridColumn *dxDBGridColumn3;
+        TdxDBGridColumn *dxDBGridColumn4;
+        TLabel *Label21;
+        TEdit *edt_busserie;
+        TQuery *qry_seriebus;
+        TDataSource *dts_seriebus;
+        TdxDBGridMaskColumn *dbgrd_estadisALM;
+        TdxDBGridMaskColumn *dbgrd_estadisENE;
+        TdxDBGridMaskColumn *dbgrd_estadisFEB;
+        TdxDBGridMaskColumn *dbgrd_estadisMAR;
+        TdxDBGridMaskColumn *dbgrd_estadisABR;
+        TdxDBGridMaskColumn *dbgrd_estadisMAY;
+        TdxDBGridMaskColumn *dbgrd_estadisJUN;
+        TdxDBGridMaskColumn *dbgrd_estadisJUL;
+        TdxDBGridMaskColumn *dbgrd_estadisAGO;
+        TdxDBGridMaskColumn *dbgrd_estadisSEP;
+        TdxDBGridMaskColumn *dbgrd_estadisOCT;
+        TdxDBGridMaskColumn *dbgrd_estadisNOV;
+        TdxDBGridMaskColumn *dbgrd_estadisDIC;
+        TdxDBGridMaskColumn *dbgrd_estadisTOT;
+        TdxDBGridMaskColumn *dbgrd_estadisNOMBRE;
+        TBitBtn *btn_exiexpert;
+        TdxDBGrid *dbgrd_exist;
+    TdxDBGridMaskColumn *dbgrd_kardexVIENEDE;
+    TdxDBGridMaskColumn *dbgrd_kardexFolviene;
+    TdxDBGridMaskColumn *dbgrd_kardexVahacia;
+    TdxDBGridMaskColumn *dbgrd_kardexFOLREC;
+    TdxDBGridMaskColumn *dbgrd_dispoVIENEDE;
+    TdxDBGridMaskColumn *dbgrd_dispoFOLVIENE;
+    TLabel *Label22;
+    TQuery *qry_descri2;
+    TDBEdit *DBEdit5;
+    TDataSource *dts_descri2;
+        TLabel *lbl_prmay;
+        TdxCurrencyEdit *edt_preciomay;
+        TLabel *lbl_prmayneto;
+        TdxCurrencyEdit *edt_mayneto;
+        TLabel *Label4;
+        TdxCurrencyEdit *edt_mubmay;
+        TQuery *qry_almreps;
+        TDataSource *dts_almreps;
+        TLabel *Label5;
+        TLabel *Label7;
+        TLabel *lbl_prxtensa;
+        TLabel *lbl_cosxtensa;
+        TdxCurrencyEdit *edt_mubcext;
+        TdxCurrencyEdit *edt_costocext;
+        TQuery *qry_extensa;
+        TLabel *Label25;
+        TQuery *qry_garantias;
+        TEdit *edt_garantia;
+        TLabel *Label26;
+        TEdit *edt_plazo;
+        TQuery *qry_plazoxlin;
+        TQuery *qry_plazoxprecio;
+        TQuery *qry_plazoxarticulo;
+        TQuery *qry_plazoxgrupo;
+        TLabel *Label27;
+        TdxCurrencyEdit *edt_prfilial;
+        TLabel *Label28;
+        TdxCurrencyEdit *edt_prfilialneto;
+        TLabel *lbl_maximo;
+        TSpeedButton *SpeedButton1;
+        TSpeedButton *SpeedButton2;
+        TSpeedButton *SpeedButton3;
+        TSpeedButton *SpeedButton4;
+        TSpeedButton *SpeedButton5;
+        TSpeedButton *SpeedButton6;
+        TQuery *qry_grabaestadis;
+        TUpdateSQL *UpdateSQL1;
+        TAction *graba_estadis_anual;
+        TMenuItem *GrabarEstadisAnual1;
+        TAction *cambia_serie;
+        TTabSheet *TabSheet1;
+        TdxDBGrid *dbgrd_obslin;
+        TQuery *qry_obslin;
+        TDataSource *dts_obslin;
+        TdxDBGridMaskColumn *dbgrd_obslinMOE;
+        TdxDBGridMaskColumn *dbgrd_obslinCONSE;
+        TdxDBGridMaskColumn *dbgrd_obslinOBSER;
+        TdxDBGridMaskColumn *dbgrd_dispoENTCAN;
+        TdxCurrencyEdit *edt_precioext;
+        TdxCurrencyEdit *edt_costoext;
+        TTabSheet *tbs_observsneg;
+        TQuery *qry_observnegxcod;
+        TDataSource *dts_observnegxcod;
+        TAction *agrega_obsneg;
+        TQuery *qry_observnegxpro;
+        TDataSource *dts_observnegxpro;
+        TGroupBox *grp_obsnegxpro;
+        TPanel *Panel8;
+        TBitBtn *btn_obsnegprove;
+        TdxDBGrid *dbgrd_observnegxpro;
+        TdxDBGridDateColumn *dxDBGridDateColumn3;
+        TGroupBox *grp_obsnegxmca;
+        TPanel *Panel9;
+        TBitBtn *btn_obsnegmarca;
+        TdxDBGrid *dbgrd_observnegxmca;
+        TdxDBGridDateColumn *dxDBGridDateColumn4;
+        TSplitter *Splitter4;
+        TSplitter *Splitter5;
+        TGroupBox *grp_obsnegxcod;
+        TPanel *Panel7;
+        TBitBtn *btn_obsnegcodigo;
+        TdxDBGrid *dbgrd_observnegxcod;
+        TdxDBGridDateColumn *dxDBGridDateColumn2;
+        TQuery *qry_observnegxmca;
+        TDataSource *dts_observnegxmca;
+        TTimer *timer_cambioprecio;
+        TAction *despliega_cambios_precio;
+        TBitBtn *btn_vercambiosprecio;
+        TAction *nuevo_articulo;
+        TSpeedButton *btn_ofertas;
+        TAction *modif_articulo;
+        TSpeedButton *SpeedButton8;
+        TComboBox *cmb_estadi2;
+        TCheckBox *chk_estadis2;
+        TEdit *edt_codestadi2;
+        TLabel *lbl_estdiscod;
+        TEdit *edt_codestad;
+        TLabel *lbl_estadi2;
+        TTabSheet *tbs_imagenes;
+        TAction *ver_imagen_completa;
+        TSplitter *Splitter6;
+        TPanel *Panel10;
+        TPanel *Panel11;
+        TPanel *Panel12;
+        TBitBtn *BitBtn1;
+        TTabSheet *tbs_observcomer;
+        TGroupBox *grp_obscomxmca;
+        TPanel *Panel13;
+        TBitBtn *BitBtn2;
+        TdxDBGrid *dbgrd_obscommca;
+        TdxDBGridDateColumn *dxDBGridDateColumn5;
+        TGroupBox *grp_obscomxlin;
+        TPanel *Panel14;
+        TBitBtn *BitBtn3;
+        TdxDBGrid *dbgrd_obscomlin;
+        TdxDBGridDateColumn *dxDBGridDateColumn6;
+        TGroupBox *grp_obscomxgpo;
+        TPanel *Panel15;
+        TBitBtn *BitBtn4;
+        TdxDBGrid *dbgrd_obscomgpo;
+        TdxDBGridDateColumn *dxDBGridDateColumn7;
+        TQuery *qry_obscomlin;
+        TDataSource *dts_obscomlin;
+        TQuery *qry_obscommca;
+        TDataSource *dts_obscommca;
+        TQuery *qry_obscomgpo;
+        TDataSource *dts_obscomgpo;
+        TAction *ver_permision;
+        TMenuItem *Permisiones1;
+        TdxDBGridWrapperColumn *dxDBGridMaskColumn8;
+        TdxDBGridWrapperColumn *dxDBGridMaskColumn7;
+        TdxDBGridWrapperColumn *dxDBGridMaskColumn6;
+        TdxDBGridWrapperColumn *dxDBGridMaskColumn9;
+        TdxDBGridWrapperColumn *dxDBGridMaskColumn10;
+        TdxDBGridWrapperColumn *dxDBGridMaskColumn11;
+        TdxCurrencyEdit *edt_minimo;
+        TLabel *Label6;
+        TLabel *Label10;
+        TdxCurrencyEdit *edt_maxmen;
+        TLabel *Label11;
+        TdxCurrencyEdit *edt_maxmay;
+        TAction *ver_almacenes;
+        TBitBtn *btn_selalmactivos;
+        TFrame_imginven *Frame_imginven1;
+        TAction *modif_ctorep;
+        TSpeedButton *SpeedButton9;
+        TQuery *qry_catprodsat;
+        TDataSource *dts_catprodsat;
+        TLabel *Label23;
+        TDBEdit *DBEdit13;
+        TDBEdit *DBEdit14;
+        TQuery *qry_catprodsatgpo;
+        TLabel *lbl_oferta;
+        TLabel *lbl_inivig;
+        TEdit *edt_inioferta;
+        TEdit *edt_finoferta;
+        TLabel *lbl_finvig;
+        TLabel *lbl_mubofer;
+        TdxCurrencyEdit *edt_mubofert;
+        TAction *desplegar_ofertas;
+        TMenuItem *Ofertas1;
+        TSpeedButton *SpeedButton10;
+        TAction *despliega_historico_costo_repo;
+        TMenuItem *DesplegarHistoricoCostoReposicion1;
+        TLabel *Label24;
+        TdxCurrencyEdit *edt_mubfilial;
+        TLabel *lbl_outlet;
+        TdxCurrencyEdit *edt_proutlet;
+        TLabel *lbl_inioutlet;
+        TEdit *edt_inioutlet;
+        TLabel *lbl_finoutlet;
+        TEdit *edt_finoutlet;
+        TLabel *lbl_muboutlet;
+        TdxCurrencyEdit *edt_muboutlet;
+        TQuery *qry_servicio;
+        TQuery *qry_servxgpo;
+        TLabel *Label29;
+        TdxCurrencyEdit *edt_servicio;
+        TQuery *qry_ofertas;
+        TQuery *qry_historialofertas;
+        TEdit *edt_proferta;
+        TTabSheet *TabSheet2;
+        TPanel *Panel16;
+        TBitBtn *BitBtn5;
+        TAction *ModificaDatosInternet;
+        TFrame_datosinternet *Frame_datosinternet1;
+        void __fastcall edt_codigoKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall qry_invenCalcFields(TDataSet *DataSet);
+        void __fastcall lkcmb_codigosExit(TObject *Sender);
+        void __fastcall lkcmb_codigosKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+  void __fastcall FormCreate(TObject *Sender);
+  void __fastcall anteriorExecute(TObject *Sender);
+  void __fastcall borraExecute(TObject *Sender);
+  void __fastcall cancelarExecute(TObject *Sender);
+  void __fastcall grabarExecute(TObject *Sender);
+  void __fastcall modificaExecute(TObject *Sender);
+  void __fastcall nuevoExecute(TObject *Sender);
+  void __fastcall primeroExecute(TObject *Sender);
+  void __fastcall siguienteExecute(TObject *Sender);
+  void __fastcall ultimoExecute(TObject *Sender);
+  void __fastcall btn_estadisClick(TObject *Sender);
+  void __fastcall btn_okxisClick(TObject *Sender);
+  void __fastcall cmb_tipoexisChange(TObject *Sender);
+  void __fastcall dbgrd_kardexDblClick(TObject *Sender);
+        void __fastcall cmb_gpoestadisChange(TObject *Sender);
+        void __fastcall btn_estadiexpClick(TObject *Sender);
+        void __fastcall dbgrd_dispoDblClick(TObject *Sender);
+        void __fastcall exporta_dbgrdExecute(TObject *Sender);
+        void __fastcall selec_ordenExecute(TObject *Sender);
+        void __fastcall tbs_disponibleShow(TObject *Sender);
+        void __fastcall lkcmb_almKeyUp(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall edt_busserieKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall dbgrd_kardexKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall dbgrd_dispoKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall dbgrd_busserieDblClick(TObject *Sender);
+        void __fastcall dbgrd_busserieKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall dbedt_lineaDblClick(TObject *Sender);
+        void __fastcall btn_exiexpertClick(TObject *Sender);
+        void __fastcall dbgrd_kardexCustomDrawCell(TObject *Sender,
+          TCanvas *ACanvas, TRect &ARect, TdxTreeListNode *ANode,
+          TdxTreeListColumn *AColumn, bool ASelected, bool AFocused,
+          bool ANewItemRow, AnsiString &AText, TColor &AColor,
+          TFont *AFont, TAlignment &AAlignment, bool &ADone);
+        void __fastcall dbgrd_existDblClick(TObject *Sender);
+        void __fastcall dbgrd_existKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+    void __fastcall edt_anuestadisDblClick(TObject *Sender);
+        void __fastcall DBEdit12DblClick(TObject *Sender);
+        void __fastcall graba_estadis_anualExecute(TObject *Sender);
+        void __fastcall cambia_serieExecute(TObject *Sender);
+        void __fastcall page_detallesChange(TObject *Sender);
+        void __fastcall btn_obsnegmarcaClick(TObject *Sender);
+        void __fastcall timer_cambioprecioTimer(TObject *Sender);
+        void __fastcall despliega_cambios_precioExecute(TObject *Sender);
+        void __fastcall nuevo_articuloExecute(TObject *Sender);
+        void __fastcall modif_articuloExecute(TObject *Sender);
+        void __fastcall chk_estadis2Click(TObject *Sender);
+        void __fastcall cmb_estadi2Change(TObject *Sender);
+        void __fastcall ver_imagen_completaExecute(TObject *Sender);
+        void __fastcall ver_permisionExecute(TObject *Sender);
+        void __fastcall ver_almacenesExecute(TObject *Sender);
+        void __fastcall modif_ctorepExecute(TObject *Sender);
+        void __fastcall desplegar_ofertasExecute(TObject *Sender);
+        void __fastcall despliega_historico_costo_repoExecute(
+          TObject *Sender);
+        void __fastcall ModificaDatosInternetExecute(TObject *Sender);
+
+private:	// User declarations
+public:		// User declarations
+        void __fastcall busca_cod(AnsiString codigo_z);
+        __fastcall TForm_consuinv(TComponent* Owner);
+        TForm_dlgcriterio *Form_dlgcriterio;
+        void __fastcall mueve_hacia(String hacia_z);
+        int __fastcall busca_plazo(String codigo_z, String linea_z, String grupo_z, double precio_z);
+        void __fastcall busca_movarts();
+        void __fastcall sel_tipoexi();
+        void __fastcall desp_detmovart(String codigo_z, String alm_z, int folio_z);
+        String  __fastcall toma_criterios(String linea_z);
+        String __fastcall busnomjoin(int tipoestadi_z);
+        String __fastcall busnombre(int tipoestadi_z, String codigo_z);
+        void __fastcall muestrasqls(String sql1_z, String sql2_z);
+        int __fastcall busca_maximoant(String codigo_z);
+        void __fastcall DesplegarObservs();
+        void __fastcall checa_cambios_precios();
+        bool __fastcall checa_si_hay_cambio_precios_articulo(String codigo_z);
+        void __fastcall muestra_cambios(String codigo_z);
+        int __fastcall busca_oferta(String codigo_z);
+
+        void __fastcall activar_timer();
+        void __fastcall alta_modif_articulo(int modo_z);
+        void __fastcall Desplegar_imagen();
+        int __fastcall busca_unidades_vendidas(String codigo_z, String tiposalida_z);
+        int __fastcall busca_outlet(String codigo_z);
+        int __fastcall busca_servicio(String codigo_z);
+        int __fastcall busca_oferta_historico(String codigo_z);
+        void __fastcall muestra_datos_internet();
+
+
+
+        int cia_z, COL_EXICOS, COL_EXICOD, COL_EXIPREC, COL_MAXIMO,
+        COL_TOTAL, itemsub_z, estado_z, eximin_z, eximax_z,
+         maxdiasglo_z, maxdiasmen_z, maxdiasmay_z;
+        TStringList  *orden_z;
+        double hoy_z, inianu_z, margenrepo_z;
+        String permis_z, antprove_z, antmarca_z, pagina_z,
+          valpermis_z, antlin_z, antgpo_z, directorioimgs_z,
+          acticamprecio_z, actioferta_z, actictorep_z, actioutlet_z,
+          desplegarofertas_z;
+
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm_consuinv *Form_consuinv;
+//---------------------------------------------------------------------------
+#endif

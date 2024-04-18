@@ -1,0 +1,48 @@
+//---------------------------------------------------------------------------
+
+
+#ifndef Frme_datoscappedmagregH
+#define Frme_datoscappedmagregH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <DBCtrls.hpp>
+#include <Mask.hpp>
+#include <Db.hpp>
+#include <DBTables.hpp>
+//---------------------------------------------------------------------------
+class TFrame_datoscappedmagrega : public TFrame
+{
+__published:	// IDE-managed Components
+        TLabel *Label8;
+        TEdit *edt_codigo;
+        TEdit *edt_descri;
+        TLabel *Label12;
+        TdxCurrencyEdit *edt_canti;
+        TdxCurrencyEdit *edt_costou;
+        TDBLookupComboBox *lkcmb_codigos;
+        TQuery *qry_buscod;
+        TDataSource *dts_buscod;
+        TQuery *qry_inven;
+        TDataSource *dts_inven;
+        TLabel *lbl_costo;
+        void __fastcall edt_codigoKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+        void __fastcall lkcmb_codigosExit(TObject *Sender);
+        void __fastcall lkcmb_codigosKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TFrame_datoscappedmagrega(TComponent* Owner);
+        int iTpcon, tipoest_z, cia_z, mi_entrada_z, lineas_z, pagina_z;
+    AnsiString sDescriEnt, sTipo, mensaje_z, este_z, titulo_z, cerrado_z,
+      titmsg_z, genero_z;
+        void __fastcall busca_cod(String codigo_z);
+        double __fastcall calcu_prvta();
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFrame_datoscappedmagrega *Frame_datoscappedmagrega;
+//---------------------------------------------------------------------------
+#endif

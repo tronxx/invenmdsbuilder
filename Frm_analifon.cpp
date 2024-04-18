@@ -1,0 +1,556 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Frm_analifon.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "dxCntner"
+#pragma link "dxDBCtrl"
+#pragma link "dxDBGrid"
+#pragma link "dxTL"
+#pragma link "dxDBTLCl"
+#pragma link "dxGrClms"
+#pragma resource "*.dfm"
+#include "imprigra.h"
+#include "numapal.h"
+#include "dmod.h"
+#include "situaciones.h"
+const int MAX_LINEAS = 60;
+TForm_analifon *Form_analifon;
+
+//---------------------------------------------------------------------------
+__fastcall TForm_analifon::TForm_analifon(TComponent* Owner)
+        : TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_analifon::report_encab()
+{
+  String situini_z,situfin_z,tit1_z,tit2_z;
+  fprintf(archout, "%s%s%s\n", dm->font_impre(dm->impre_z, ELITE),
+    dm->font_impre(dm->impre_z, CONDENSADO_OFF), cjust(dm->nemp_z, 90)
+  );
+  fprintf(archout, "%s%s%s%s Pag:%d\n", dm->font_impre(dm->impre_z, CONDENSADO_ON),
+     "Frm_analifon" + FormatDateTime("dd-mm-yyyy hh:nn", Now())+ " ",
+    dm->font_impre(dm->impre_z, CONDENSADO_OFF),  cjust(dm->diremp_z, 60),pagina_z
+  );
+  if(rbtn_fona->Checked ){
+       tit1_z = "FONACOT ";
+   }else if(rbtn_imevi->Checked ){
+       tit1_z = "IMEVI ";
+   }else if(rbtn_fide->Checked ){
+       tit1_z = "FIDE ";
+   }else if(rbtn_cel->Checked ){
+       tit1_z = "CELULARES ";
+   }
+   situini_z = edt_situini->Text;
+   situfin_z = edt_situfin->Text;
+
+   tit2_z = "Tabla de costos de Ventas ";
+   fprintf(archout, "%s", cjust( tit2_z + tit1_z + "x Ubicacion",45));
+   fprintf(archout, "%s\n", ljust( " del "  + FormatDateTime("dd/mm/yyyy",
+   date_ini->Date) + " AL "  + FormatDateTime("dd/mm/yyyy",
+   date_fin->Date),50));
+   tit2_z = "Productos con Situacion de ";
+   fprintf(archout, "%s", cjust( tit2_z + situini_z + "A " + situfin_z  ,75));
+   fprintf(archout, "\n");
+   lineas_z = 5;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::parametros()
+{
+  //Reporte Fonacot:
+  if(rbtn_fona->Checked ){
+     tpvta_z = "F";
+     tpcan_z = "O";
+  }
+  //Reporte Imevi:
+  if(rbtn_imevi->Checked ){
+     tpvta_z = "H";
+     tpcan_z = "J";
+  }
+  //Reporte FIDE:
+  if(rbtn_fide->Checked ){
+     tpvta_z = "Q";
+     tpcan_z = "U";
+  }
+  //Reporte CELULARES:
+  if(rbtn_cel->Checked ){
+     tpvta_z = "1";
+     tpcan_z = "2";
+  }
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::encab()
+{
+   String suc_z,recemi_z;
+   //fprintf(archout, "%s", dm->font_impre(dm->impre_z, CONDENSADO_ON));
+   fprintf(archout, "%s|", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+   fprintf(archout, "%s|", cjust("Codigo",12 ));
+   fprintf(archout, "%s|", cjust("Descripcion",30));
+   fprintf(archout, "%s|", cjust("Nombre del Cilente",25 ));
+   fprintf(archout, "%s|", cjust("Canti",5));
+   fprintf(archout, "%s|", cjust("T o t a l ",12));
+   fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+   lineas_z += 1;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::FormCreate(TObject *Sender)
+{
+    cia_z = dm->cia_z;
+    puntt_z = 0;
+    sum = new TStringList();
+    sumgen = new TStringList();
+    date_ini->Date = PrimerDiaMes(IncMonth(dm->ahora(), -1));
+    date_fin->Date = UltimoDiaMes(date_ini->Date);
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::imprime_analit()
+{
+   String codinv_z,descri_z ,concepto_z;
+   double unids_z,total_z;
+   qry_punto->Close();
+   qry_punto->ParamByName("ALMINI")->AsString = almini_z;
+   qry_punto->ParamByName("ALMFIN")->AsString = almfin_z;
+   qry_punto->ParamByName("FECINI")->AsDateTime = fecini_z ;
+   qry_punto->ParamByName("FECFIN")->AsDateTime = fecfin_z;
+   qry_punto->ParamByName("PVTA")->AsString = tpvta_z;
+   qry_punto->ParamByName("PCAN")->AsString = tpcan_z;
+   qry_punto->ParamByName("CIA")->AsInteger = cia_z;
+   qry_punto->ParamByName("EMPINI")->AsString = empini_z;
+   qry_punto->ParamByName("EMPFIN")->AsString = empfin_z;
+   qry_punto->Open();
+
+   for ( qry_punto->First(); !qry_punto->Eof; qry_punto->Next()) {
+     recemi_z = qry_punto->FieldByName("recemi")->AsString;
+     nombre_z = qry_punto->FieldByName("nombre")->AsString;
+
+     encab_punto(recemi_z,nombre_z);
+     encab();
+
+     qry_analitico->Close();
+     qry_analitico->ParamByName("ALMINI")->AsString = almini_z;
+     qry_analitico->ParamByName("ALMFIN")->AsString = almfin_z;
+     qry_analitico->ParamByName("FECINI")->AsDateTime = fecini_z ;
+     qry_analitico->ParamByName("FECFIN")->AsDateTime = fecfin_z;
+     qry_analitico->ParamByName("PVTA")->AsString =  tpvta_z;
+     qry_analitico->ParamByName("PCAN")->AsString =  tpcan_z;
+     qry_analitico->ParamByName("RECEMI")->AsString = recemi_z ;
+     qry_analitico->ParamByName("CIA")->AsInteger = cia_z;
+     qry_analitico->ParamByName("EMPINI")->AsString = empini_z;
+     qry_analitico->ParamByName("EMPFIN")->AsString = empfin_z ;
+     qry_analitico->Open();
+
+     for ( qry_analitico->First(); !qry_analitico->Eof; qry_analitico->Next()) {
+       codinv_z =  qry_analitico->FieldByName("codinv")->AsString;
+       descri_z =   qry_analitico->FieldByName("descri")->AsString;
+       concepto_z =  qry_analitico->FieldByName("concepto")->AsString;
+       unids_z =  qry_analitico->FieldByName("unids")->AsFloat;
+       total_z =  qry_analitico->FieldByName("total")->AsFloat;
+       fprintf(archout, "|");
+       fprintf(archout, "%s|", ljust( codinv_z, 12));
+       fprintf(archout, "%s|", ljust(descri_z, 30));
+       fprintf(archout, "%s|", ljust(concepto_z, 25));
+       fprintf(archout, "%s|", rjust(FormatFloat("0",unids_z), 5));
+       fprintf(archout, "%s|\n", rjust(FormatFloat("###,##0.00",total_z ),12 ));
+       lineas_z += 1;
+       checa_salto_pag(3);
+
+       tottotal_z += total_z;
+       totgen_z += total_z;
+
+     }
+     total_punto();
+
+   }
+   total_gen();
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::encab_punto(String recemi_z, String nombre_z)
+{
+  fprintf(archout, "%s", ljust("Punto de Venta:", 15));
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, ON_LINE_EXPANDED_ON));
+  fprintf(archout, "%s", ljust( recemi_z + " " + nombre_z, 40));
+  fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, ON_LINE_EXPANDED_OFF));
+  lineas_z += 1;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::total_punto()
+{
+  int sumas_z;
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+  fprintf(archout, "%s|", cjust("Total de Este Punto de Venta:", 76));
+  fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00",  tottotal_z),12 ));
+  fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+  fprintf(archout, "\n");
+  lineas_z += 1;
+  tottotal_z = 0;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::total_gen()
+{
+  int sumas_z;
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+  fprintf(archout, "%s|", cjust("Total General:", 76));
+  fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00",totgen_z),12 ));
+  fprintf(archout, "%s\n", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+  lineas_z += 1;
+  tottotal_z = 0;
+}
+//---------------------------------------------------------------------------
+
+bool __fastcall TForm_analifon::checa_salto_pag(int margen_z)
+{
+  bool haysalto_z = false;
+  if(lineas_z > (MAX_LINEAS - margen_z)) {
+    fprintf(archout, "%c", 12);
+    pagina_z++;
+    report_encab();
+    haysalto_z = true;
+  }
+  return (haysalto_z);
+}
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::tabla_lineas()
+{
+   double dato_z,tot_z;
+   int ii_z, columnas_z,tod_z, nelem_z=0,
+   inicia_z, ndatos_z, ncolxtab_z, ntablas_z,
+   przona_z, ulzona_z;
+
+   qry_punto->Close();
+   qry_punto->ParamByName("ALMINI")->AsString = almini_z;
+   qry_punto->ParamByName("ALMFIN")->AsString = almfin_z;
+   qry_punto->ParamByName("FECINI")->AsDateTime = fecini_z ;
+   qry_punto->ParamByName("FECFIN")->AsDateTime = fecfin_z;
+   qry_punto->ParamByName("PVTA")->AsString = tpvta_z;
+   qry_punto->ParamByName("PCAN")->AsString = tpcan_z;
+   qry_punto->ParamByName("CIA")->AsInteger = cia_z;
+   qry_punto->ParamByName("EMPINI")->AsString = empini_z;
+   qry_punto->ParamByName("EMPFIN")->AsString = empfin_z;
+   qry_punto->Open();
+
+   nelem_z = qry_punto->RecordCount + 3;
+
+   ncolxtab_z=7;
+   ntablas_z= nelem_z / ncolxtab_z;
+   if( nelem_z % ncolxtab_z) ntablas_z++;
+   ncolxtab_z=nelem_z / ntablas_z;
+   if(nelem_z % ntablas_z) ncolxtab_z++;
+   for(int tablaac_z = 0; tablaac_z < ntablas_z; tablaac_z++) {
+     inicia_z = tablaac_z * ncolxtab_z + 1;
+     termin_z = inicia_z + ncolxtab_z - 1;
+     if(termin_z > nelem_z) termin_z=nelem_z;
+     GENERATABLA(inicia_z, termin_z);
+
+   }
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::GENERATABLA(
+  int inicia_z, int termin_z
+)
+{
+  String  nomzon_z,suc_z,descrips_z ;
+  int ndatos_z, ncolxtab_z, ancho_z, ii_z, antzoncar_z;
+  ncolxtab_z = termin_z - inicia_z + 1;
+  if(ncolxtab_z < 5) ancho_z=90; else ancho_z=132;
+  if (ancho_z == 90) {
+    fprintf(archout, "%s", dm->font_impre(dm->impre_z, ELITE));
+    fprintf(archout, "%s", dm->font_impre(dm->impre_z, CONDENSADO_OFF));
+  } else {
+    fprintf(archout, "%s", dm->font_impre(dm->impre_z, PICA_PITCH));
+    fprintf(archout, "%s", dm->font_impre(dm->impre_z, CONDENSADO_ON));
+  }
+  //fprintf(archout, "%s ", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+  for ( ii_z = inicia_z; ii_z <= termin_z; ii_z++) {
+     fprintf(archout, "%s ", ljust("", 12));
+  }
+  //fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+  fprintf(archout, "\n");
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+  fprintf(archout, "|");
+  fprintf(archout, "%s|", ljust("LINE", 4));
+  fprintf(archout, "%s|", ljust("DESCRIPCION", 10));
+  ii_z=1;
+
+  for ( qry_punto->First(); !qry_punto->Eof; qry_punto->Next()) {
+
+    if(ii_z >= inicia_z && ii_z <= termin_z) {
+      recemi_z = qry_punto->FieldByName("recemi")->AsString;
+      suc_z = qry_punto->FieldByName("nombre")->AsString;
+      fprintf(archout, "%s|", cjust(recemi_z + " " + suc_z , 12));
+      fprintf(archout, "%s|", cjust("%",5));
+      puntt_z++;
+    }
+    ii_z++;
+
+  }
+
+  if(ii_z == (termin_z -2 )) {
+   fprintf(archout, "%s|", ljust("T o t a l",12));
+   fprintf(archout, "%s|", cjust("%",5));
+  }
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+  fprintf(archout, "\n");
+   fin_z = ii_z;
+  imprimir_informe(inicia_z, termin_z);
+
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_analifon::imprimir_informe (int inicia_z, int termin_z)
+{
+ String campo_z,line_z,puntos_z,descrips_z ;
+ double tothor_z=0,dato_z,tot_z,
+ client_z,dia_z,doc_z,totallin_z ,totsuc_z,porc_z,sumasgen_z,gdivgen_z,subzon_z,
+ importe_z, clientes_z, doctos_z, dias_z;
+ int num_z,ii_z, antzoncar_z, final_z,orden_z,liz_z;
+ liz_z = 0;
+ gtot();
+   qry_lineas->Close();
+   qry_lineas->ParamByName("ALMINI")->AsString = almini_z;
+   qry_lineas->ParamByName("ALMFIN")->AsString = almfin_z;
+   qry_lineas->ParamByName("FECINI")->AsDateTime = fecini_z ;
+   qry_lineas->ParamByName("FECFIN")->AsDateTime = fecfin_z;
+   qry_lineas->ParamByName("PVTA")->AsString = tpvta_z;
+   qry_lineas->ParamByName("PCAN")->AsString = tpcan_z;
+   qry_lineas->ParamByName("CIA")->AsInteger = cia_z;
+   qry_lineas->ParamByName("EMPINI")->AsString = empini_z;
+   qry_lineas->ParamByName("EMPFIN")->AsString = empfin_z;
+   qry_lineas->Open();
+   orden_z = 0;
+   for (qry_lineas->First(); !qry_lineas->Eof; qry_lineas->Next()) {
+       line_z = qry_lineas->FieldByName("numero")->AsString;
+       descrips_z =  qry_lineas->FieldByName("descri")->AsString;
+       ii_z = 1;
+       cuant_z = 0;
+
+       fprintf(archout, "|");
+       fprintf(archout, "%s|", ljust(line_z, 4));
+       fprintf(archout, "%s|", ljust(descrips_z, 10));
+       for ( qry_punto->First(); !qry_punto->Eof; qry_punto->Next()) {
+
+            sum->Append("0");
+            sumgen->Append("0");
+          if(ii_z >= inicia_z && ii_z <= termin_z) {
+             puntos_z = qry_punto->FieldByName("recemi")->AsString;
+             qry_totline->Close();
+             qry_totline->ParamByName("ALMINI")->AsString = almini_z;
+             qry_totline->ParamByName("ALMFIN")->AsString = almfin_z;
+             qry_totline->ParamByName("FECINI")->AsDateTime = fecini_z ;
+             qry_totline->ParamByName("FECFIN")->AsDateTime = fecfin_z;
+             qry_totline->ParamByName("PVTA")->AsString = tpvta_z;
+             qry_totline->ParamByName("RECEMI")->AsString = puntos_z;
+             qry_totline->ParamByName("LINEA")->AsString = line_z;
+             qry_totline->ParamByName("CIA")->AsInteger = cia_z;
+             qry_totline->ParamByName("EMPINI")->AsString = empini_z;
+             qry_totline->ParamByName("EMPFIN")->AsString = empfin_z;
+             qry_totline->Open();
+             totallin_z =  qry_totline->FieldByName("total")->AsFloat;
+             //qry total de sucusales
+             qry_totsuc->Close();
+             qry_totsuc->ParamByName("ALMINI")->AsString = almini_z;
+             qry_totsuc->ParamByName("ALMFIN")->AsString = almfin_z;
+             qry_totsuc->ParamByName("FECINI")->AsDateTime = fecini_z ;
+             qry_totsuc->ParamByName("FECFIN")->AsDateTime = fecfin_z;
+             qry_totsuc->ParamByName("PVTA")->AsString = tpvta_z;
+             qry_totsuc->ParamByName("RECEMI")->AsString = puntos_z;
+             qry_totsuc->ParamByName("CIA")->AsInteger = cia_z;
+             qry_totsuc->ParamByName("EMPINI")->AsString = empini_z;
+             qry_totsuc->ParamByName("EMPFIN")->AsString = empfin_z;
+             qry_totsuc->Open();
+             totsuc_z = qry_totsuc->FieldByName("totsuc")->AsFloat;
+
+             //Suma de totales;
+             misuma_z = StrToFloat(sum->Strings[cuant_z]);
+             misuma_z += totallin_z;
+             sum->Strings[cuant_z] = FormatFloat("0.00", misuma_z);
+             cuant_z++;
+
+             //suma de t o t a l General
+
+             sumagen_z = StrToFloat(sumgen->Strings[orden_z]);
+             sumagen_z += totallin_z;
+             sumgen->Strings[orden_z] = FormatFloat("0.00", sumagen_z);
+
+
+             for ( qry_totline->First(); !qry_totline->Eof; qry_totline->Next()) {
+                totallin_z =  qry_totline->FieldByName("total")->AsFloat;
+                porc_z = 0;
+                if (totsuc_z) porc_z = (totallin_z / totsuc_z ) * 100;
+                fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", totallin_z ), 12));
+                fprintf(archout, "%s|", rjust(FormatFloat("0.0", porc_z ), 5));
+                //
+               /*
+                if(fin_z == (termin_z -2 )) {
+                  sumasgen_z = StrToFloat(sumgen->Strings[liz_z]);
+                  gdivgen_z = (sumasgen_z / gto_z)* 100;
+                  fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", sumasgen_z), 12));
+                  fprintf(archout, "%s|", rjust(FormatFloat("0.0", gdivgen_z), 5));
+                  sumdiv_z += gdivgen_z;
+                  liz_z++;
+                }
+               */
+             }
+
+
+          }
+             ii_z++;
+
+
+       }
+
+       if(fin_z == (termin_z -2 )) {
+          if (gto_z > 0 ){
+          sumasgen_z = StrToFloat(sumgen->Strings[liz_z]);
+          gdivgen_z = (sumasgen_z / gto_z )* 100;
+          fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", sumasgen_z), 12));
+          fprintf(archout, "%s|", rjust(FormatFloat("0.0", gdivgen_z), 5));
+          sumdiv_z += gdivgen_z;
+          liz_z++;
+
+          }
+        }
+
+       orden_z++;
+       fprintf(archout, "\n");
+   }
+   totales();
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::totales()
+{
+
+   double gdiv_z,sumas_z ;
+
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+  fprintf(archout, "|");
+  fprintf(archout, "%s|", cjust("", 4));
+  fprintf(archout, "%s|", cjust("Totales:", 10));
+  for( int ii_z=0; ii_z < puntt_z ; ii_z++) {
+     sumas_z = StrToFloat(sum->Strings[ii_z]);
+     gdiv_z = (sumas_z / gto_z )* 100;
+     fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", sumas_z), 12));
+     fprintf(archout, "%s|", rjust(FormatFloat("0.0", gdiv_z), 5));
+
+
+  }
+  if(fin_z == (termin_z -2 )) {
+     fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_ON));
+     fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", gto_z), 12));
+     fprintf(archout, "%s|", rjust(FormatFloat("0.0", sumdiv_z), 5));
+     fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+   }
+  fprintf(archout, "\n");
+  fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
+  lineas_z += 1;
+  //ii_z = 0;
+  puntt_z = 0;
+
+  delete sum;
+  sum = new TStringList();
+
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_analifon::FormClose(TObject *Sender,
+      TCloseAction &Action)
+{
+  Action = caFree;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_analifon::imprimir_reporteExecute(TObject *Sender)
+{
+  String alm_z,codigodat_z,descridat_z,lineatmp_z,codigodes_z,descri_z,
+  empaqe_z;
+  double costodat_z ,totaldat_z,unidades_z,costotot_z;
+  int unidat_z,folent_z,puntos_z,totalsem_z;
+  if( edt_almfin->Text == ""){
+       Application->MessageBox("Ingrese el Almacen Final \n y  hacer click en el boton OK", "Datos Incompletos", MB_ICONQUESTION);
+       return;
+   }else if (edt_situfin->Text == "" ){
+       Application->MessageBox("Ingrese el Situacion Final \n y  hacer click en el boton OK", "Datos Incompletos", MB_ICONQUESTION);
+       return;
+   }else if (rbtn_fona->Checked == false && rbtn_imevi->Checked == false && rbtn_fide->Checked == false ){
+       Application->MessageBox("Seleccione Fonacot,Imevi o FIDE \n y  hacer click en el boton OK", "Datos Incompletos", MB_ICONQUESTION);
+       return;
+   }
+   parametros();
+   almini_z = edt_almini->Text;
+   almfin_z = edt_almfin->Text;
+   fecini_z = date_ini->Date;
+   fecfin_z = date_fin->Date;
+   empini_z = edt_situini->Text;
+   empfin_z = edt_situfin->Text;
+
+
+   qry_llena->Close();
+   qry_llena->ParamByName("ALMINI")->AsString = almini_z;
+   qry_llena->ParamByName("ALMFIN")->AsString = almfin_z;
+   qry_llena->ParamByName("FECINI")->AsDateTime = fecini_z ;
+   qry_llena->ParamByName("FECFIN")->AsDateTime = fecfin_z;
+   qry_llena->ParamByName("PVTA")->AsString =  tpvta_z;
+   qry_llena->ParamByName("PCAN")->AsString =  tpcan_z;
+   qry_llena->ParamByName("CIA")->AsInteger = cia_z;
+   qry_llena->ParamByName("EMPINI")->AsString = empini_z;
+   qry_llena->ParamByName("EMPFIN")->AsString = empfin_z ;
+   qry_llena->Open();
+   pagina_z = 1;
+
+   arch_z = "frm_analifon.txt";
+   if( (archout = fopen(arch_z.c_str(), "w")) == NULL ) {
+       Application->MessageBox(("No puedo abrir archivo Textual de Salida:"+arch_z).c_str(), "No puedo escribir", MB_ICONEXCLAMATION);
+       return;
+   }
+
+   report_encab();
+   tabla_lineas();
+   fprintf(archout, "\n");
+   checa_salto_pag(300);
+
+   ///Reporte de analitico
+   imprime_analit();
+   sumgen->Clear();
+   sumdiv_z = 0;
+   totgen_z = 0;
+   fclose(archout);
+   dm->manda_impresion(arch_z);
+   dbgrd_renglones->FullExpand();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm_analifon::gtot()
+{
+ //qry total de sucusales
+   qry_gtotal->Close();
+   qry_gtotal->ParamByName("ALMINI")->AsString = almini_z;
+   qry_gtotal->ParamByName("ALMFIN")->AsString = almfin_z;
+   qry_gtotal->ParamByName("FECINI")->AsDateTime = fecini_z ;
+   qry_gtotal->ParamByName("FECFIN")->AsDateTime = fecfin_z;
+   qry_gtotal->ParamByName("PVTA")->AsString = tpvta_z;
+   qry_gtotal->ParamByName("CIA")->AsInteger = cia_z;
+   qry_gtotal->ParamByName("EMPINI")->AsString = empini_z;
+   qry_gtotal->ParamByName("EMPFIN")->AsString = empfin_z;
+   qry_gtotal->Open();
+   gto_z = qry_gtotal->FieldByName("totsuc")->AsFloat;
+
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TForm_analifon::date_iniExit(TObject *Sender)
+{
+date_fin->Date = UltimoDiaMes(date_ini->Date);
+}
+//---------------------------------------------------------------------------
+
