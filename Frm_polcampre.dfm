@@ -955,15 +955,28 @@ object Form_polcampre: TForm_polcampre
         'IDRENPOLCAMPRE, IDPOLCAMPRE, a.IDART, ANTPRMDS, ANTPRELEC, a.PRE' +
         'CMDS,'
       
-        'a.PRECELEC, ANTEMPAQ, NVOEMPAQ, a.IDOBSERV, PRECIOEXT, COSTOEXT,' +
-        ' a.IDGARANTIA,'
+        'a.PRECELEC, ANTEMPAQ, NVOEMPAQ, a.IDOBSERV, a.PRECIOEXT, a.COSTO' +
+        'EXT, a.IDGARANTIA,'
       'b.clave, b.descri as descrigtia,'
       'd.codigo, d.descri, e.concep, d.cod2 as grupo, d.linea,'
       'f.situacion as antersit,'
       'g.situacion as nuevasit,'
       
         '( case coston when 0 then 0 else 100 * (1 - ( coston / (precio +' +
-        ' 0.001))) end ) as mub'
+        ' 0.001))) end ) as mub,'
+      'h.costoext  as ctorepo,'
+      '( case h.costoext  when 0 then '
+      '  0'
+      
+        '  else ( 100 * (1 - ( ( h.costoext * (d.piva / 100 +1) )  / (a.p' +
+        'recmds + 0.001))) ) '
+      '  end '
+      ')'
+      ' as mubofertactorepo,'
+      
+        '( case coston when 0 then 0 else 100 * (1 - ( coston / (a.precmd' +
+        's + 0.001))) end ) as muboferta'
+      ''
       
         'from inv_renpolcampre a join inv_garantias b on a.idgarantia = b' +
         '.idgarantia'
@@ -972,8 +985,12 @@ object Form_polcampre: TForm_polcampre
       'join inv_conceps e on a.idobserv = e.idconcep'
       'join inv_situaciones f on a.antempaq = f.idsituac'
       'join inv_situaciones g on a.nvoempaq = g.idsituac'
+      'left outer join inv_extensa h on a.idart = h.idart '
+      ''
       'where IDPOLCAMPRE = :IDPOLCAMPRE'
       'order by IDRENPOLCAMPRE'
+      ''
+      ' '
       '')
     UpdateObject = uqry_renpolcampre
     Left = 512

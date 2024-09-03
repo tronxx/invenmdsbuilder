@@ -77,7 +77,17 @@ void __fastcall TForm_polcampre::inicializa(String tipo_z)
      dbgrd_renglonesDESCRIGTIA->Visible = false;
      dbgrd_renglonesCONCEP->Visible = false;
      dbgrd_renglonesPRECELEC->Visible = false;
-     dbgrd_renglonesANTPRELEC->Visible = false;
+     dbgrd_renglonesANTPRELEC->Visible = true;
+     dbgrd_renglonesANTPRELEC->Caption = "MUB.Oferta.Rep";
+     dbgrd_renglonesANTPRELEC->FieldName = "mubofertactorepo";
+     dbgrd_renglonesANTPRELEC->ColIndex = 3;
+     dbgrd_renglonesANTPRELEC->DisplayFormat =  "0.00;-0.00";
+     dbgrd_renglonesPRECELEC->Visible = true;
+     dbgrd_renglonesPRECELEC->Caption = "MUB.Oferta";
+     dbgrd_renglonesPRECELEC->FieldName = "muboferta";
+     dbgrd_renglonesPRECELEC->DisplayFormat =  "0.00;-0.00";
+     dbgrd_renglonesPRECELEC->ColIndex = 4;
+
      dbgrd_renglonesPRECMDS->Caption = "Precio Oferta";
      sql_z = qry_polcampre->SQL->Text;
      qry_polcampre->SQL->Text = StrReplace(qry_polcampre->SQL->Text, "inv_polcampre", "inv_polofertas");
@@ -129,6 +139,32 @@ void __fastcall TForm_polcampre::inicializa(String tipo_z)
      dbgrd_renglonesPRECELEC->Visible = false;
      dbgrd_renglonesANTPRELEC->Visible = false;
      dbgrd_renglonesPRECMDS->Caption = "Pr Oferta Internet";
+     sql_z = qry_polcampre->SQL->Text;
+     qry_polcampre->SQL->Text = StrReplace(qry_polcampre->SQL->Text, "inv_polcampre", "inv_polofertas");
+     uqry_polcampre->DeleteSQL->Text = StrReplace(uqry_polcampre->DeleteSQL->Text, "inv_polcampre", "inv_polofertas");
+     uqry_polcampre->ModifySQL->Text = StrReplace(uqry_polcampre->ModifySQL->Text, "inv_polcampre", "inv_polofertas");
+     uqry_polcampre->InsertSQL->Text = StrReplace(uqry_polcampre->InsertSQL->Text, "inv_polcampre", "inv_polofertas");
+     qry_renpolcampre->SQL->Text = StrReplace(qry_renpolcampre->SQL->Text, "inv_renpolcampre", "inv_renpolofertas");
+     uqry_renpolcampre->DeleteSQL->Text = StrReplace(uqry_renpolcampre->DeleteSQL->Text, "inv_renpolcampre", "inv_renpolofertas");
+     uqry_renpolcampre->ModifySQL->Text = StrReplace(uqry_renpolcampre->ModifySQL->Text, "inv_renpolcampre", "inv_renpolofertas");
+     uqry_renpolcampre->InsertSQL->Text = StrReplace(uqry_renpolcampre->InsertSQL->Text, "inv_renpolcampre", "inv_renpolofertas");
+     sql_z = qry_renpolcampre->SQL->Text;
+   }
+   if (tipo_z == "POL_ASI") {
+     titulo_z = "Póliza de Precios ASI";
+     tipopol_z = "A";
+     lbl_tipopol->Caption = "PRECIOS_ASI";
+     lbl_tipopol->Color = clLime;
+     Frame_datospolcampre1->lbl_finvigencia->Visible = true;
+     Frame_datospolcampre1->date_finvigencia->Visible = true;
+     dbgrd_renglonesNVOEMPAQ->Visible = false;
+     dbgrd_renglonesANTEMPAQ->Visible = false;
+     dbgrd_renglonesDESCRIGTIA->Visible = false;
+     dbgrd_renglonesCONCEP->Visible = false;
+     dbgrd_renglonesPRECELEC->Visible = false;
+     dbgrd_renglonesANTPRELEC->Visible = false;
+     dbgrd_renglonesPRECMDS->Caption = "Precio ASI";
+     dbgrd_renglonesANTPRMDS->Caption = "Anter Precio ASI";
      sql_z = qry_polcampre->SQL->Text;
      qry_polcampre->SQL->Text = StrReplace(qry_polcampre->SQL->Text, "inv_polcampre", "inv_polofertas");
      uqry_polcampre->DeleteSQL->Text = StrReplace(uqry_polcampre->DeleteSQL->Text, "inv_polcampre", "inv_polofertas");
@@ -220,6 +256,13 @@ void __fastcall TForm_polcampre::agregar_modificar(int tipo_z)
      Frame_datospolcampre->lbl_inivig->Visible = false;
      Frame_datospolcampre->date_inivig->Visible = false;
    }
+   if (tipopol_z == "A") {
+     titulo_z = "Póliza Precios ASI";
+     Frame_datospolcampre->lbl_finvigencia->Visible = false;
+     Frame_datospolcampre->date_finvigencia->Visible = false;
+     Frame_datospolcampre->lbl_inivig->Visible = false;
+     Frame_datospolcampre->date_inivig->Visible = false;
+   }
 
    Dlg_mantgpoinv->Caption = titulo_z;
    Dlg_mantgpoinv->Position = poScreenCenter;
@@ -262,6 +305,9 @@ void __fastcall TForm_polcampre::agregar_modificar(int tipo_z)
           idpol_z = dm->busca_sigid(IDPOLOFERTAS);
         }
         if(tipopol_z == "S") {
+          idpol_z = dm->busca_sigid(IDPOLOFERTAS);
+        }
+        if(tipopol_z == "A") {
           idpol_z = dm->busca_sigid(IDPOLOFERTAS);
         }
         qry_polcampre->FieldByName("idpolcampre")->AsInteger = idpol_z;
@@ -340,6 +386,9 @@ int __fastcall TForm_polcampre::busca_sigfolio()
   if(tipopol_z == "S") {
     sql_z += "inv_polofertas ";
   }
+  if(tipopol_z == "A") {
+    sql_z += "inv_polofertas ";
+  }
   sql_z += "where folio > 0 and tipo = :TIPOPOL and cia = :CIA";
   dm->qry_iddato->SQL->Text = sql_z;
   dm->qry_iddato->Close();
@@ -414,6 +463,9 @@ void __fastcall TForm_polcampre::SigteSabana(int HACIA_DONDE)
     sql_z += "inv_polofertas ";
   }
   if(tipopol_z == "S") {
+    sql_z += "inv_polofertas ";
+  }
+  if(tipopol_z == "A") {
     sql_z += "inv_polofertas ";
   }
   sql_z += where_z;
@@ -548,6 +600,30 @@ void __fastcall TForm_polcampre::agrerenExecute(TObject *Sender)
      Frame_datosrenpolcampre->lbl_precioant->Visible = false;
      Frame_datosrenpolcampre->edt_precioant->Visible = false;
      Frame_datosrenpolcampre->lbl_precionvo->Caption = "Pr Oferta Internet";
+     Frame_datosrenpolcampre->edt_precionvo->Left = Frame_datosrenpolcampre->lbl_precionvo->Left + Frame_datosrenpolcampre->lbl_precionvo->Width + 4;
+     Frame_datosrenpolcampre->lbl_subsidionvo->Visible = false;
+     Frame_datosrenpolcampre->edt_fidenvo->Visible = false;
+     Frame_datosrenpolcampre->lbl_subsidioant->Visible = false;
+     Frame_datosrenpolcampre->edt_fideant->Visible = false;
+     Frame_datosrenpolcampre->lbl_situanvo->Visible = false;
+     Frame_datosrenpolcampre->lkcmb_situaciones->Visible = false;
+     Frame_datosrenpolcampre->lbl_situaant->Visible = false;
+     Frame_datosrenpolcampre->edt_antsit->Visible = false;
+     Frame_datosrenpolcampre->lbl_garantia->Visible = false;
+     Frame_datosrenpolcampre->lkcmb_garantia->Visible = false;
+     Frame_datosrenpolcampre->dbedt_garantia->Visible = false;
+     Frame_datosrenpolcampre->lbl_observs->Visible = false;
+     Frame_datosrenpolcampre->edt_observs->Visible = false;
+     Frame_datosrenpolcampre->lbl_costorepo->Visible = false;
+     Frame_datosrenpolcampre->edt_costoxten->Visible = false;
+     Frame_datosrenpolcampre->lbl_precioxtensa->Visible = false;
+     Frame_datosrenpolcampre->edt_precioxten->Visible = false;
+  }
+  if (tipopol_z == "A") {
+     titulo_z = "Datos ASI";
+     Frame_datosrenpolcampre->lbl_precioant->Visible = false;
+     Frame_datosrenpolcampre->edt_precioant->Visible = false;
+     Frame_datosrenpolcampre->lbl_precionvo->Caption = "Precio ASI";
      Frame_datosrenpolcampre->edt_precionvo->Left = Frame_datosrenpolcampre->lbl_precionvo->Left + Frame_datosrenpolcampre->lbl_precionvo->Width + 4;
      Frame_datosrenpolcampre->lbl_subsidionvo->Visible = false;
      Frame_datosrenpolcampre->edt_fidenvo->Visible = false;
@@ -1032,6 +1108,14 @@ void __fastcall TForm_polcampre::imprimeExecute(TObject *Sender)
     chk_impenc->Caption = "Imprimir Titulo en Encabezado";
     chk_impenc->Visible = true;
   }
+  if (tipopol_z == "A") {
+    Dlg_analipol->Caption = "Desea Impresión Póliza Precio ASI";
+    rbtn_boletin->Visible = false;
+    rbtn_poliza->Checked = true;
+    chk_impenc->Width = 200;
+    chk_impenc->Caption = "Imprimir Titulo en Encabezado";
+    chk_impenc->Visible = true;
+  }
 
   //Dlg_analipol->Width = ancho_z;
   //Dlg_analipol->Height = alto_z;
@@ -1088,6 +1172,9 @@ void __fastcall TForm_polcampre::impresion_poliza()
    if (tipopol_z == "N") {
      sql_z += " from inv_renpolofertas a ";
    }
+   if (tipopol_z == "A") {
+     sql_z += " from inv_renpolofertas a ";
+   }
    sql_z += " join inv_garantias b on a.idgarantia = b.idgarantia";
    sql_z += " join inv_invhist c on a.idart = c.idart";
    sql_z += " join inven d on c.codigo = d.codigo and c.cia = d.cia";
@@ -1107,6 +1194,9 @@ void __fastcall TForm_polcampre::impresion_poliza()
    if (tipopol_z == "N") {
       sql_z += " order by d.linea, d.cod2, d.codigo, a.PRECMDS";
    }
+   if (tipopol_z == "A") {
+      sql_z += " order by d.linea, d.cod2, d.codigo, a.PRECMDS";
+   }
    qry_renpolcampre->SQL->Text = sql_z;
    qry_renpolcampre->ParamByName("IDPOLCAMPRE")->AsInteger = idpolcampre_z;
    qry_renpolcampre->Open();
@@ -1115,7 +1205,7 @@ void __fastcall TForm_polcampre::impresion_poliza()
    report_encab();
    ii_z = qry_renpolcampre->RecordCount;
    for(qry_renpolcampre->First(); !qry_renpolcampre->Eof; qry_renpolcampre->Next()) {
-     if (tipopol_z == "O" || tipopol_z == "T"  || tipopol_z == "N") {
+     if (tipopol_z == "O" || tipopol_z == "T"  || tipopol_z == "N"  || tipopol_z == "A") {
        if(antlinea_z != qry_renpolcampre->FieldByName("linea")->AsString ) {
          antlinea_z   = qry_renpolcampre->FieldByName("linea")->AsString;
          report_subenc();
@@ -1161,11 +1251,17 @@ void __fastcall TForm_polcampre::impresion_poliza()
        //fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", servicio_z),12));
        //fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", precio_z + servicio_z),12));
      }
+     if (tipopol_z == "A") {
+       codigo_z = qry_renpolcampre->FieldByName("codigo")->AsString;
+       //servicio_z = busca_servicio(codigo_z) / 100;
+       //fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", servicio_z),12));
+       //fprintf(archout, "%s|", rjust(FormatFloat("###,##0.00", precio_z + servicio_z),12));
+     }
      if(!ii_z) fprintf(archout, "%s", dm->font_impre(dm->impre_z, SUBRAYADO_OFF));
      salta_linea(1);
 
    }
-   if (tipopol_z == "O" || tipopol_z == "T" || tipopol_z == "N") {
+   if (tipopol_z == "O" || tipopol_z == "T" || tipopol_z == "N"  || tipopol_z == "A") {
      checa_salto_pag(3);
      fprintf(archout, "%s", AnsiString::StringOfChar('-', 74));
      salta_linea(1);
@@ -1385,6 +1481,9 @@ void __fastcall TForm_polcampre::report_encab()
     if (tipopol_z == "N") {
         tit2_z = tit2_z + "Ofertas Internet";
     }
+    if (tipopol_z == "N") {
+        tit2_z = tit2_z + "Precios ASI";
+    }
     if (tipopol_z == "T") {
         tit2_z = tit2_z + "De Outlet";
     }
@@ -1421,6 +1520,13 @@ void __fastcall TForm_polcampre::report_encab()
         tit2_z += Frame_datospolcampre1->edt_concepto->Text.Trim();
       } else {
         tit2_z += "Lista de Precios Ofertas Internet ";
+      }
+    }
+    if (tipopol_z == "A") {
+      if(impenc_z == "S") {
+        tit2_z += Frame_datospolcampre1->edt_concepto->Text.Trim();
+      } else {
+        tit2_z += "Lista de Precios ASI ";
       }
     }
   }
@@ -1480,6 +1586,11 @@ void __fastcall TForm_polcampre::report_encab()
     }
     if (tipopol_z == "N") {
       fprintf(archout, "%s|", rjust("Oferta Internet",12));
+      //fprintf(archout, "%s|", rjust("Servicio",12));
+      //fprintf(archout, "%s|", rjust("Total",12));
+    }
+    if (tipopol_z == "A") {
+      fprintf(archout, "%s|", rjust("Precio ASI",12));
       //fprintf(archout, "%s|", rjust("Servicio",12));
       //fprintf(archout, "%s|", rjust("Total",12));
     }
@@ -1579,6 +1690,31 @@ void __fastcall TForm_polcampre::despliega_renglonExecute(TObject *Sender)
      Frame_datosrenpolcampre->lbl_precioxtensa->Visible = false;
      Frame_datosrenpolcampre->edt_precioxten->Visible = false;
   }
+  if (tipopol_z == "A") {
+     titulo_z = "Datos Precio Asi";
+     Frame_datosrenpolcampre->lbl_precioant->Visible = false;
+     Frame_datosrenpolcampre->edt_precioant->Visible = false;
+     Frame_datosrenpolcampre->lbl_precionvo->Caption = "Precio Asi";
+     Frame_datosrenpolcampre->edt_precionvo->Left = Frame_datosrenpolcampre->lbl_precionvo->Left + Frame_datosrenpolcampre->lbl_precionvo->Width + 4;
+     Frame_datosrenpolcampre->lbl_subsidionvo->Visible = false;
+     Frame_datosrenpolcampre->edt_fidenvo->Visible = false;
+     Frame_datosrenpolcampre->lbl_subsidioant->Visible = false;
+     Frame_datosrenpolcampre->edt_fideant->Visible = false;
+     Frame_datosrenpolcampre->lbl_situanvo->Visible = false;
+     Frame_datosrenpolcampre->lkcmb_situaciones->Visible = false;
+     Frame_datosrenpolcampre->lbl_situaant->Visible = false;
+     Frame_datosrenpolcampre->edt_antsit->Visible = false;
+     Frame_datosrenpolcampre->lbl_garantia->Visible = false;
+     Frame_datosrenpolcampre->lkcmb_garantia->Visible = false;
+     Frame_datosrenpolcampre->dbedt_garantia->Visible = false;
+     Frame_datosrenpolcampre->lbl_observs->Visible = false;
+     Frame_datosrenpolcampre->edt_observs->Visible = false;
+     Frame_datosrenpolcampre->lbl_costorepo->Visible = false;
+     Frame_datosrenpolcampre->edt_costoxten->Visible = false;
+     Frame_datosrenpolcampre->lbl_precioxtensa->Visible = false;
+     Frame_datosrenpolcampre->edt_precioxten->Visible = false;
+  }
+
 
   Frame_datosrenpolcampre->Align = alClient;
   Frame_datosrenpolcampre->edt_codigo->Tag = INACTIVO;

@@ -173,6 +173,7 @@ __published:
         TMenuItem *AnalticodeSabandeVentas1;
         TMenuItem *PlizaOfertasInternet1;
         TMenuItem *PlizaCambioSituacin1;
+        TMenuItem *PlizadepreciosASI1;
         void __fastcall FileNew1Execute(TObject *Sender);
         void __fastcall FileOpen1Execute(TObject *Sender);
         void __fastcall HelpAbout1Execute(TObject *Sender);
@@ -286,6 +287,7 @@ __published:
         void __fastcall AnalticodeSabandeVentas1Click(TObject *Sender);
         void __fastcall PlizaOfertasInternet1Click(TObject *Sender);
         void __fastcall PlizaCambioSituacin1Click(TObject *Sender);
+        void __fastcall PlizadepreciosASI1Click(TObject *Sender);
 private:
 	void __fastcall CreateMDIChild(const String Name);
 public:

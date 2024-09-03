@@ -986,3 +986,12 @@ void __fastcall TMainForm::PlizaCambioSituacin1Click(TObject *Sender)
 //---------------------------------------------------------------------------
 
 
+void __fastcall TMainForm::PlizadepreciosASI1Click(TObject *Sender)
+{
+  TForm_polcampre *Form_polcampre = new TForm_polcampre (this);
+  Form_polcampre->inicializa("POL_ASI");
+  Form_polcampre->Show();
+
+}
+//---------------------------------------------------------------------------
+
