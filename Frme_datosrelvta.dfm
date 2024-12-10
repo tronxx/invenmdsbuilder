@@ -579,12 +579,13 @@ object Frame_datosrelvta: TFrame_datosrelvta
       'from car_tiposctes where cia = :CIA'
       'and'
       '( ticte = '#39'PC'#39' or ticte = '#39'AR'#39' or ticte = '#39'CR'#39' or ticte = '#39'AP'#39
-      '  or ticte = '#39'CC'#39' or ticte = '#39'TC'#39' or ticte = '#39'RC'#39
+      
+        '  or ticte = '#39'CC'#39' or ticte = '#39'TC'#39' or ticte = '#39'RC'#39' or ticte = '#39'FI' +
+        #39
+      '  or ticte = '#39'EX'#39
       ')'
       'order by ticte'
-      ''
-      ' '
-      ' ')
+      '')
     Left = 104
     Top = 424
     ParamData = <

@@ -290,6 +290,7 @@ void __fastcall TFrame_datosrelvta::despliega_comprometidos()
   TStringList *comp_z = new TStringList();
   TLocateOptions Opts;
   Opts.Clear();
+  // --> Solo le pongo un return para que termine el proceso
   return;
   if(qry_exist->IsEmpty()) return;
   codigo_z = edt_codigo->Text;
